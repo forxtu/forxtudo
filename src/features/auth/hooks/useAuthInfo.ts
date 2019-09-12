@@ -1,7 +1,7 @@
 import { useState, MouseEvent, ChangeEvent } from "react";
 
 // utils
-import authConfig from "config/Auth";
+import authConfig, { db } from "config/Auth";
 
 type UserAuthInfo = {
   email: string;
@@ -38,9 +38,11 @@ const useAuthInfo = () => {
     authConfig
       .auth()
       .createUserWithEmailAndPassword(userAuthInfo.email, userAuthInfo.password)
-      .then(u => {})
       .then(u => {
-        console.log(u);
+        db.collection("users").add({
+          email: userAuthInfo.email,
+          userId: u.user && u.user.uid
+        });
       })
       .catch(error => {
         console.log(error);

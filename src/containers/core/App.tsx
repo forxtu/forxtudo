@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
 
@@ -12,15 +12,19 @@ import light from "styles/themes/light";
 // styles
 import GlobalStyles from "styles/globalStyles";
 
+export const UserContext = createContext({ user: null });
+
 const App = () => {
   const { authUser } = useAuth();
 
   return (
     <Router>
       <GlobalStyles />
-      <StyledThemeProvider theme={light}>
-        <RoutesWrapper user={authUser} />
-      </StyledThemeProvider>
+      <UserContext.Provider value={{ user: authUser } as any}>
+        <StyledThemeProvider theme={light}>
+          <RoutesWrapper user={authUser} />
+        </StyledThemeProvider>
+      </UserContext.Provider>
     </Router>
   );
 };
