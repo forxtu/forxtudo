@@ -1,5 +1,6 @@
 import React from "react";
 import TodoListItem from "features/tasks/components/TodoListItem";
+import { List } from "antd";
 
 interface Props {
   todos: any[];
@@ -7,11 +8,11 @@ interface Props {
 
 const TodoList = ({ todos }: Props) => {
   return (
-    <ul className="list-group">
+    <List>
       {todos.map(todo => (
         <TodoListItem todo={todo} key={todo.id} />
       ))}
-    </ul>
+    </List>
   );
 };
 

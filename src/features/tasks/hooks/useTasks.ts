@@ -1,4 +1,4 @@
-import { FormEvent, ChangeEvent, useState, useEffect, useContext } from "react";
+import { ChangeEvent, useState, useEffect, useContext } from "react";
 
 // utils
 import { db } from "config/Auth";
@@ -10,7 +10,7 @@ const useTasks = () => {
 
   const { user } = useContext(UserContext);
 
-  const addTaskHandler = (event: FormEvent<HTMLFormElement>) => {
+  const addTaskHandler = (event: Event) => {
     event.preventDefault();
 
     setTodos(previousTodos => [

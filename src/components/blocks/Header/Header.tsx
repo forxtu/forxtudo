@@ -1,5 +1,6 @@
 import React from "react";
-import { Container, Row, Col } from "styled-bootstrap-grid";
+import { Row } from "styled-bootstrap-grid";
+import { Button } from "antd";
 
 // hooks
 import useAuthInfo from "features/auth/hooks/useAuthInfo";
@@ -16,8 +17,7 @@ const Header = () => {
         <S.InnerWrapper>
           <S.Logo>FORXTUDO</S.Logo>
           <S.Menu>
-            <button onClick={logOut}>Logout</button>
-            Settings
+            <Button onClick={logOut}>Logout</Button>
           </S.Menu>
         </S.InnerWrapper>
       </Row>

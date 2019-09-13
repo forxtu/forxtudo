@@ -12,7 +12,7 @@ const Tasks = () => {
     <div>
       <TodoList todos={todos} />
       <TodoForm
-        onSubmit={addTaskHandler}
+        addTask={addTaskHandler}
         onInputChange={setTodoValueHandler}
         inputValue={todoValue}
       />

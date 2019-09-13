@@ -1,6 +1,7 @@
 import React, { createContext } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
+import "antd/dist/antd.css";
 
 // hooks
 import useAuth from "features/auth/hooks/useAuth";

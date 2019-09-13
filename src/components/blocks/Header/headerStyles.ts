@@ -9,8 +9,6 @@ export const InnerWrapper = styled(Col)`
 `;
 
 export const Wrapper = styled(Container)`
-  padding-top: 12px;
-  padding-bottom: 12px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.33);
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13);
 `;
