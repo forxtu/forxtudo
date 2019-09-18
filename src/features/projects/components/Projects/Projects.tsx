@@ -6,21 +6,29 @@ import { observer } from "mobx-react";
 // hooks
 import useProjects from "features/projects/hooks/useProjects";
 
+// utils
+import { Project } from "features/projects/store/ProjectsStore";
+
 const Projects = observer(({ history }: any) => {
   const {
-    projects,
-    setProjectsHandler,
+    initialProjects,
+    allProjects,
+    addProjectHandler,
     projectValue,
     setProjectValueHandler
   } = useProjects();
-
-  const handleNavigate = (project: any) => {
+  const handleNavigate = (project: Project) => {
     history.push(`/project/${project.id}`);
   };
 
   return (
     <div>
-      {projects.map((project: any) => (
+      {initialProjects.map((defaultProject: Project) => (
+        <p onClick={() => handleNavigate(defaultProject)}>
+          {defaultProject.name}
+        </p>
+      ))}
+      {allProjects.map((project: Project) => (
         <p onClick={() => handleNavigate(project)}>{project.name}</p>
       ))}
       <Input
@@ -29,7 +37,7 @@ const Projects = observer(({ history }: any) => {
         value={projectValue}
       />
       <Button
-        onClick={setProjectsHandler}
+        onClick={addProjectHandler}
         type="primary"
         icon="plus"
         size="large"

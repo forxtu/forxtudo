@@ -1,39 +1,18 @@
-import { useState, useEffect, useContext, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
+import { autorun } from "mobx";
 
-// utils
-import { db } from "config/Auth";
-import { UserContext } from "containers/core/App";
-
-type Project = {
-  name: string;
-  userId: string | null;
-  id?: string;
-};
-
-type Projects = Project[];
+// hooks
+import useStores from "hooks/useStores";
 
 const useProjects = () => {
-  const { user } = useContext(UserContext);
+  const { projectsStore } = useStores();
 
-  const [projects, setProjects] = useState<Projects>([]);
   const [projectValue, setProjectValue] = useState<string>("");
 
-  const setProjectsHandler = (event: any) => {
+  const addProjectHandler = (event: any) => {
     event.preventDefault();
 
-    setProjects((previousProjects: Projects) => [
-      ...previousProjects,
-      {
-        name: projectValue,
-        userId: user
-      }
-    ]);
-
-    db.collection("projects").add({
-      name: projectValue,
-      userId: user
-    });
-
+    projectsStore.addProject(projectValue);
     setProjectValue("");
   };
 
@@ -42,24 +21,16 @@ const useProjects = () => {
   };
 
   useEffect(() => {
-    db.collection("projects")
-      .where("userId", "==", user)
-      .get()
-      .then(snapshot => {
-        const allProjects = snapshot.docs.map(project => ({
-          id: project.id,
-          ...project.data()
-        }));
-
-        console.log("allProjects :", allProjects);
-
-        setProjects([...projects, ...(allProjects as any)]);
-      });
+    autorun(() => {
+      projectsStore.fetchAllProjects();
+      projectsStore.fetchDefaultProjects();
+    });
   }, []);
 
   return {
-    projects,
-    setProjectsHandler,
+    initialProjects: projectsStore.initialProjects,
+    allProjects: projectsStore.allProjects,
+    addProjectHandler,
     projectValue,
     setProjectValueHandler
   };
