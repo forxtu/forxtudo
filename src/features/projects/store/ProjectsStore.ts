@@ -92,6 +92,21 @@ class ProjectsStore implements IProjectsStore {
   };
 
   @action
+  deleteProject = (projectId: string) => {
+    db.collection("projects")
+      .doc(projectId)
+      .delete()
+      .then(() => {
+        console.log(projectId + " deleted");
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+    this.fetchAllProjects();
+  };
+
+  @action
   fetchAllProjects = () => {
     db.collection("projects")
       .where("userId", "==", this.rootStore.user)

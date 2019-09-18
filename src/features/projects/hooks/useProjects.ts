@@ -16,6 +16,10 @@ const useProjects = () => {
     setProjectValue("");
   };
 
+  const deleteProjectHandler = (projectId: string) => {
+    projectsStore.deleteProject(projectId);
+  };
+
   const setProjectValueHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setProjectValue(event.currentTarget.value);
   };
@@ -31,6 +35,7 @@ const useProjects = () => {
     initialProjects: projectsStore.initialProjects,
     allProjects: projectsStore.allProjects,
     addProjectHandler,
+    deleteProjectHandler,
     projectValue,
     setProjectValueHandler
   };
