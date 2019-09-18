@@ -2,8 +2,8 @@ import React from "react";
 import { observer } from "mobx-react";
 
 // components
-import TodoList from "features/tasks/components/TodoList";
-import TodoForm from "features/tasks/components/TodoForm";
+import TasksList from "features/tasks/components/TasksList";
+import TasksForm from "features/tasks/components/TasksForm";
 
 //hooks
 import useTasks from "features/tasks/hooks/useTasks";
@@ -25,13 +25,13 @@ const Tasks = observer(({ projectId }: Tasks) => {
 
   return (
     <div>
-      <TodoList
-        todos={tasks}
+      <TasksList
+        tasks={tasks}
         deleteTask={deleteTaskHandler}
         completeTask={completeTaskHandler}
         unCompleteTask={unCompleteTaskHandler}
       />
-      <TodoForm
+      <TasksForm
         setTasks={addTaskHandler}
         setTaskValue={setTaskValueHandler}
         taskValue={taskValue}

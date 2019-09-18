@@ -20,7 +20,7 @@ const StyledButton = styled(Button)`
   margin-right: 12px;
 `;
 
-const TodoForm = ({ setTaskValue, taskValue, setTasks }: Props) => {
+const TasksForm = ({ setTaskValue, taskValue, setTasks }: Props) => {
   const {
     value: isEditModeOpen,
     setTrue: setIsEditModeOpenTrue,
@@ -56,4 +56,4 @@ const TodoForm = ({ setTaskValue, taskValue, setTasks }: Props) => {
   );
 };
 
-export default TodoForm;
+export default TasksForm;

@@ -3,6 +3,16 @@ import { observable, action } from "mobx";
 // utils
 import { db } from "config/Auth";
 
+export type Task = {
+  task: string;
+  userId: string;
+  projectId: string;
+  archived: boolean;
+  completed: boolean;
+  date: Date;
+  id?: string;
+};
+
 export interface ITasksStore {
   rootStore: any;
 }
@@ -15,7 +25,7 @@ class TasksStore implements ITasksStore {
   }
 
   @observable
-  allTasks = [] as any;
+  allTasks: Task[] = [];
 
   @action
   addTask = ({
@@ -35,7 +45,7 @@ class TasksStore implements ITasksStore {
         projectId,
         userId: this.rootStore.user
       }
-    ];
+    ] as Task[];
 
     db.collection("tasks").add({
       task: taskValue,
@@ -48,7 +58,7 @@ class TasksStore implements ITasksStore {
   };
 
   @action
-  deleteTask = (task: any) => {
+  deleteTask = (task: Task) => {
     db.collection("tasks")
       .doc(task.id)
       .delete()
@@ -63,9 +73,9 @@ class TasksStore implements ITasksStore {
   };
 
   @action
-  completeTask = (taskId: string) => {
+  completeTask = (task: Task) => {
     db.collection("tasks")
-      .doc(taskId)
+      .doc(task.id)
       .update({
         completed: true
       });
@@ -74,9 +84,9 @@ class TasksStore implements ITasksStore {
   };
 
   @action
-  unCompleteTask = (taskId: string) => {
+  unCompleteTask = (task: Task) => {
     db.collection("tasks")
-      .doc(taskId)
+      .doc(task.id)
       .update({
         completed: false
       });
@@ -98,7 +108,7 @@ class TasksStore implements ITasksStore {
 
         console.log(tasks, "allTasks");
 
-        this.allTasks = tasks;
+        this.allTasks = tasks as Task[];
       });
   };
 }

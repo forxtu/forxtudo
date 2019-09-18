@@ -4,6 +4,9 @@ import { autorun } from "mobx";
 // hooks
 import useStores from "hooks/useStores";
 
+// utils
+import { Task } from "features/tasks/store/TasksStore";
+
 type UseTasks = {
   projectId: string;
 };
@@ -23,15 +26,15 @@ const useTasks = ({ projectId }: UseTasks) => {
     setTaskValue("");
   };
 
-  const deleteTaskHandler = (task: any) => {
+  const deleteTaskHandler = (task: Task) => {
     tasksStore.deleteTask(task);
   };
 
-  const completeTaskHandler = (task: any) => {
+  const completeTaskHandler = (task: Task) => {
     tasksStore.completeTask(task);
   };
 
-  const unCompleteTaskHandler = (task: any) => {
+  const unCompleteTaskHandler = (task: Task) => {
     tasksStore.unCompleteTask(task);
   };
 
