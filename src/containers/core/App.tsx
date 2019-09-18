@@ -9,11 +9,16 @@ import useAuth from "features/auth/hooks/useAuth";
 // utils
 import RoutesWrapper from "routes/RoutesWrapper";
 import light from "styles/themes/light";
+import StoreProvider from "store/StoreProvider";
 
 // styles
 import GlobalStyles from "styles/globalStyles";
 
-export const UserContext = createContext({ user: null });
+type UserContext = {
+  user: null | string;
+};
+
+export const UserContext = createContext<UserContext>({ user: null });
 
 const App = () => {
   const { authUser } = useAuth();
@@ -22,9 +27,11 @@ const App = () => {
     <Router>
       <GlobalStyles />
       <UserContext.Provider value={{ user: authUser } as any}>
-        <StyledThemeProvider theme={light}>
-          <RoutesWrapper user={authUser} />
-        </StyledThemeProvider>
+        <StoreProvider>
+          <StyledThemeProvider theme={light}>
+            <RoutesWrapper user={authUser} />
+          </StyledThemeProvider>
+        </StoreProvider>
       </UserContext.Provider>
     </Router>
   );

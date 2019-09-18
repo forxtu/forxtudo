@@ -1,5 +1,8 @@
 import { useState, MouseEvent, ChangeEvent } from "react";
 
+// hooks
+import useStores from "hooks/useStores";
+
 // utils
 import authConfig, { db } from "config/Auth";
 
@@ -9,6 +12,8 @@ type UserAuthInfo = {
 };
 
 const useAuthInfo = () => {
+  const { projectsStore } = useStores();
+
   const [userAuthInfo, setUserAuthInfo] = useState<UserAuthInfo>({
     email: "",
     password: ""
@@ -43,6 +48,8 @@ const useAuthInfo = () => {
           email: userAuthInfo.email,
           userId: u.user && u.user.uid
         });
+
+        projectsStore.setDefaultProjects(u.user && u.user.uid);
       })
       .catch(error => {
         console.log(error);

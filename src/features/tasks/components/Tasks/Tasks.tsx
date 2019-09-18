@@ -5,16 +5,22 @@ import TodoForm from "features/tasks/components/TodoForm";
 //hooks
 import useTasks from "features/tasks/hooks/useTasks";
 
-const Tasks = () => {
-  const { todos, addTaskHandler, setTodoValueHandler, todoValue } = useTasks();
+type Tasks = {
+  projectId: string;
+};
+
+const Tasks = ({ projectId }: Tasks) => {
+  const { tasks, setTasksHandler, setTaskValueHandler, taskValue } = useTasks({
+    projectId
+  });
 
   return (
     <div>
-      <TodoList todos={todos} />
+      <TodoList todos={tasks} />
       <TodoForm
-        addTask={addTaskHandler}
-        onInputChange={setTodoValueHandler}
-        inputValue={todoValue}
+        setTasks={setTasksHandler}
+        setTaskValue={setTaskValueHandler}
+        taskValue={taskValue}
       />
     </div>
   );

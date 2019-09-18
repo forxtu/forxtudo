@@ -6,20 +6,21 @@ import styled from "styled-components";
 import useBoolean from "hooks/useBoolean";
 
 interface Props extends HTMLProps<HTMLFormElement> {
-  onInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  inputValue: string;
-  addTask: (event: any) => void;
+  setTaskValue: (event: ChangeEvent<HTMLInputElement>) => void;
+  taskValue: string;
+  setTasks: (event: any) => void;
 }
 
 const StyledInput = styled(Input)`
   margin-bottom: 12px;
+  margin-top: 12px;
 `;
 
 const StyledButton = styled(Button)`
   margin-right: 12px;
 `;
 
-const TodoForm = ({ onInputChange, inputValue, addTask }: Props) => {
+const TodoForm = ({ setTaskValue, taskValue, setTasks }: Props) => {
   const {
     value: isEditModeOpen,
     setTrue: setIsEditModeOpenTrue,
@@ -32,10 +33,10 @@ const TodoForm = ({ onInputChange, inputValue, addTask }: Props) => {
         <>
           <StyledInput
             placeholder="Type something..."
-            onChange={onInputChange}
-            value={inputValue}
+            onChange={setTaskValue}
+            value={taskValue}
           />
-          <StyledButton type="primary" onClick={addTask}>
+          <StyledButton type="primary" onClick={setTasks}>
             Create
           </StyledButton>
           <Button onClick={setIsEditModeOpenFalse}>Cancel</Button>

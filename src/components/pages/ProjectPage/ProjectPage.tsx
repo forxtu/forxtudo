@@ -8,12 +8,13 @@ import Projects from "features/projects/components/Projects";
 // styles
 import { H2 } from "components/elements/Text";
 
-const Home = () => {
+const ProjectPage = ({ match }: any) => {
   return (
     <MainLayout sidebarContent={() => <Projects />}>
-      <h1>Home</h1>
+      Project {match.params.id}
+      <Tasks projectId={match.params.id} />
     </MainLayout>
   );
 };
 
-export default Home;
+export default ProjectPage;
