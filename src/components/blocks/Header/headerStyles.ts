@@ -13,6 +13,9 @@ export const Wrapper = styled(Container)`
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13);
 `;
 
-export const Logo = styled.div``;
+export const Logo = styled.div`
+  color: #fff;
+  font-size: 24px;
+`;
 
 export const Menu = styled.div``;

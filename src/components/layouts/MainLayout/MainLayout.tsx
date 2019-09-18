@@ -1,5 +1,6 @@
 import React from "react";
 import { Layout, Menu, Breadcrumb, Icon } from "antd";
+import styled from "styled-components";
 
 // components
 import MainHeader from "components/blocks/Header";
@@ -7,6 +8,10 @@ import Sidebar from "components/blocks/Sidebar";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
+
+const StyledHeader = styled(Header)`
+  padding: 0;
+`;
 
 const MainLayout = ({ sidebarContent, children }: any) => {
   return (
@@ -25,9 +30,9 @@ const MainLayout = ({ sidebarContent, children }: any) => {
       <Layout
         style={{ marginLeft: 300, padding: "0 0 24px 0", background: "#fff" }}
       >
-        <Header>
+        <StyledHeader>
           <MainHeader />
-        </Header>
+        </StyledHeader>
         <Content style={{ padding: "0 24px", minHeight: 280 }}>
           {children}
         </Content>

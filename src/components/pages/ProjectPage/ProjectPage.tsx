@@ -8,10 +8,17 @@ import Projects from "features/projects/components/Projects";
 // styles
 import { H2 } from "components/elements/Text";
 
-const ProjectPage = ({ match }: any) => {
+const ProjectPage = ({
+  match,
+  location: {
+    state: { project }
+  }
+}: any) => {
+  const parsedProjectData = JSON.parse(project);
+
   return (
     <MainLayout sidebarContent={() => <Projects />}>
-      Project {match.params.id}
+      <H2>{parsedProjectData.name}</H2>
       <Tasks projectId={match.params.id} />
     </MainLayout>
   );

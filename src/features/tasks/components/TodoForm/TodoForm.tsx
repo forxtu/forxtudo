@@ -46,7 +46,7 @@ const TodoForm = ({ setTaskValue, taskValue, setTasks }: Props) => {
           onClick={setIsEditModeOpenTrue}
           type="primary"
           icon="plus"
-          size="large"
+          size="default"
           shape="round"
         >
           Add task
