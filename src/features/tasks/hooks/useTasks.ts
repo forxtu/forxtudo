@@ -1,44 +1,38 @@
 import { ChangeEvent, useState, useEffect, useContext } from "react";
+import { autorun } from "mobx";
 
-// utils
-import { db } from "config/Auth";
-import { UserContext } from "containers/core/App";
+// hooks
+import useStores from "hooks/useStores";
 
 type UseTasks = {
   projectId: string;
 };
 
 const useTasks = ({ projectId }: UseTasks) => {
-  const [tasks, setTasks] = useState<Array<any>>([]);
+  const { tasksStore, projectsStore } = useStores();
+
   const [taskValue, setTaskValue] = useState("");
 
-  const { user } = useContext(UserContext);
-
-  const setTasksHandler = (event: Event) => {
+  const addTaskHandler = (event: Event) => {
     event.preventDefault();
 
-    setTasks(previousTasks => [
-      ...previousTasks,
-      {
-        task: taskValue,
-        archived: false,
-        completed: false,
-        date: "",
-        projectId,
-        userId: user
-      }
-    ]);
-
-    db.collection("tasks").add({
-      task: taskValue,
-      archived: false,
-      completed: false,
-      date: "",
-      projectId,
-      userId: user
+    tasksStore.addTask({
+      taskValue,
+      projectId
     });
-
     setTaskValue("");
+  };
+
+  const deleteTaskHandler = (task: any) => {
+    tasksStore.deleteTask(task);
+  };
+
+  const completeTaskHandler = (task: any) => {
+    tasksStore.completeTask(task);
+  };
+
+  const unCompleteTaskHandler = (task: any) => {
+    tasksStore.unCompleteTask(task);
   };
 
   const setTaskValueHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -46,25 +40,19 @@ const useTasks = ({ projectId }: UseTasks) => {
   };
 
   useEffect(() => {
-    db.collection("tasks")
-      .where("userId", "==", user)
-      .where("projectId", "==", projectId)
-      .get()
-      .then(snapshot => {
-        const allTasks = snapshot.docs.map(task => ({
-          id: task.id,
-          ...task.data()
-        }));
-
-        console.log(allTasks, "allTasks");
-
-        setTasks(allTasks);
-      });
+    tasksStore.fetchAllTasks(projectId);
+    // autorun(() => {
+    //   projectsStore.selectedProjectId &&
+    //     tasksStore.fetchAllTasks(projectsStore.selectedProjectId);
+    // });
   }, [projectId]);
 
   return {
-    tasks,
-    setTasksHandler,
+    tasks: tasksStore.allTasks,
+    addTaskHandler,
+    deleteTaskHandler,
+    completeTaskHandler,
+    unCompleteTaskHandler,
     setTaskValueHandler,
     taskValue
   };

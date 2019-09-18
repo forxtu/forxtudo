@@ -1,12 +1,19 @@
 import React from "react";
 import { List, Icon } from "antd";
 import styled from "styled-components";
+import { observer } from "mobx-react";
+
+// hooks
+import useTasks from "features/tasks/hooks/useTasks";
 
 // utils
 import { db } from "config/Auth";
 
 interface TodoListItemProps {
   todo: any;
+  deleteTask: any;
+  completeTask: any;
+  unCompleteTask: any;
 }
 
 const StyledListItem = styled(List.Item)`
@@ -23,46 +30,29 @@ const SyledText = styled.span`
   padding-left: 12px;
 `;
 
-const TodoListItem = ({ todo }: TodoListItemProps) => {
-  const deleteTask = () => {
-    db.collection("tasks")
-      .doc(todo.id)
-      .delete()
-      .then(() => {
-        console.log(todo.task + "deleted");
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
-  const completeTask = () => {
-    db.collection("tasks")
-      .doc(todo.id)
-      .update({
-        completed: true
-      });
-  };
-
-  const unCompleteTask = () => {
-    db.collection("tasks")
-      .doc(todo.id)
-      .update({
-        completed: false
-      });
-  };
-
+const TodoListItem = ({
+  todo,
+  deleteTask,
+  completeTask,
+  unCompleteTask
+}: TodoListItemProps) => {
   return (
     <StyledListItem>
       <div>
         {todo.completed ? (
-          <SyledIcon onClick={unCompleteTask} type="check-circle" />
+          <SyledIcon
+            onClick={() => unCompleteTask(todo.id)}
+            type="check-circle"
+          />
         ) : (
-          <SyledIcon onClick={completeTask} type="loading-3-quarters" />
+          <SyledIcon
+            onClick={() => completeTask(todo.id)}
+            type="loading-3-quarters"
+          />
         )}
         <SyledText>{todo.task}</SyledText>
       </div>
-      <SyledIcon onClick={deleteTask} type="delete" />
+      <SyledIcon onClick={() => deleteTask(todo)} type="delete" />
     </StyledListItem>
   );
 };

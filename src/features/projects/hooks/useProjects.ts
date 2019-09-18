@@ -24,6 +24,10 @@ const useProjects = () => {
     setProjectValue(event.currentTarget.value);
   };
 
+  const setSelectedProjectId = (projectId: string) => {
+    projectsStore.selectedProjectId = projectId;
+  };
+
   useEffect(() => {
     autorun(() => {
       projectsStore.fetchAllProjects();
@@ -37,7 +41,8 @@ const useProjects = () => {
     addProjectHandler,
     deleteProjectHandler,
     projectValue,
-    setProjectValueHandler
+    setProjectValueHandler,
+    setSelectedProjectId
   };
 };
 

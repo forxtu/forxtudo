@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { List, Icon } from "antd";
+import { autorun } from "mobx";
+import { observer } from "mobx-react";
 
 // hooks
 import useProjects from "features/projects/hooks/useProjects";
@@ -28,30 +30,44 @@ const SyledText = styled.span`
 type ProjectProps = {
   project: Project;
   history: any;
+  deleteProjectHandler?: any;
+  setSelectedProjectId: any;
 };
 
-const ProjectItem = ({ project, history }: ProjectProps) => {
-  const { deleteProjectHandler } = useProjects();
+const ProjectItem = observer(
+  ({
+    project,
+    history,
+    deleteProjectHandler,
+    setSelectedProjectId
+  }: ProjectProps) => {
+    // const { deleteProjectHandler, setSelectedProjectId } = useProjects();
 
-  const handleNavigate = (project: Project) => {
-    // history.push(`/project/${project.id}`, { project });
-    history.push({
-      pathname: `/project/${project.id}`,
-      state: { project: JSON.stringify(project) }
-    });
-  };
+    const handleNavigate = (project: Project) => {
+      history.push({
+        pathname: `/project/${project.id}`,
+        state: { project: JSON.stringify(project) }
+      });
 
-  return (
-    <StyledListItem key={project.id} onClick={() => handleNavigate(project)}>
-      <SyledText>{project.name}</SyledText>
-      {!project.isDefault && (
-        <SyledIcon
-          onClick={() => deleteProjectHandler(project.id as string)}
-          type="delete"
-        />
-      )}
-    </StyledListItem>
-  );
-};
+      // setSelectedProjectId(project.id as string);
+    };
+
+    useEffect(() => {
+      setSelectedProjectId(project.id as string);
+    }, [project.id]);
+
+    return (
+      <StyledListItem key={project.id} onClick={() => handleNavigate(project)}>
+        <SyledText>{project.name}</SyledText>
+        {!project.isDefault && (
+          <SyledIcon
+            onClick={() => deleteProjectHandler(project.id as string)}
+            type="delete"
+          />
+        )}
+      </StyledListItem>
+    );
+  }
+);
 
 export default ProjectItem;

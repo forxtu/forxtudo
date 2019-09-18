@@ -50,6 +50,9 @@ class ProjectsStore implements IProjectsStore {
   @observable
   allProjects: Project[] = [];
 
+  @observable
+  selectedProjectId: string = "";
+
   @computed
   get defaultProjects() {
     return this.initialProjects.map(initProject => ({

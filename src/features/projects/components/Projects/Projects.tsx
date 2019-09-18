@@ -30,13 +30,19 @@ const Projects = observer(({ history }: any) => {
     allProjects,
     addProjectHandler,
     projectValue,
-    setProjectValueHandler
+    setProjectValueHandler,
+    deleteProjectHandler,
+    setSelectedProjectId
   } = useProjects();
 
   return (
     <div>
       {initialProjects.map((defaultProject: Project) => (
-        <ProjectItem project={defaultProject} history={history} />
+        <ProjectItem
+          project={defaultProject}
+          history={history}
+          setSelectedProjectId={setSelectedProjectId}
+        />
       ))}
       <Menu
         theme="dark"
@@ -54,7 +60,12 @@ const Projects = observer(({ history }: any) => {
           }
         >
           {allProjects.map((project: Project) => (
-            <ProjectItem project={project} history={history} />
+            <ProjectItem
+              project={project}
+              history={history}
+              deleteProjectHandler={deleteProjectHandler}
+              setSelectedProjectId={setSelectedProjectId}
+            />
           ))}
         </SubMenu>
       </Menu>
