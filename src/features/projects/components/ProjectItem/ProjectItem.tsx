@@ -31,30 +31,16 @@ type ProjectProps = {
   project: Project;
   history: any;
   deleteProjectHandler?: any;
-  setSelectedProjectId: any;
 };
 
 const ProjectItem = observer(
-  ({
-    project,
-    history,
-    deleteProjectHandler,
-    setSelectedProjectId
-  }: ProjectProps) => {
-    // const { deleteProjectHandler, setSelectedProjectId } = useProjects();
-
+  ({ project, history, deleteProjectHandler }: ProjectProps) => {
     const handleNavigate = (project: Project) => {
       history.push({
         pathname: `/project/${project.id}`,
         state: { project: JSON.stringify(project) }
       });
-
-      // setSelectedProjectId(project.id as string);
     };
-
-    useEffect(() => {
-      setSelectedProjectId(project.id as string);
-    }, [project.id]);
 
     return (
       <StyledListItem key={project.id} onClick={() => handleNavigate(project)}>

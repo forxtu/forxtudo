@@ -17,7 +17,9 @@ const ProjectPage = ({
   const parsedProjectData = JSON.parse(project);
 
   return (
-    <MainLayout sidebarContent={() => <Projects />}>
+    <MainLayout
+      sidebarContent={() => <Projects globalProjectId={match.params.id} />}
+    >
       <H2>{parsedProjectData.name}</H2>
       <Tasks projectId={match.params.id} />
     </MainLayout>

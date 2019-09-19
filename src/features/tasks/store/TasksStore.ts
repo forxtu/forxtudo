@@ -1,7 +1,8 @@
-import { observable, action } from "mobx";
+import { observable, action, computed } from "mobx";
 
 // utils
 import { db } from "config/Auth";
+import { IRootStore } from "store/RootStore";
 
 export type Task = {
   task: string;
@@ -13,28 +14,36 @@ export type Task = {
   id?: string;
 };
 
+type AddTask = {
+  taskValue: string;
+  projectId: string;
+};
+
 export interface ITasksStore {
-  rootStore: any;
+  readonly rootStore: IRootStore;
+  allTasks: Task[];
+  addTask: ({ taskValue, projectId }: AddTask) => void;
+  deleteTask: (task: Task) => void;
+  completeTask: (task: Task) => void;
+  unCompleteTask: (task: Task) => void;
+  fetchAllTasks: () => void;
 }
 
 class TasksStore implements ITasksStore {
-  rootStore: any;
-
-  constructor(rootStore: any) {
-    this.rootStore = rootStore;
-  }
+  constructor(readonly rootStore: IRootStore) {}
 
   @observable
   allTasks: Task[] = [];
 
+  @computed
+  get filteredByProjectTasks() {
+    return this.allTasks.filter(
+      task => task.projectId == this.rootStore.projectsStore.selectedProjectId
+    );
+  }
+
   @action
-  addTask = ({
-    taskValue,
-    projectId
-  }: {
-    taskValue: string;
-    projectId: string;
-  }) => {
+  addTask = ({ taskValue, projectId }: AddTask) => {
     this.allTasks = [
       ...this.allTasks,
       {
@@ -55,6 +64,8 @@ class TasksStore implements ITasksStore {
       projectId,
       userId: this.rootStore.user
     });
+
+    this.fetchAllTasks();
   };
 
   @action
@@ -69,7 +80,7 @@ class TasksStore implements ITasksStore {
         console.log(err);
       });
 
-    this.fetchAllTasks(this.rootStore.projectsStore.selectedProjectId);
+    this.fetchAllTasks();
   };
 
   @action
@@ -80,7 +91,7 @@ class TasksStore implements ITasksStore {
         completed: true
       });
 
-    this.fetchAllTasks(this.rootStore.projectsStore.selectedProjectId);
+    this.fetchAllTasks();
   };
 
   @action
@@ -91,22 +102,19 @@ class TasksStore implements ITasksStore {
         completed: false
       });
 
-    this.fetchAllTasks(this.rootStore.projectsStore.selectedProjectId);
+    this.fetchAllTasks();
   };
 
   @action
-  fetchAllTasks = (projectId: string) => {
+  fetchAllTasks = () => {
     db.collection("tasks")
       .where("userId", "==", this.rootStore.user)
-      .where("projectId", "==", projectId)
       .get()
       .then(snapshot => {
         const tasks = snapshot.docs.map(task => ({
           id: task.id,
           ...task.data()
         }));
-
-        console.log(tasks, "allTasks");
 
         this.allTasks = tasks as Task[];
       });

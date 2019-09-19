@@ -31,13 +31,12 @@ const useProjects = () => {
   useEffect(() => {
     autorun(() => {
       projectsStore.fetchAllProjects();
-      projectsStore.fetchDefaultProjects();
     });
   }, []);
 
   return {
-    initialProjects: projectsStore.initialProjects,
-    allProjects: projectsStore.allProjects,
+    defaultProjects: projectsStore.defaultProjects,
+    customProjects: projectsStore.customProjects,
     addProjectHandler,
     deleteProjectHandler,
     projectValue,

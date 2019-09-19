@@ -1,5 +1,4 @@
 import { ChangeEvent, useState, useEffect, useContext } from "react";
-import { autorun } from "mobx";
 
 // hooks
 import useStores from "hooks/useStores";
@@ -12,7 +11,7 @@ type UseTasks = {
 };
 
 const useTasks = ({ projectId }: UseTasks) => {
-  const { tasksStore, projectsStore } = useStores();
+  const { tasksStore } = useStores();
 
   const [taskValue, setTaskValue] = useState("");
 
@@ -43,15 +42,11 @@ const useTasks = ({ projectId }: UseTasks) => {
   };
 
   useEffect(() => {
-    tasksStore.fetchAllTasks(projectId);
-    // autorun(() => {
-    //   projectsStore.selectedProjectId &&
-    //     tasksStore.fetchAllTasks(projectsStore.selectedProjectId);
-    // });
-  }, [projectId]);
+    tasksStore.fetchAllTasks();
+  }, []);
 
   return {
-    tasks: tasksStore.allTasks,
+    tasks: tasksStore.filteredByProjectTasks,
     addTaskHandler,
     deleteTaskHandler,
     completeTaskHandler,

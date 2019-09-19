@@ -4,14 +4,20 @@ import ProjectsStore, {
 } from "features/projects/store/ProjectsStore";
 import TasksStore, { ITasksStore } from "features/tasks/store/TasksStore";
 
-export class RootStore {
+export interface IRootStore {
   user: string | null;
   projectsStore: IProjectsStore;
   tasksStore: ITasksStore;
+}
 
-  constructor(user: string | null) {
-    this.user = user;
+class RootStore {
+  projectsStore: IProjectsStore;
+  tasksStore: ITasksStore;
+
+  constructor(public user: string | null) {
     this.projectsStore = new ProjectsStore(this);
     this.tasksStore = new TasksStore(this);
   }
 }
+
+export default RootStore;

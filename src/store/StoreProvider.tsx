@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from "react";
 
 // utils
-import { RootStore } from "store/RootStore";
+import RootStore from "store/RootStore";
 import { UserContext } from "containers/core/App";
 
 export const StoreContext = createContext<any>(null);

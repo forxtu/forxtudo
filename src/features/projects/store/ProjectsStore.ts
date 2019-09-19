@@ -2,6 +2,7 @@ import { observable, action, computed } from "mobx";
 
 // utils
 import { db } from "config/Auth";
+import { IRootStore } from "store/RootStore";
 
 export type Project = {
   name: string;
@@ -11,17 +12,19 @@ export type Project = {
 };
 
 export interface IProjectsStore {
-  rootStore: any;
+  readonly rootStore: IRootStore;
   initialProjects: Project[];
   defaultProjects: Project[];
+  customProjects: Project[];
+  selectedProjectId: string;
   setDefaultProjects(user: string): void;
+  addProject: (projectValue: string) => void;
+  deleteProject: (projectValue: string) => void;
+  fetchAllProjects: () => void;
 }
 
 class ProjectsStore implements IProjectsStore {
-  rootStore: any;
-  constructor(rootStore: any) {
-    this.rootStore = rootStore;
-  }
+  constructor(readonly rootStore: IRootStore) {}
 
   @observable
   initialProjects: Project[] = [
@@ -55,20 +58,21 @@ class ProjectsStore implements IProjectsStore {
 
   @computed
   get defaultProjects() {
-    return this.initialProjects.map(initProject => ({
-      name: initProject.name,
-      userId: this.rootStore.user,
-      isDefault: true
-    }));
+    return this.allProjects.filter(project => project.isDefault === true);
+  }
+
+  @computed
+  get customProjects() {
+    return this.allProjects.filter(project => project.isDefault === false);
   }
 
   @action
   setDefaultProjects = (user: string) => {
-    this.defaultProjects.forEach((initProject: any) => {
+    this.defaultProjects.forEach((project: any) => {
       db.collection("projects")
         .doc()
         .set({
-          name: initProject.name,
+          name: project.name,
           userId: user,
           isDefault: true
         });
@@ -83,7 +87,7 @@ class ProjectsStore implements IProjectsStore {
         name: projectValue,
         userId: this.rootStore.user
       }
-    ];
+    ] as Project[];
 
     db.collection("projects").add({
       name: projectValue,
@@ -113,7 +117,6 @@ class ProjectsStore implements IProjectsStore {
   fetchAllProjects = () => {
     db.collection("projects")
       .where("userId", "==", this.rootStore.user)
-      .where("isDefault", "==", false)
       .get()
       .then(snapshot => {
         const projects = snapshot.docs.map(project => ({
@@ -122,22 +125,6 @@ class ProjectsStore implements IProjectsStore {
         }));
 
         this.allProjects = projects as Project[];
-      });
-  };
-
-  @action
-  fetchDefaultProjects = () => {
-    db.collection("projects")
-      .where("userId", "==", this.rootStore.user)
-      .where("isDefault", "==", true)
-      .get()
-      .then(snapshot => {
-        const projects = snapshot.docs.map(project => ({
-          id: project.id,
-          ...project.data()
-        }));
-
-        this.initialProjects = projects as Project[];
       });
   };
 }
