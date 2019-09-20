@@ -32,7 +32,7 @@ const Tasks = observer(({ projectId }: Tasks) => {
         unCompleteTask={unCompleteTaskHandler}
       />
       <TasksForm
-        setTasks={addTaskHandler}
+        addTask={addTaskHandler}
         setTaskValue={setTaskValueHandler}
         taskValue={taskValue}
       />

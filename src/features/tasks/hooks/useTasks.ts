@@ -15,13 +15,19 @@ const useTasks = ({ projectId }: UseTasks) => {
 
   const [taskValue, setTaskValue] = useState("");
 
-  const addTaskHandler = (event: Event) => {
+  const addTaskHandler = (event: Event, newProjectId?: string) => {
     event.preventDefault();
 
-    tasksStore.addTask({
-      taskValue,
-      projectId
-    });
+    newProjectId
+      ? tasksStore.addTask({
+          taskValue,
+          projectId: newProjectId
+        })
+      : tasksStore.addTask({
+          taskValue,
+          projectId
+        });
+
     setTaskValue("");
   };
 

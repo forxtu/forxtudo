@@ -1,46 +1,80 @@
-import React, { HTMLProps, ChangeEvent, useState } from "react";
-import { Button, Input } from "antd";
-import styled from "styled-components";
+import React, { HTMLProps, ChangeEvent } from "react";
+import { Button } from "antd";
 
 // hooks
 import useBoolean from "hooks/useBoolean";
+import useTaskControls from "features/tasks/hooks/useTaskControls";
+import useTaskSettings from "features/tasks/hooks/useTaskSettings";
 
-interface Props extends HTMLProps<HTMLFormElement> {
-  setTaskValue: (event: ChangeEvent<HTMLInputElement>) => void;
+// components
+import TasksFormSettings from "features/tasks/components/TasksFormSettings";
+
+// styles
+import * as S from "features/tasks/styles/tasksStyles";
+
+interface TasksForm extends HTMLProps<HTMLFormElement> {
   taskValue: string;
-  setTasks: (event: any) => void;
+  setTaskValue: (event: ChangeEvent<HTMLInputElement>) => void;
+  addTask: (event: any, newProjectId?: string) => void;
 }
 
-const StyledInput = styled(Input)`
-  margin-bottom: 12px;
-  margin-top: 12px;
-`;
-
-const StyledButton = styled(Button)`
-  margin-right: 12px;
-`;
-
-const TasksForm = ({ setTaskValue, taskValue, setTasks }: Props) => {
+const TasksForm = ({ setTaskValue, taskValue, addTask }: TasksForm) => {
   const {
-    value: isEditModeOpen,
-    setTrue: setIsEditModeOpenTrue,
-    setFalse: setIsEditModeOpenFalse
-  } = useBoolean(false);
+    isEditModeOpen,
+    setIsEditModeOpenTrue,
+    setIsEditModeOpenFalse
+  } = useTaskControls();
+
+  const taskSettings = useTaskSettings();
+
+  const {
+    setProjectHandler,
+    selectedProject,
+    onTaskSettingsCancelHandler,
+    onTaskSettingsConfirmHandler,
+    setIsTaskSettingsOpen,
+    isTaskSettingsOpen
+  } = taskSettings;
+
+  const onAddTaskHandler = (e: any) => {
+    addTask(e, selectedProject);
+    onTaskSettingsCancelHandler();
+  };
+
+  const onCancelAddTaskHandler = (e: any) => {
+    onTaskSettingsCancelHandler();
+    setIsEditModeOpenFalse();
+  };
 
   return (
     <div>
       {isEditModeOpen ? (
-        <>
-          <StyledInput
+        <S.Wrapper>
+          <S.TaskInput
             placeholder="Type something..."
             onChange={setTaskValue}
             value={taskValue}
           />
-          <StyledButton type="primary" onClick={setTasks}>
-            Create
-          </StyledButton>
-          <Button onClick={setIsEditModeOpenFalse}>Cancel</Button>
-        </>
+          <S.Controls>
+            <S.ControlsButtons>
+              <S.TaskFormButton
+                type="primary"
+                onClick={(e: any) => onAddTaskHandler(e)}
+              >
+                Create
+              </S.TaskFormButton>
+              <Button onClick={onCancelAddTaskHandler}>Cancel</Button>
+            </S.ControlsButtons>
+            <TasksFormSettings
+              setProject={setProjectHandler}
+              setIsTaskSettingsOpen={setIsTaskSettingsOpen}
+              onTaskSettingsCancel={onTaskSettingsCancelHandler}
+              onTaskSettingsConfirm={onTaskSettingsConfirmHandler}
+              isTaskSettingsOpen={isTaskSettingsOpen}
+              selectedProject={selectedProject}
+            />
+          </S.Controls>
+        </S.Wrapper>
       ) : (
         <Button
           onClick={setIsEditModeOpenTrue}

@@ -1,9 +1,29 @@
 import styled from "styled-components";
-import { List, Icon, Popover, Tooltip } from "antd";
+import { Input, Button, List, Icon, Popover, Tooltip, Typography } from "antd";
+
+const { Text } = Typography;
+
+// TaskForm
+const Wrapper = styled.div``;
+
+const TaskInput = styled(Input)`
+  margin-bottom: 12px;
+  margin-top: 12px;
+`;
+
+const TaskFormButton = styled(Button)`
+  margin-right: 12px;
+`;
+
+const Controls = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const ControlsButtons = styled.div``;
 
 // TaskListItem
 const StyledIcon = styled(Icon)``;
-const StyledText = styled.span``;
+const StyledText = styled(Text)``;
 const StyledListItem = styled(List.Item)`
   display: flex;
   justify-content: space-between;
@@ -13,7 +33,6 @@ const StyledListItem = styled(List.Item)`
   }
 
   ${StyledText} {
-    font-size: 16px;
     padding-left: 12px;
   }
 `;
@@ -26,6 +45,7 @@ const More = styled(Icon)`
 `;
 
 // TaskItemMorePopover
+const MoreListItemIcon = styled(Icon)``;
 const DeleteIcon = styled(Icon)``;
 const MoreListItem = styled.li``;
 const MoreListWrapper = styled.ul`
@@ -33,7 +53,7 @@ const MoreListWrapper = styled.ul`
 
   ${MoreListItem} {
     cursor: pointer;
-    margin: -12px -16px -8px -16px;
+    margin: 0 -16px 0 -16px;
     padding: 12px;
 
     &:hover {
@@ -44,15 +64,25 @@ const MoreListWrapper = styled.ul`
       color: red;
       padding-right: 5px;
     }
+
+    ${MoreListItemIcon} {
+      padding-right: 5px;
+    }
   }
 `;
 
 export {
+  Wrapper,
+  TaskInput,
+  TaskFormButton,
+  Controls,
+  ControlsButtons,
   StyledText,
   StyledListItem,
   StyledIcon,
   More,
   DeleteIcon,
   MoreListItem,
+  MoreListItemIcon,
   MoreListWrapper
 };
