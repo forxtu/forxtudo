@@ -44,15 +44,14 @@ const TasksListItem = ({
           {task.completed ? (
             <S.StyledIcon
               onClick={() => unCompleteTask(task)}
-              type="check-circle"
+              type="check-square"
             />
           ) : (
-            <S.StyledIcon
-              onClick={() => completeTask(task)}
-              type="loading-3-quarters"
-            />
+            <S.StyledIcon onClick={() => completeTask(task)} type="border" />
           )}
-          <S.StyledText>{task.task}</S.StyledText>
+          <S.StyledText delete={task.completed ? true : false}>
+            {task.task}
+          </S.StyledText>
         </div>
         {isMoreVisible ? (
           <TaskItemMore

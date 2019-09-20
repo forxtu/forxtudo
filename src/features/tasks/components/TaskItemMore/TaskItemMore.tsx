@@ -39,7 +39,7 @@ const TaskItemMore = ({
         visible={isMoreOpen}
         onVisibleChange={setIsMoreOpenToggle}
       >
-        <S.More type="more" />
+        <S.More type="ellipsis" />
       </Popover>
     </Tooltip>
   );
