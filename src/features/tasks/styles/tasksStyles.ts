@@ -53,7 +53,6 @@ const MoreListWrapper = styled.ul`
 
   ${MoreListItem} {
     cursor: pointer;
-    margin: 0 -16px 0 -16px;
     padding: 12px;
 
     &:hover {

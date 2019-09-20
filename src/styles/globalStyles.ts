@@ -70,6 +70,10 @@ const GlobalStyles = createGlobalStyle`
       max-width: 1440px;
     }
   }
+
+  .ant-popover-inner-content {
+    padding: 0;
+  }
 `;
 
 export default GlobalStyles;

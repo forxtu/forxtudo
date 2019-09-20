@@ -119,6 +119,17 @@ class TasksStore implements ITasksStore {
         this.allTasks = tasks as Task[];
       });
   };
+
+  @action
+  moveTaskToProject = (task: Task, projectId: string) => {
+    db.collection("tasks")
+      .doc(task.id)
+      .update({
+        projectId
+      });
+
+    this.fetchAllTasks();
+  };
 }
 
 export default TasksStore;
