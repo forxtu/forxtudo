@@ -1,5 +1,14 @@
 import styled from "styled-components";
-import { Input, Button, List, Icon, Popover, Tooltip, Typography } from "antd";
+import {
+  Input,
+  DatePicker,
+  Button,
+  List,
+  Icon,
+  Popover,
+  Tooltip,
+  Typography
+} from "antd";
 
 const { Text } = Typography;
 
@@ -9,6 +18,20 @@ const Wrapper = styled.div``;
 const TaskInput = styled(Input)`
   margin-bottom: 12px;
   margin-top: 12px;
+  .ant-input-group > input {
+    height: 35px;
+  }
+  .ant-input-group-addon {
+    padding: 0;
+  }
+`;
+
+const StyledDatePicker = styled(DatePicker)`
+  width: 200px;
+  input {
+    border: none;
+    text-align: left !important;
+  }
 `;
 
 const TaskFormButton = styled(Button)`
@@ -73,6 +96,7 @@ const MoreListWrapper = styled.ul`
 export {
   Wrapper,
   TaskInput,
+  StyledDatePicker,
   TaskFormButton,
   Controls,
   ControlsButtons,

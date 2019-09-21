@@ -15,7 +15,7 @@ import * as S from "features/tasks/styles/tasksStyles";
 interface TasksForm extends HTMLProps<HTMLFormElement> {
   taskValue: string;
   setTaskValue: (event: ChangeEvent<HTMLInputElement>) => void;
-  addTask: (event: any, newProjectId?: string) => void;
+  addTask: (event: any, newProjectId?: string, selectedDate?: string) => void;
 }
 
 const TasksForm = ({ setTaskValue, taskValue, addTask }: TasksForm) => {
@@ -33,16 +33,19 @@ const TasksForm = ({ setTaskValue, taskValue, addTask }: TasksForm) => {
     onTaskSettingsCancelHandler,
     onTaskSettingsConfirmHandler,
     setIsTaskSettingsOpen,
-    isTaskSettingsOpen
+    isTaskSettingsOpen,
+    selectedDate,
+    setDateHandler
   } = taskSettings;
 
   const onAddTaskHandler = (e: any) => {
-    addTask(e, selectedProject);
+    addTask(e, selectedProject, selectedDate);
     onTaskSettingsCancelHandler();
   };
 
   const onCancelAddTaskHandler = (e: any) => {
     onTaskSettingsCancelHandler();
+    setDateHandler("");
     setIsEditModeOpenFalse();
   };
 
@@ -54,6 +57,11 @@ const TasksForm = ({ setTaskValue, taskValue, addTask }: TasksForm) => {
             placeholder="Type something..."
             onChange={setTaskValue}
             value={taskValue}
+            addonAfter={
+              <S.StyledDatePicker
+                onChange={(date: any, dateString) => setDateHandler(dateString)}
+              />
+            }
           />
           <S.Controls>
             <S.ControlsButtons>

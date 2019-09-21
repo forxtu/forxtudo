@@ -7,6 +7,7 @@ import useBoolean from "hooks/useBoolean";
 const useTaskSettings = () => {
   const { projectsStore } = useStores();
   const [selectedProject, setSelectedProject] = useState();
+  const [selectedDate, setSelectedDate] = useState("");
 
   const {
     value: isTaskSettingsOpen,
@@ -28,6 +29,10 @@ const useTaskSettings = () => {
     setSelectedProject(value);
   };
 
+  const setDateHandler = (date: string) => {
+    setSelectedDate(date);
+  };
+
   return {
     allProjects: projectsStore.allProjects,
     setProjectHandler,
@@ -35,7 +40,9 @@ const useTaskSettings = () => {
     isTaskSettingsOpen,
     setIsTaskSettingsOpen,
     onTaskSettingsCancelHandler,
-    onTaskSettingsConfirmHandler
+    onTaskSettingsConfirmHandler,
+    selectedDate,
+    setDateHandler
   };
 };
 
