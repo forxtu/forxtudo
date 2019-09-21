@@ -55,7 +55,7 @@ const Projects = observer(({ history, globalProjectId }: any) => {
           title={
             <span>
               <Icon type="project" />
-              Categories
+              Projects
             </span>
           }
         >
