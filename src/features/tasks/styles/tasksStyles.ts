@@ -49,14 +49,18 @@ const StyledIcon = styled(Icon)``;
 const StyledText = styled(Text)``;
 const StyledListItem = styled(List.Item)`
   display: flex;
-  justify-content: space-between;
 
   ${StyledIcon} {
     font-size: 16px;
   }
 
+  .ant-typography-edit-content {
+    position: absolute;
+  }
+
   ${StyledText} {
     padding-left: 12px;
+    width: 95%;
   }
 `;
 

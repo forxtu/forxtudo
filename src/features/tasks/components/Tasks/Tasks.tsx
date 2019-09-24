@@ -19,6 +19,7 @@ const Tasks = observer(({ projectId, filterType = "" }: Tasks) => {
     filteredByDateTasks,
     addTaskHandler,
     deleteTaskHandler,
+    editTaskNameHandler,
     completeTaskHandler,
     unCompleteTaskHandler,
     setTaskValueHandler,
@@ -31,6 +32,7 @@ const Tasks = observer(({ projectId, filterType = "" }: Tasks) => {
         tasks={tasks}
         filteredByDateTasks={filteredByDateTasks}
         deleteTask={deleteTaskHandler}
+        editTaskName={editTaskNameHandler}
         completeTask={completeTaskHandler}
         unCompleteTask={unCompleteTaskHandler}
         filterType={filterType as string}

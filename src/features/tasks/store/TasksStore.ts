@@ -91,6 +91,17 @@ class TasksStore implements ITasksStore {
   };
 
   @action
+  editTaskName = (task: Task, taskValue: string) => {
+    db.collection("tasks")
+      .doc(task.id)
+      .update({
+        task: taskValue
+      });
+
+    this.fetchAllTasks();
+  };
+
+  @action
   completeTask = (task: Task) => {
     db.collection("tasks")
       .doc(task.id)

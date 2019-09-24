@@ -15,6 +15,7 @@ import * as S from "features/tasks/styles/tasksStyles";
 type TasksListItem = {
   task: Task;
   deleteTask: (task: Task) => void;
+  editTaskName: (task: Task, taskValue: string) => void;
   completeTask: (task: Task) => void;
   unCompleteTask: (task: Task) => void;
 };
@@ -22,6 +23,7 @@ type TasksListItem = {
 const TasksListItem = ({
   task,
   deleteTask,
+  editTaskName,
   completeTask,
   unCompleteTask
 }: TasksListItem) => {
@@ -34,13 +36,14 @@ const TasksListItem = ({
   } = useTaskPopover();
 
   const popoverRef = useRef();
+
   return (
     <div ref={popoverRef as any}>
       <S.StyledListItem
         onMouseOver={setIsMoreVisibleTrue}
         onMouseLeave={setIsMoreVisibleHandler}
       >
-        <div>
+        <>
           {task.completed ? (
             <S.StyledIcon
               onClick={() => unCompleteTask(task)}
@@ -49,10 +52,13 @@ const TasksListItem = ({
           ) : (
             <S.StyledIcon onClick={() => completeTask(task)} type="border" />
           )}
-          <S.StyledText delete={task.completed ? true : false}>
+          <S.StyledText
+            editable={{ onChange: taskValue => editTaskName(task, taskValue) }}
+            delete={task.completed ? true : false}
+          >
             {task.task}
           </S.StyledText>
-        </div>
+        </>
         {isMoreVisible ? (
           <TaskItemMore
             isMoreOpen={isMoreOpen}

@@ -37,6 +37,10 @@ const useTasks = ({ projectId }: UseTasks) => {
     setTaskValue("");
   };
 
+  const editTaskNameHandler = (task: Task, taskValue: string) => {
+    tasksStore.editTaskName(task, taskValue);
+  };
+
   const deleteTaskHandler = (task: Task) => {
     tasksStore.deleteTask(task);
   };
@@ -62,6 +66,7 @@ const useTasks = ({ projectId }: UseTasks) => {
     filteredByDateTasks: tasksStore.filteredByDateTasks,
     addTaskHandler,
     deleteTaskHandler,
+    editTaskNameHandler,
     completeTaskHandler,
     unCompleteTaskHandler,
     setTaskValueHandler,

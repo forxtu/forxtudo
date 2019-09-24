@@ -74,6 +74,10 @@ const GlobalStyles = createGlobalStyle`
   .ant-popover-inner-content {
     padding: 0;
   }
+
+  .ant-typography-edit-content {
+    margin-bottom: 0 !important;
+  }
 `;
 
 export default GlobalStyles;
