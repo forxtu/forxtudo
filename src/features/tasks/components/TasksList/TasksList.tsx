@@ -7,6 +7,8 @@ import { Task } from "features/tasks/store/TasksStore";
 
 type TasksList = {
   tasks: Task[];
+  filteredByDateTasks: Task[];
+  filterType: string;
   deleteTask: (task: Task) => void;
   completeTask: (task: Task) => void;
   unCompleteTask: (task: Task) => void;
@@ -14,21 +16,25 @@ type TasksList = {
 
 const TasksList = ({
   tasks,
+  filterType,
+  filteredByDateTasks,
   deleteTask,
   completeTask,
   unCompleteTask
 }: TasksList) => {
   return (
     <List>
-      {tasks.map(task => (
-        <TasksListItem
-          task={task}
-          key={task.id}
-          deleteTask={deleteTask}
-          completeTask={completeTask}
-          unCompleteTask={unCompleteTask}
-        />
-      ))}
+      {(filterType === "date" ? filteredByDateTasks : tasks).map(
+        (task: Task) => (
+          <TasksListItem
+            task={task}
+            key={task.id}
+            deleteTask={deleteTask}
+            completeTask={completeTask}
+            unCompleteTask={unCompleteTask}
+          />
+        )
+      )}
     </List>
   );
 };

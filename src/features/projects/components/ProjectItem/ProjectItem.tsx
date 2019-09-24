@@ -37,7 +37,7 @@ const ProjectItem = observer(
   ({ project, history, deleteProjectHandler }: ProjectProps) => {
     const handleNavigate = (project: Project) => {
       history.push({
-        pathname: `/project/${project.id}`,
+        pathname: `/project/${project.name === "Inbox" ? "inbox" : project.id}`,
         state: { project: JSON.stringify(project) }
       });
     };

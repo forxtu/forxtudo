@@ -1,4 +1,5 @@
 import { observable, action, computed } from "mobx";
+import moment from "moment";
 
 // utils
 import { db } from "config/Auth";
@@ -41,6 +42,11 @@ class TasksStore implements ITasksStore {
     return this.allTasks.filter(
       task => task.projectId == this.rootStore.projectsStore.selectedProjectId
     );
+  }
+
+  @computed
+  get filteredByDateTasks() {
+    return this.allTasks.filter(task => moment().isSame(task.date, "day"));
   }
 
   @action

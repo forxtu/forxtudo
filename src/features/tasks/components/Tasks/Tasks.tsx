@@ -10,11 +10,13 @@ import useTasks from "features/tasks/hooks/useTasks";
 
 type Tasks = {
   projectId: string;
+  filterType?: string;
 };
 
-const Tasks = observer(({ projectId }: Tasks) => {
+const Tasks = observer(({ projectId, filterType = "" }: Tasks) => {
   const {
     tasks,
+    filteredByDateTasks,
     addTaskHandler,
     deleteTaskHandler,
     completeTaskHandler,
@@ -27,9 +29,11 @@ const Tasks = observer(({ projectId }: Tasks) => {
     <div>
       <TasksList
         tasks={tasks}
+        filteredByDateTasks={filteredByDateTasks}
         deleteTask={deleteTaskHandler}
         completeTask={completeTaskHandler}
         unCompleteTask={unCompleteTaskHandler}
+        filterType={filterType as string}
       />
       <TasksForm
         addTask={addTaskHandler}

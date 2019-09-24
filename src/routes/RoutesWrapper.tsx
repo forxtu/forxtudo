@@ -3,6 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 
 // components
 import Home from "components/pages/Home";
+import TodayPage from "components/pages/TodayPage";
 import ProjectPage from "components/pages/ProjectPage";
 import NotFoundPage from "components/pages/NotFoundPage";
 import Auth from "features/auth/components";
@@ -17,6 +18,11 @@ const routes = [
     path: "/project/:id",
     exact: true,
     component: ProjectPage
+  },
+  {
+    path: "/today",
+    exact: true,
+    component: TodayPage
   }
 ];
 

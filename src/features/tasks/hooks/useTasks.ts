@@ -59,6 +59,7 @@ const useTasks = ({ projectId }: UseTasks) => {
 
   return {
     tasks: tasksStore.filteredByProjectTasks,
+    filteredByDateTasks: tasksStore.filteredByDateTasks,
     addTaskHandler,
     deleteTaskHandler,
     completeTaskHandler,
