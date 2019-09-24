@@ -1,7 +1,7 @@
 // hooks
 import useBoolean from "hooks/useBoolean";
 
-const useTaskPopover = () => {
+const useTaskMore = () => {
   const {
     value: isMoreVisible,
     toggle: setIsMoreVisibleToggle,
@@ -28,8 +28,9 @@ const useTaskPopover = () => {
     setIsMoreVisibleFalse,
     setIsMoreVisibleHandler,
     isMoreOpen,
-    setIsMoreOpenToggle
+    setIsMoreOpenToggle,
+    setIsMoreOpenFalse
   };
 };
 
-export default useTaskPopover;
+export default useTaskMore;

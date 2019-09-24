@@ -8,10 +8,13 @@ import useTaskMoreActions from "features/tasks/hooks/useTaskMoreActions";
 // utils
 import { Task } from "features/tasks/store/TasksStore";
 
+// components
+import TaskItemMoreSchedule from "features/tasks/components/TaskItemMoreSchedule";
+
 // styles
 import * as S from "features/tasks/styles/tasksStyles";
 
-const StlyedListItem = styled(List.Item)`
+const StyledListItem = styled(List.Item)`
   display: flex;
   justify-content: space-between;
   padding: 12px;
@@ -42,7 +45,10 @@ const TaskItemMorePopover = ({
     isMoveToProjectOpen,
     toggleIsMoveToProjectOpen,
     moveTaskToProjectHandler,
-    globalSelectedProjectId
+    globalSelectedProjectId,
+    isScheduleMoreOpen,
+    toggleIsScheduleMoreOpen,
+    onDateSelectHandler
   } = useTaskMoreActions();
 
   const showDeleteConfirm = () => {
@@ -62,13 +68,19 @@ const TaskItemMorePopover = ({
 
   return (
     <S.MoreListWrapper>
+      <TaskItemMoreSchedule
+        isScheduleMoreOpen={isScheduleMoreOpen}
+        toggleIsScheduleMoreOpen={toggleIsScheduleMoreOpen}
+        onDateSelect={onDateSelectHandler}
+        task={task}
+      />
       <Popover
         placement="left"
         content={
           <List
             dataSource={allProjects}
             renderItem={(project: any) => (
-              <StlyedListItem
+              <StyledListItem
                 onClick={() =>
                   moveTaskToProjectHandler(task, project.id as string)
                 }
@@ -77,7 +89,7 @@ const TaskItemMorePopover = ({
                 {globalSelectedProjectId === project.id ? (
                   <S.MoreListItemIcon type="check" style={{ color: "green" }} />
                 ) : null}
-              </StlyedListItem>
+              </StyledListItem>
             )}
           />
         }
@@ -85,15 +97,15 @@ const TaskItemMorePopover = ({
         visible={isMoveToProjectOpen}
         onVisibleChange={toggleIsMoveToProjectOpen}
       >
-        <S.MoreListItem>
+        <S.MoreListItemBtn>
           <S.MoreListItemIcon type="right-circle" />
           <Text>Move to project</Text>
-        </S.MoreListItem>
+        </S.MoreListItemBtn>
       </Popover>
-      <S.MoreListItem onClick={showDeleteConfirm}>
+      <S.MoreListItemBtn onClick={showDeleteConfirm}>
         <S.DeleteIcon type="delete" />
         <Text type="danger">Delete task</Text>
-      </S.MoreListItem>
+      </S.MoreListItemBtn>
     </S.MoreListWrapper>
   );
 };

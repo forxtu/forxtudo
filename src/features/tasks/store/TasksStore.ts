@@ -148,6 +148,17 @@ class TasksStore implements ITasksStore {
 
     this.fetchAllTasks();
   };
+
+  @action
+  editTaskDate = (task: Task, date: any) => {
+    db.collection("tasks")
+      .doc(task.id)
+      .update({
+        date
+      });
+
+    this.fetchAllTasks();
+  };
 }
 
 export default TasksStore;

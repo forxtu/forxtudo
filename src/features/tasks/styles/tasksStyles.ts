@@ -72,13 +72,28 @@ const More = styled(Icon)`
 `;
 
 // TaskItemMorePopover
+const ScheduleControls = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 const MoreListItemIcon = styled(Icon)``;
 const DeleteIcon = styled(Icon)``;
-const MoreListItem = styled.li``;
+const MoreListItemBtn = styled(List.Item)``;
+const MoreListItem = styled(List.Item)``;
 const MoreListWrapper = styled.ul`
   padding: 0;
 
   ${MoreListItem} {
+    padding: 12px;
+    display: block;
+
+    ${MoreListItemIcon} {
+      padding-right: 5px;
+      font-size: 16px;
+    }
+  }
+
+  ${MoreListItemBtn} {
     cursor: pointer;
     padding: 12px;
 
@@ -109,7 +124,9 @@ export {
   StyledIcon,
   More,
   DeleteIcon,
+  ScheduleControls,
   MoreListItem,
+  MoreListItemBtn,
   MoreListItemIcon,
   MoreListWrapper
 };
