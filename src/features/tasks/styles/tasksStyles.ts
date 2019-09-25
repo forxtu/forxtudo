@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import {
   Input,
   DatePicker,
@@ -9,6 +9,7 @@ import {
   Tooltip,
   Typography
 } from "antd";
+import { ifProp } from "styled-tools";
 
 const { Text } = Typography;
 
@@ -45,10 +46,25 @@ const Controls = styled.div`
 const ControlsButtons = styled.div``;
 
 // TaskListItem
+const StyledInput = styled(Input)``;
 const StyledIcon = styled(Icon)``;
 const StyledText = styled(Text)``;
-const StyledListItem = styled(List.Item)`
+const StyledListItem = styled(List.Item as any)`
   display: flex;
+  padding: 0 12px;
+  margin: 12px 0;
+  border-radius: 5px;
+
+  ${ifProp(
+    "isHighlighted",
+    css`
+      background: #4b6fde1f !important;
+    `
+  )}
+
+  &:hover {
+    background: #f0f2f5;
+  }
 
   ${StyledIcon} {
     font-size: 16px;
@@ -62,12 +78,21 @@ const StyledListItem = styled(List.Item)`
     padding-left: 12px;
     width: 95%;
   }
+
+  ${StyledInput} {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    &:focus {
+      box-shadow: none;
+    }
+  }
 `;
 
 // TaskItemMore
 const More = styled(Icon)`
   position: absolute;
-  right: 0;
+  right: 12px;
   font-size: 20px;
 `;
 
@@ -119,6 +144,7 @@ export {
   TaskFormButton,
   Controls,
   ControlsButtons,
+  StyledInput,
   StyledText,
   StyledListItem,
   StyledIcon,

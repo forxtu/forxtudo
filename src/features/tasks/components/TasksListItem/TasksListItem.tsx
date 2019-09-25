@@ -1,4 +1,4 @@
-import React, { useRef, createContext } from "react";
+import React, { useState, useEffect, useRef, createContext } from "react";
 
 // hooks
 import useTaskMore from "features/tasks/hooks/useTaskMore";
@@ -39,9 +39,24 @@ const TasksListItem = ({
     setIsMoreOpenToggle
   } = useTaskMore();
 
-  const { setSelectedTaskHandler } = useTaskItem();
+  const { selectedTask, setSelectedTaskHandler } = useTaskItem();
 
   const popoverRef = useRef();
+
+  const [taskName, setTaskName] = useState();
+  const [isHighlighted, setIsHighlighted] = useState<boolean>(false);
+
+  useEffect(() => {
+    setTaskName(task.task);
+  }, [task.task]);
+
+  useEffect(() => {
+    if (selectedTask && task && selectedTask.id == task.id) {
+      setIsHighlighted(true);
+    } else {
+      setIsHighlighted(false);
+    }
+  }, [selectedTask && selectedTask.id]);
 
   return (
     <TaskItemContext.Provider value={{ setIsMoreOpenFalse }}>
@@ -49,6 +64,7 @@ const TasksListItem = ({
         <S.StyledListItem
           onMouseOver={setIsMoreVisibleTrue}
           onMouseLeave={setIsMoreVisibleHandler}
+          isHighlighted={isHighlighted}
         >
           <>
             {task.completed ? (
@@ -59,14 +75,12 @@ const TasksListItem = ({
             ) : (
               <S.StyledIcon onClick={() => completeTask(task)} type="border" />
             )}
-            <S.StyledText
-              editable={{
-                onChange: taskValue => editTaskName(task, taskValue)
-              }}
-              delete={task.completed ? true : false}
-            >
-              {task.task}
-            </S.StyledText>
+            <S.StyledInput
+              onBlur={(e: any) => editTaskName(task, e.target.value)}
+              onPressEnter={(e: any) => editTaskName(task, e.target.value)}
+              value={taskName}
+              onChange={(e: any) => setTaskName(e.target.value)}
+            />
           </>
           {isMoreVisible ? (
             <TaskItemMore

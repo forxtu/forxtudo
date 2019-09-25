@@ -12,6 +12,7 @@ const useTaskItem = () => {
   };
 
   return {
+    selectedTask: tasksStore.selectedTask,
     setSelectedTaskHandler
   };
 };

@@ -9,10 +9,7 @@ export const InnerWrapper = styled(Col)`
   align-items: center;
 `;
 
-export const Wrapper = styled(Container)`
-  border-bottom: 1px solid rgba(0, 0, 0, 0.33);
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13);
-`;
+export const Wrapper = styled(Container)``;
 
 export const Logo = styled.div`
   font-size: 24px;
