@@ -1,31 +1,11 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import { List, Icon } from "antd";
-import { autorun } from "mobx";
+import React from "react";
 import { observer } from "mobx-react";
-
-// hooks
-import useProjects from "features/projects/hooks/useProjects";
 
 // utils
 import { Project } from "features/projects/store/ProjectsStore";
 
-const StyledListItem = styled(List.Item)`
-  display: flex;
-  justify-content: space-between;
-  padding: 12px;
-  cursor: pointer;
-`;
-
-const SyledIcon = styled(Icon)`
-  font-size: 16px;
-`;
-
-const SyledText = styled.span`
-  font-size: 16px;
-  padding-left: 12px;
-  color: #fff;
-`;
+// styles
+import * as S from "features/projects/styles/projectsStyles";
 
 type ProjectProps = {
   project: Project;
@@ -43,15 +23,18 @@ const ProjectItem = observer(
     };
 
     return (
-      <StyledListItem key={project.id} onClick={() => handleNavigate(project)}>
-        <SyledText>{project.name}</SyledText>
+      <S.StyledListItem
+        key={project.id}
+        onClick={() => handleNavigate(project)}
+      >
+        <S.StyledText>{project.name}</S.StyledText>
         {!project.isDefault && (
-          <SyledIcon
+          <S.StyledIcon
             onClick={() => deleteProjectHandler(project.id as string)}
             type="delete"
           />
         )}
-      </StyledListItem>
+      </S.StyledListItem>
     );
   }
 );

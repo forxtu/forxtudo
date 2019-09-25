@@ -7,6 +7,7 @@ import { IRootStore } from "store/RootStore";
 
 export type Task = {
   task: string;
+  description: string;
   userId: string;
   projectId: string;
   archived: boolean;
@@ -37,6 +38,9 @@ class TasksStore implements ITasksStore {
   @observable
   allTasks: Task[] = [];
 
+  @observable
+  selectedTask: Task = null as any;
+
   @computed
   get filteredByProjectTasks() {
     return this.allTasks.filter(
@@ -57,6 +61,7 @@ class TasksStore implements ITasksStore {
         task: taskValue,
         archived: false,
         completed: false,
+        description: "",
         date,
         projectId,
         userId: this.rootStore.user
@@ -67,6 +72,7 @@ class TasksStore implements ITasksStore {
       task: taskValue,
       archived: false,
       completed: false,
+      description: "",
       date,
       projectId,
       userId: this.rootStore.user
@@ -87,6 +93,7 @@ class TasksStore implements ITasksStore {
         console.log(err);
       });
 
+    this.setSelectedTask(null as any);
     this.fetchAllTasks();
   };
 
@@ -158,6 +165,22 @@ class TasksStore implements ITasksStore {
       });
 
     this.fetchAllTasks();
+  };
+
+  @action
+  editTaskDescription = (task: Task, description: string) => {
+    db.collection("tasks")
+      .doc(task.id)
+      .update({
+        description
+      });
+
+    this.fetchAllTasks();
+  };
+
+  @action
+  setSelectedTask = (task: Task) => {
+    this.selectedTask = task;
   };
 }
 

@@ -2,6 +2,7 @@ import React, { useRef, createContext } from "react";
 
 // hooks
 import useTaskMore from "features/tasks/hooks/useTaskMore";
+import useTaskItem from "features/tasks/hooks/useTaskItem";
 
 // utils
 import { Task } from "features/tasks/store/TasksStore";
@@ -38,11 +39,13 @@ const TasksListItem = ({
     setIsMoreOpenToggle
   } = useTaskMore();
 
+  const { setSelectedTaskHandler } = useTaskItem();
+
   const popoverRef = useRef();
 
   return (
     <TaskItemContext.Provider value={{ setIsMoreOpenFalse }}>
-      <div ref={popoverRef as any}>
+      <div ref={popoverRef as any} onClick={() => setSelectedTaskHandler(task)}>
         <S.StyledListItem
           onMouseOver={setIsMoreVisibleTrue}
           onMouseLeave={setIsMoreVisibleHandler}

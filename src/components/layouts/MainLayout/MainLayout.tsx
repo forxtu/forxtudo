@@ -1,6 +1,7 @@
 import React from "react";
 import { Layout, Menu, Breadcrumb, Icon } from "antd";
 import styled from "styled-components";
+import { Container, Row, Col } from "styled-bootstrap-grid";
 
 // components
 import MainHeader from "components/blocks/Header";
@@ -11,31 +12,56 @@ const { Header, Content, Sider } = Layout;
 
 const StyledHeader = styled(Header)`
   padding: 0;
+  background: #f0f2f5;
 `;
 
-const MainLayout = ({ sidebarContent, children }: any) => {
+const MainContent = styled(Content)`
+  background: #fffff2;
+  border-radius: 10px;
+  padding: 24px;
+`;
+
+const TaskDescription = styled.div`
+  background: #fffff2;
+  border-radius: 10px;
+  padding: 24px;
+`;
+
+const MainLayout = ({
+  sidebarContent,
+  taskDescriptionContent,
+  children
+}: any) => {
   return (
     <Layout>
-      <Sider
-        width={300}
-        style={{
-          overflow: "auto",
-          height: "100vh",
-          position: "fixed",
-          left: 0
-        }}
-      >
-        {sidebarContent()}
-      </Sider>
+      <StyledHeader>
+        <MainHeader />
+      </StyledHeader>
       <Layout
-        style={{ marginLeft: 300, padding: "0 0 24px 0", background: "#fff" }}
+      // style={{ marginLeft: 300, padding: "0 0 24px 0", background: "#fff" }}
       >
-        <StyledHeader>
-          <MainHeader />
-        </StyledHeader>
-        <Content style={{ padding: "0 24px", minHeight: 280 }}>
-          {children}
-        </Content>
+        <Sider
+          width={300}
+          style={{
+            // overflow: "auto",
+            height: "calc(100vh - 64px)",
+            backgroundColor: "#f0f2f5"
+            // position: "fixed",
+            // left: 0
+          }}
+        >
+          {sidebarContent}
+        </Sider>
+        <Container fluid>
+          <Row>
+            <Col md={6}>
+              <MainContent>{children}</MainContent>
+            </Col>
+            <Col md={6}>
+              <TaskDescription>{taskDescriptionContent}</TaskDescription>
+            </Col>
+          </Row>
+        </Container>
       </Layout>
     </Layout>
   );

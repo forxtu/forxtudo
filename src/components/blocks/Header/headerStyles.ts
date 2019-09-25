@@ -15,7 +15,6 @@ export const Wrapper = styled(Container)`
 `;
 
 export const Logo = styled.div`
-  color: #fff;
   font-size: 24px;
 `;
 

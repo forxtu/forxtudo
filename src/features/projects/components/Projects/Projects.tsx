@@ -1,28 +1,19 @@
 import React, { useEffect } from "react";
-import { Button, Input } from "antd";
+import { Button, Icon } from "antd";
 import { withRouter } from "react-router-dom";
 import { observer } from "mobx-react";
-import styled from "styled-components";
 
 // hooks
 import useProjects from "features/projects/hooks/useProjects";
 
 // utils
 import { Project } from "features/projects/store/ProjectsStore";
-import { Menu, Icon } from "antd";
 
 // components
 import ProjectItem from "features/projects/components/ProjectItem";
 
-const { SubMenu } = Menu;
-
-const AddProjectWrapper = styled.div`
-  padding: 12px;
-`;
-
-const StyledInput = styled(Input)`
-  margin-bottom: 12px;
-`;
+// styles
+import * as S from "features/projects/styles/projectsStyles";
 
 const Projects = observer(({ history, globalProjectId }: any) => {
   const {
@@ -44,13 +35,12 @@ const Projects = observer(({ history, globalProjectId }: any) => {
       {defaultProjects.map((defaultProject: Project) => (
         <ProjectItem project={defaultProject} history={history} />
       ))}
-      <Menu
-        theme="dark"
+      <S.ProjectsMenu
         mode="inline"
         defaultSelectedKeys={["1"]}
         defaultOpenKeys={["sub1"]}
       >
-        <SubMenu
+        <S.ProjectsSubMenu
           key="sub1"
           title={
             <span>
@@ -66,10 +56,10 @@ const Projects = observer(({ history, globalProjectId }: any) => {
               deleteProjectHandler={deleteProjectHandler}
             />
           ))}
-        </SubMenu>
-      </Menu>
-      <AddProjectWrapper>
-        <StyledInput
+        </S.ProjectsSubMenu>
+      </S.ProjectsMenu>
+      <S.AddProjectWrapper>
+        <S.StyledInput
           placeholder="Type something..."
           onChange={setProjectValueHandler}
           value={projectValue}
@@ -83,7 +73,7 @@ const Projects = observer(({ history, globalProjectId }: any) => {
         >
           Add project
         </Button>
-      </AddProjectWrapper>
+      </S.AddProjectWrapper>
     </div>
   );
 });
