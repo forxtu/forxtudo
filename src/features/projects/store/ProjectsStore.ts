@@ -31,22 +31,6 @@ class ProjectsStore implements IProjectsStore {
     {
       name: "Inbox",
       userId: ""
-    },
-    {
-      name: "Today",
-      userId: ""
-    },
-    {
-      name: "Week",
-      userId: ""
-    },
-    {
-      name: "Month",
-      userId: ""
-    },
-    {
-      name: "Year",
-      userId: ""
     }
   ];
 
@@ -68,7 +52,7 @@ class ProjectsStore implements IProjectsStore {
 
   @action
   setDefaultProjects = (user: string) => {
-    this.defaultProjects.forEach((project: any) => {
+    this.initialProjects.forEach((project: any) => {
       db.collection("projects")
         .doc()
         .set({
