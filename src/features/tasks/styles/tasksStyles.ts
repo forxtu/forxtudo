@@ -1,6 +1,8 @@
 import styled, { css } from "styled-components";
 import {
   Input,
+  Mentions,
+  Badge,
   DatePicker,
   Button,
   List,
@@ -12,6 +14,7 @@ import {
 import { ifProp } from "styled-tools";
 
 const { Text } = Typography;
+const { Option } = Mentions;
 
 // TaskForm
 const Wrapper = styled.div``;
@@ -46,7 +49,8 @@ const Controls = styled.div`
 const ControlsButtons = styled.div``;
 
 // TaskListItem
-const StyledInput = styled(Input)``;
+const TaskProjectBadge = styled(Badge)``;
+const StyledMentions = styled(Mentions)``;
 const StyledIcon = styled(Icon)``;
 const StyledText = styled(Text)``;
 const StyledListItem = styled(List.Item as any)`
@@ -79,12 +83,30 @@ const StyledListItem = styled(List.Item as any)`
     width: 95%;
   }
 
-  ${StyledInput} {
+  ${StyledMentions} {
     border: none;
     background: transparent;
-    cursor: pointer;
+    box-shadow: none;
     &:focus {
-      box-shadow: none;
+    }
+    textarea {
+      cursor: pointer;
+      background: transparent;
+    }
+  }
+
+  ${TaskProjectBadge} {
+    display: flex;
+    align-items: center;
+    margin-right: 24px;
+
+    .ant-badge-status {
+      &-text {
+        font-size: 11px;
+      }
+      &-dot {
+        top: 0px;
+      }
     }
   }
 `;
@@ -92,7 +114,7 @@ const StyledListItem = styled(List.Item as any)`
 // TaskItemMore
 const More = styled(Icon)`
   position: absolute;
-  right: 12px;
+  right: 8px;
   font-size: 20px;
 `;
 
@@ -144,7 +166,8 @@ export {
   TaskFormButton,
   Controls,
   ControlsButtons,
-  StyledInput,
+  TaskProjectBadge,
+  StyledMentions,
   StyledText,
   StyledListItem,
   StyledIcon,

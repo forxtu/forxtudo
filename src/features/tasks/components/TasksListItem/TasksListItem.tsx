@@ -1,8 +1,11 @@
-import React, { useState, useEffect, useRef, createContext } from "react";
+import React, { useRef, createContext } from "react";
+import { Mentions } from "antd";
+import { lowerCase } from "lodash";
 
 // hooks
 import useTaskMore from "features/tasks/hooks/useTaskMore";
 import useTaskItem from "features/tasks/hooks/useTaskItem";
+import useProjects from "features/projects/hooks/useProjects";
 
 // utils
 import { Task } from "features/tasks/store/TasksStore";
@@ -12,6 +15,8 @@ import TaskItemMore from "features/tasks/components/TaskItemMore";
 
 // styles
 import * as S from "features/tasks/styles/tasksStyles";
+
+const { Option } = Mentions;
 
 export const TaskItemContext = createContext<any>(null);
 
@@ -39,24 +44,21 @@ const TasksListItem = ({
     setIsMoreOpenToggle
   } = useTaskMore();
 
-  const { selectedTask, setSelectedTaskHandler } = useTaskItem();
+  const {
+    setSelectedTaskHandler,
+    isHighlighted,
+    mentionsData,
+    setPrefixHandler,
+    onProjectSelect,
+    taskName,
+    setTaskNameHandler,
+    onBlurHandler,
+    prefix
+  } = useTaskItem({ task, editTaskName });
+
+  const { allProjects } = useProjects();
 
   const popoverRef = useRef();
-
-  const [taskName, setTaskName] = useState();
-  const [isHighlighted, setIsHighlighted] = useState<boolean>(false);
-
-  useEffect(() => {
-    setTaskName(task.task);
-  }, [task.task]);
-
-  useEffect(() => {
-    if (selectedTask && task && selectedTask.id == task.id) {
-      setIsHighlighted(true);
-    } else {
-      setIsHighlighted(false);
-    }
-  }, [selectedTask && selectedTask.id]);
 
   return (
     <TaskItemContext.Provider value={{ setIsMoreOpenFalse }}>
@@ -66,22 +68,38 @@ const TasksListItem = ({
           onMouseLeave={setIsMoreVisibleHandler}
           isHighlighted={isHighlighted}
         >
-          <>
-            {task.completed ? (
-              <S.StyledIcon
-                onClick={() => unCompleteTask(task)}
-                type="check-square"
-              />
-            ) : (
-              <S.StyledIcon onClick={() => completeTask(task)} type="border" />
-            )}
-            <S.StyledInput
-              onBlur={(e: any) => editTaskName(task, e.target.value)}
-              onPressEnter={(e: any) => editTaskName(task, e.target.value)}
-              value={taskName}
-              onChange={(e: any) => setTaskName(e.target.value)}
+          {task.completed ? (
+            <S.StyledIcon
+              onClick={() => unCompleteTask(task)}
+              type="check-square"
             />
-          </>
+          ) : (
+            <S.StyledIcon onClick={() => completeTask(task)} type="border" />
+          )}
+          <S.StyledMentions
+            style={{ width: "100%" }}
+            placeholder={`Task name`}
+            prefix={["@", "#"]}
+            onSearch={setPrefixHandler}
+            onSelect={onProjectSelect}
+            value={taskName}
+            onChange={setTaskNameHandler}
+            onBlur={onBlurHandler}
+          >
+            {(mentionsData[prefix] || []).map((value: any) => (
+              <Option key={value.id} value={value.name} data-project={value}>
+                {value.name}
+              </Option>
+            ))}
+          </S.StyledMentions>
+          {allProjects.map((project: any) => {
+            if (
+              lowerCase(project.id) == lowerCase(task.projectId) ||
+              lowerCase(project.name) == lowerCase(task.projectId)
+            ) {
+              return <S.TaskProjectBadge color="#f50" text={project.name} />;
+            }
+          })}
           {isMoreVisible ? (
             <TaskItemMore
               isMoreOpen={isMoreOpen}

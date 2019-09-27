@@ -37,6 +37,7 @@ const useProjects = () => {
   return {
     defaultProjects: projectsStore.defaultProjects,
     customProjects: projectsStore.customProjects,
+    allProjects: projectsStore.allProjects,
     addProjectHandler,
     deleteProjectHandler,
     projectValue,
