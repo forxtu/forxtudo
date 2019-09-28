@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Button, Icon } from "antd";
+import { Icon } from "antd";
 import { withRouter } from "react-router-dom";
 import { observer } from "mobx-react";
 
@@ -11,6 +11,7 @@ import { Project } from "features/projects/store/ProjectsStore";
 
 // components
 import ProjectItem from "features/projects/components/ProjectItem";
+import ProjectCreate from "features/projects/components/ProjectCreate";
 
 // styles
 import * as S from "features/projects/styles/projectsStyles";
@@ -19,9 +20,6 @@ const Projects = observer(({ history, globalProjectId }: any) => {
   const {
     defaultProjects,
     customProjects,
-    addProjectHandler,
-    projectValue,
-    setProjectValueHandler,
     deleteProjectHandler,
     setSelectedProjectId
   } = useProjects();
@@ -31,10 +29,15 @@ const Projects = observer(({ history, globalProjectId }: any) => {
   }, [globalProjectId]);
 
   return (
-    <div>
+    <>
       {defaultProjects.map((defaultProject: Project) => (
         <ProjectItem project={defaultProject} history={history} />
       ))}
+      {customProjects.map((favoriteProject: Project) => {
+        return favoriteProject.isFavorite ? (
+          <ProjectItem project={favoriteProject} history={history} />
+        ) : null;
+      })}
       <S.ProjectsMenu
         mode="inline"
         defaultSelectedKeys={["1"]}
@@ -56,25 +59,10 @@ const Projects = observer(({ history, globalProjectId }: any) => {
               deleteProjectHandler={deleteProjectHandler}
             />
           ))}
+          <ProjectCreate />
         </S.ProjectsSubMenu>
       </S.ProjectsMenu>
-      <S.AddProjectWrapper>
-        <S.StyledInput
-          placeholder="Type something..."
-          onChange={setProjectValueHandler}
-          value={projectValue}
-        />
-        <Button
-          onClick={addProjectHandler}
-          type="primary"
-          icon="plus"
-          size="default"
-          shape="round"
-        >
-          Add project
-        </Button>
-      </S.AddProjectWrapper>
-    </div>
+    </>
   );
 });
 

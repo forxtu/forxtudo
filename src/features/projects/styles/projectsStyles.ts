@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { Menu, Input, List, Icon } from "antd";
+import { Menu, Input, List, Icon, Badge } from "antd";
 
 // Projects
 const { SubMenu } = Menu;
 
 const AddProjectWrapper = styled.div`
-  padding: 12px;
+  padding: 0 12px;
 `;
 
 const StyledInput = styled(Input)`
@@ -22,6 +22,10 @@ const ProjectsSubMenu = styled(SubMenu)`
 `;
 
 // ProjectItem
+const ProjectTitle = styled.div`
+  padding-left: 12px;
+`;
+
 const StyledListItem = styled(List.Item)`
   display: flex;
   justify-content: space-between;
@@ -36,15 +40,29 @@ const StyledIcon = styled(Icon)`
 
 const StyledText = styled.span`
   font-size: 16px;
-  padding-left: 12px;
+`;
+
+// ProjectCreate
+const FavoriteTogglerText = styled.span``;
+const FavoriteToggler = styled.div`
+  margin: 12px 0;
+  display: flex;
+  align-items: center;
+
+  ${FavoriteTogglerText} {
+    margin-left: 12px;
+  }
 `;
 
 export {
   AddProjectWrapper,
   StyledInput,
+  ProjectTitle,
   ProjectsMenu,
   ProjectsSubMenu,
   StyledListItem,
   StyledText,
-  StyledIcon
+  StyledIcon,
+  FavoriteToggler,
+  FavoriteTogglerText
 };

@@ -7,8 +7,15 @@ import { IRootStore } from "store/RootStore";
 export type Project = {
   name: string;
   userId: string;
+  color?: string;
+  isFavorite?: boolean;
   isDefault?: boolean;
   id?: string;
+};
+
+type ProjectColor = {
+  hash: string;
+  name: string;
 };
 
 export interface IProjectsStore {
@@ -18,7 +25,11 @@ export interface IProjectsStore {
   customProjects: Project[];
   selectedProjectId: string;
   setDefaultProjects(user: string): void;
-  addProject: (projectValue: string) => void;
+  addProject: (
+    projectValue: string,
+    projectColor: string,
+    isFavorite: boolean
+  ) => void;
   deleteProject: (projectValue: string) => void;
   fetchAllProjects: () => void;
 }
@@ -30,8 +41,16 @@ class ProjectsStore implements IProjectsStore {
   initialProjects: Project[] = [
     {
       name: "Inbox",
-      userId: ""
+      userId: "",
+      color: "#4e44f3"
     }
+  ];
+
+  @observable
+  colors: ProjectColor[] = [
+    { hash: "#000", name: "Black" },
+    { hash: "red", name: "Red" },
+    { hash: "blue", name: "Blue" }
   ];
 
   @observable
@@ -64,7 +83,11 @@ class ProjectsStore implements IProjectsStore {
   };
 
   @action
-  addProject = (projectValue: string): void => {
+  addProject = (
+    projectValue: string,
+    projectColor: string,
+    isFavorite: boolean
+  ): void => {
     this.allProjects = [
       ...this.allProjects,
       {
@@ -75,6 +98,8 @@ class ProjectsStore implements IProjectsStore {
 
     db.collection("projects").add({
       name: projectValue,
+      color: projectColor,
+      isFavorite,
       userId: this.rootStore.user,
       isDefault: false
     });

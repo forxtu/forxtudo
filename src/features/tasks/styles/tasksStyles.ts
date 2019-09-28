@@ -13,6 +13,9 @@ import {
 } from "antd";
 import { ifProp } from "styled-tools";
 
+// components
+import ColorBadge from "components/elements/ColorBadge";
+
 const { Text } = Typography;
 const { Option } = Mentions;
 
@@ -49,7 +52,7 @@ const Controls = styled.div`
 const ControlsButtons = styled.div``;
 
 // TaskListItem
-const TaskProjectBadge = styled(Badge)``;
+const TaskProjectBadge = styled(ColorBadge)``;
 const StyledMentions = styled(Mentions)``;
 const StyledIcon = styled(Icon)``;
 const StyledText = styled(Text)``;
@@ -101,9 +104,6 @@ const StyledListItem = styled(List.Item as any)`
     margin-right: 24px;
 
     .ant-badge-status {
-      &-text {
-        font-size: 11px;
-      }
       &-dot {
         top: 0px;
       }

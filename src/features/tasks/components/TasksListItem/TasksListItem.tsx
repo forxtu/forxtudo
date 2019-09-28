@@ -97,7 +97,15 @@ const TasksListItem = ({
               lowerCase(project.id) == lowerCase(task.projectId) ||
               lowerCase(project.name) == lowerCase(task.projectId)
             ) {
-              return <S.TaskProjectBadge color="#f50" text={project.name} />;
+              return (
+                <S.TaskProjectBadge
+                  width="6px"
+                  height="6px"
+                  fontSize="11px"
+                  color={project.color || "#4e44f3"}
+                  text={project.name}
+                />
+              );
             }
           })}
           {isMoreVisible ? (
