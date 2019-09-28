@@ -1,10 +1,14 @@
 import React from "react";
 import { observer } from "mobx-react";
 
+// hooks
+import useItemMore from "hooks/useItemMore";
+
 // utils
 import { Project } from "features/projects/store/ProjectsStore";
 
 // components
+import ProjectItemMore from "features/projects/components/ProjectItemMore";
 import ColorBadge from "components/elements/ColorBadge";
 
 // styles
@@ -14,10 +18,25 @@ type ProjectProps = {
   project: Project;
   history: any;
   deleteProjectHandler?: any;
+  isFavorite?: boolean;
 };
 
 const ProjectItem = observer(
-  ({ project, history, deleteProjectHandler }: ProjectProps) => {
+  ({
+    project,
+    history,
+    deleteProjectHandler,
+    isFavorite = false
+  }: ProjectProps) => {
+    const {
+      isMoreVisible,
+      setIsMoreVisibleTrue,
+      setIsMoreVisibleHandler,
+      isMoreOpen,
+      setIsMoreOpenFalse,
+      setIsMoreOpenToggle
+    } = useItemMore();
+
     const handleNavigate = (project: Project) => {
       history.push({
         pathname: `/project/${project.name === "Inbox" ? "inbox" : project.id}`,
@@ -28,6 +47,8 @@ const ProjectItem = observer(
     return (
       <>
         <S.StyledListItem
+          onMouseOver={setIsMoreVisibleTrue}
+          onMouseLeave={setIsMoreVisibleHandler}
           key={project.id}
           onClick={() => handleNavigate(project)}
         >
@@ -38,12 +59,15 @@ const ProjectItem = observer(
               <ColorBadge color={project.color} text={project.name} />
             )}
           </S.ProjectTitle>
-          {!project.isDefault && (
-            <S.StyledIcon
-              onClick={() => deleteProjectHandler(project.id as string)}
-              type="delete"
+          {!project.isDefault && isMoreVisible ? (
+            <ProjectItemMore
+              isMoreOpen={isMoreOpen}
+              setIsMoreOpenToggle={setIsMoreOpenToggle}
+              project={project}
+              deleteProject={deleteProjectHandler}
+              isFavorite={isFavorite}
             />
-          )}
+          ) : null}
         </S.StyledListItem>
       </>
     );

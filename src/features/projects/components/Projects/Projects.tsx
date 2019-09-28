@@ -35,7 +35,11 @@ const Projects = observer(({ history, globalProjectId }: any) => {
       ))}
       {customProjects.map((favoriteProject: Project) => {
         return favoriteProject.isFavorite ? (
-          <ProjectItem project={favoriteProject} history={history} />
+          <ProjectItem
+            isFavorite={favoriteProject.isFavorite}
+            project={favoriteProject}
+            history={history}
+          />
         ) : null;
       })}
       <S.ProjectsMenu

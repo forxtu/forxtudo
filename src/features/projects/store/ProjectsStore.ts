@@ -30,7 +30,7 @@ export interface IProjectsStore {
     projectColor: string,
     isFavorite: boolean
   ) => void;
-  deleteProject: (projectValue: string) => void;
+  deleteProject: (project: Project) => void;
   fetchAllProjects: () => void;
 }
 
@@ -108,15 +108,26 @@ class ProjectsStore implements IProjectsStore {
   };
 
   @action
-  deleteProject = (projectId: string) => {
+  deleteProject = (project: Project) => {
     db.collection("projects")
-      .doc(projectId)
+      .doc(project.id)
       .delete()
       .then(() => {
-        console.log(projectId + " deleted");
+        console.log(project.id + " deleted");
       })
       .catch(err => {
         console.log(err);
+      });
+
+    this.fetchAllProjects();
+  };
+
+  @action
+  setProjectFavoriteStatus = (projectId: string, isFavorite: boolean) => {
+    db.collection("projects")
+      .doc(projectId)
+      .update({
+        isFavorite
       });
 
     this.fetchAllProjects();
