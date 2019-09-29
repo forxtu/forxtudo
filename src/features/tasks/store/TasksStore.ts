@@ -16,10 +16,11 @@ export type Task = {
   id?: string;
 };
 
-type AddTask = {
+export type AddTask = {
   taskValue: string;
   projectId: string;
-  date: string;
+  date?: string;
+  description?: string;
 };
 
 export interface ITasksStore {
@@ -54,14 +55,14 @@ class TasksStore implements ITasksStore {
   }
 
   @action
-  addTask = ({ taskValue, projectId, date }: AddTask) => {
+  addTask = ({ taskValue, projectId, date, description }: AddTask) => {
     this.allTasks = [
       ...this.allTasks,
       {
         task: taskValue,
         archived: false,
         completed: false,
-        description: "",
+        description,
         date,
         projectId,
         userId: this.rootStore.user
@@ -72,7 +73,7 @@ class TasksStore implements ITasksStore {
       task: taskValue,
       archived: false,
       completed: false,
-      description: "",
+      description,
       date,
       projectId,
       userId: this.rootStore.user

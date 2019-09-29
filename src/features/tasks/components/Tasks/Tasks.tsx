@@ -23,7 +23,8 @@ const Tasks = observer(({ projectId, filterType = "" }: Tasks) => {
     completeTaskHandler,
     unCompleteTaskHandler,
     setTaskValueHandler,
-    taskValue
+    taskValue,
+    resetTaskValueHandler
   } = useTasks({ projectId });
 
   return (
@@ -40,7 +41,9 @@ const Tasks = observer(({ projectId, filterType = "" }: Tasks) => {
       <TasksForm
         addTask={addTaskHandler}
         setTaskValue={setTaskValueHandler}
+        resetTaskValue={resetTaskValueHandler}
         taskValue={taskValue}
+        globalSelectedProjectId={projectId}
       />
     </div>
   );

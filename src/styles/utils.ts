@@ -5,3 +5,8 @@ export const flexRowSpaceBetween = css`
   flex-direction: row;
   justify-content: space-between;
 `;
+
+export const flexAlignItemsCenter = css`
+  display: flex;
+  align-items: center;
+`;

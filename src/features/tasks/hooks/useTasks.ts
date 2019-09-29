@@ -6,6 +6,12 @@ import useStores from "hooks/useStores";
 // utils
 import { Task } from "features/tasks/store/TasksStore";
 
+export type AddTaskArgs = {
+  projectId: string;
+  date?: string;
+  description?: string;
+};
+
 type UseTasks = {
   projectId: string;
 };
@@ -15,23 +21,19 @@ const useTasks = ({ projectId }: UseTasks) => {
 
   const [taskValue, setTaskValue] = useState("");
 
-  const addTaskHandler = (
-    event: Event,
-    newProjectId?: string,
-    selectedDate?: string
-  ) => {
-    event.preventDefault();
-
-    newProjectId
+  const addTaskHandler = ({ projectId, date, description }: AddTaskArgs) => {
+    projectId
       ? tasksStore.addTask({
           taskValue,
-          projectId: newProjectId,
-          date: selectedDate
+          projectId,
+          date,
+          description
         })
       : tasksStore.addTask({
           taskValue,
           projectId,
-          date: selectedDate
+          date,
+          description
         });
 
     setTaskValue("");
@@ -57,6 +59,10 @@ const useTasks = ({ projectId }: UseTasks) => {
     setTaskValue(event.currentTarget.value);
   };
 
+  const resetTaskValueHandler = () => {
+    setTaskValue("");
+  };
+
   useEffect(() => {
     tasksStore.fetchAllTasks();
   }, []);
@@ -70,7 +76,8 @@ const useTasks = ({ projectId }: UseTasks) => {
     completeTaskHandler,
     unCompleteTaskHandler,
     setTaskValueHandler,
-    taskValue
+    taskValue,
+    resetTaskValueHandler
   };
 };
 

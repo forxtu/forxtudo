@@ -6,7 +6,7 @@ const { Item } = List;
 const MoreItemIcon = styled(Icon)``;
 const MoreItemBtn = styled(Item)``;
 const MoreItem = styled(Item)``;
-const MoreWrapper = styled.ul`
+const MoreWrapper = styled(List)`
   padding: 0;
 
   ${MoreItem} {

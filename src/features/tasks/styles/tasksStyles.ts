@@ -34,7 +34,7 @@ const TaskInput = styled(Input)`
 `;
 
 const StyledDatePicker = styled(DatePicker)`
-  width: 200px;
+  width: 150px;
   input {
     border: none;
     text-align: left !important;

@@ -1,66 +1,45 @@
-import React from "react";
-import { Icon, Tooltip, Select, Modal } from "antd";
-import styled from "styled-components";
+import React, { useEffect } from "react";
 
 // hooks
 import useTaskSettings from "features/tasks/hooks/useTaskSettings";
 
-// utils
-import { Project } from "features/projects/store/ProjectsStore";
+// components
+import TaskSetupProject from "features/tasks/components/TasksFormSettings/TaskSetupProject";
+import TaskSetupDescription from "features/tasks/components/TasksFormSettings/TaskSetupDescription";
 
-const { Option } = Select;
-
-const ControlsSelections = styled.div``;
+// styles
+import * as S from "features/tasks/components/TasksFormSettings/tasksFormSettingsStyles";
 
 type TasksFormSettings = {
-  isTaskSettingsOpen: boolean;
-  selectedProject: string;
-  setProject: (value: string) => void;
-  setIsTaskSettingsOpen: () => void;
-  onTaskSettingsCancel: () => void;
-  onTaskSettingsConfirm: () => void;
+  taskSettings: any;
+  newProjectId: string;
+  globalSelectedProjectId?: string;
+  onTaskSetupProjectConfirm: () => void;
 };
 
 const TasksFormSettings = ({
-  setProject,
-  selectedProject,
-  setIsTaskSettingsOpen,
-  onTaskSettingsCancel,
-  onTaskSettingsConfirm,
-  isTaskSettingsOpen
+  taskSettings,
+  newProjectId,
+  onTaskSetupProjectConfirm
 }: TasksFormSettings) => {
   const { allProjects } = useTaskSettings();
 
+  useEffect(() => {
+    onTaskSetupProjectConfirm();
+  }, [newProjectId]);
+
   return (
-    <ControlsSelections>
-      <Tooltip placement="bottom" title="Setup your task">
-        <Icon type="setting" onClick={setIsTaskSettingsOpen} />
-      </Tooltip>
-      <Modal
-        title="Setup your task"
-        visible={isTaskSettingsOpen}
-        onOk={onTaskSettingsConfirm}
-        onCancel={onTaskSettingsCancel}
-      >
-        <Select
-          showSearch
-          style={{ width: 200 }}
-          placeholder="Select a project"
-          optionFilterProp="children"
-          onChange={setProject}
-          value={selectedProject}
-          filterOption={(input, option) =>
-            (option as any).props.children
-              .toLowerCase()
-              .indexOf(input.toLowerCase()) >= 0
-          }
-        >
-          {allProjects.map((project: Project) => (
-            <Option value={project.id}>{project.name}</Option>
-          ))}
-        </Select>
-      </Modal>
-    </ControlsSelections>
+    <S.ControlSelections>
+      <S.ControlItem>
+        <TaskSetupProject
+          taskSettings={taskSettings}
+          allProjects={allProjects}
+        />
+      </S.ControlItem>
+      <S.ControlItem>
+        <TaskSetupDescription taskSettings={taskSettings} />
+      </S.ControlItem>
+    </S.ControlSelections>
   );
 };
 

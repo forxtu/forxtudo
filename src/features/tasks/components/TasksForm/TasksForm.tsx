@@ -1,8 +1,9 @@
 import React, { HTMLProps, ChangeEvent } from "react";
 import { Button } from "antd";
+import { Moment } from "moment";
 
 // hooks
-import useBoolean from "hooks/useBoolean";
+import { AddTaskArgs } from "features/tasks/hooks/useTasks";
 import useTaskControls from "features/tasks/hooks/useTaskControls";
 import useTaskSettings from "features/tasks/hooks/useTaskSettings";
 
@@ -14,11 +15,19 @@ import * as S from "features/tasks/styles/tasksStyles";
 
 interface TasksForm extends HTMLProps<HTMLFormElement> {
   taskValue: string;
+  globalSelectedProjectId: string;
   setTaskValue: (event: ChangeEvent<HTMLInputElement>) => void;
-  addTask: (event: any, newProjectId?: string, selectedDate?: string) => void;
+  resetTaskValue: () => void;
+  addTask: ({ projectId, date, description }: AddTaskArgs) => void;
 }
 
-const TasksForm = ({ setTaskValue, taskValue, addTask }: TasksForm) => {
+const TasksForm = ({
+  setTaskValue,
+  taskValue,
+  resetTaskValue,
+  addTask,
+  globalSelectedProjectId
+}: TasksForm) => {
   const {
     isEditModeOpen,
     setIsEditModeOpenTrue,
@@ -28,24 +37,28 @@ const TasksForm = ({ setTaskValue, taskValue, addTask }: TasksForm) => {
   const taskSettings = useTaskSettings();
 
   const {
-    setProjectHandler,
-    selectedProject,
-    onTaskSettingsCancelHandler,
-    onTaskSettingsConfirmHandler,
-    setIsTaskSettingsOpen,
-    isTaskSettingsOpen,
+    newProjectId,
+    resetTaskSetup,
+    taskDescription,
+    onTaskSetupProjectConfirmHandler,
     selectedDate,
+    selectedDateObject,
     setDateHandler
   } = taskSettings;
 
-  const onAddTaskHandler = (e: any) => {
-    addTask(e, selectedProject, selectedDate);
-    onTaskSettingsCancelHandler();
+  const onAddTaskHandler = () => {
+    addTask({
+      projectId: newProjectId,
+      date: selectedDate,
+      description: taskDescription
+    });
+    resetTaskSetup();
+    resetTaskValue();
   };
 
-  const onCancelAddTaskHandler = (e: any) => {
-    onTaskSettingsCancelHandler();
-    setDateHandler("");
+  const onCancelAddTaskHandler = () => {
+    resetTaskSetup();
+    resetTaskValue();
     setIsEditModeOpenFalse();
   };
 
@@ -59,27 +72,25 @@ const TasksForm = ({ setTaskValue, taskValue, addTask }: TasksForm) => {
             value={taskValue}
             addonAfter={
               <S.StyledDatePicker
-                onChange={(date: any, dateString) => setDateHandler(dateString)}
+                value={selectedDateObject as Moment & null & undefined}
+                onChange={(date: Moment | null, dateString) =>
+                  setDateHandler(date, dateString)
+                }
               />
             }
           />
           <S.Controls>
             <S.ControlsButtons>
-              <S.TaskFormButton
-                type="primary"
-                onClick={(e: any) => onAddTaskHandler(e)}
-              >
+              <S.TaskFormButton type="primary" onClick={onAddTaskHandler}>
                 Create
               </S.TaskFormButton>
               <Button onClick={onCancelAddTaskHandler}>Cancel</Button>
             </S.ControlsButtons>
             <TasksFormSettings
-              setProject={setProjectHandler}
-              setIsTaskSettingsOpen={setIsTaskSettingsOpen}
-              onTaskSettingsCancel={onTaskSettingsCancelHandler}
-              onTaskSettingsConfirm={onTaskSettingsConfirmHandler}
-              isTaskSettingsOpen={isTaskSettingsOpen}
-              selectedProject={selectedProject}
+              onTaskSetupProjectConfirm={onTaskSetupProjectConfirmHandler}
+              newProjectId={newProjectId}
+              globalSelectedProjectId={globalSelectedProjectId}
+              taskSettings={taskSettings}
             />
           </S.Controls>
         </S.Wrapper>

@@ -10,6 +10,7 @@ import { Project } from "features/projects/store/ProjectsStore";
 // components
 import ProjectItemMore from "features/projects/components/ProjectItemMore";
 import ColorBadge from "components/elements/ColorBadge";
+import DefaultProjectItem from "components/blocks/DefaultProjectItem";
 
 // styles
 import * as S from "features/projects/styles/projectsStyles";
@@ -54,7 +55,7 @@ const ProjectItem = observer(
         >
           <S.ProjectTitle>
             {project.isDefault ? (
-              <S.StyledText>{project.name}</S.StyledText>
+              <DefaultProjectItem project={project} />
             ) : (
               <ColorBadge color={project.color} text={project.name} />
             )}
