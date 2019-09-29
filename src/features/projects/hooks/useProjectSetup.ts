@@ -4,17 +4,29 @@ import { useState, ChangeEvent } from "react";
 import useStores from "hooks/useStores";
 import useBoolean from "hooks/useBoolean";
 
-const useProjectCreate = () => {
+// utils
+import { Project } from "features/projects/store/ProjectsStore";
+
+type UseProjectSetup = {
+  project: Project;
+  isEditMode: boolean;
+};
+
+const useProjectSetup = ({
+  project: { name, color, id, isFavorite: isFavoriteProject },
+  isEditMode
+}: UseProjectSetup) => {
   const { projectsStore } = useStores();
 
-  const [projectValue, setProjectValue] = useState<string>("");
-  const [projectColor, setProjectColor] = useState<string>("#000");
+  const [projectValue, setProjectValue] = useState<string>(name || "");
+  const [projectColor, setProjectColor] = useState<string>(color || "#000");
 
   const {
     value: isFavorite,
+    setValue: setIsFavoritesValue,
     setFalse: setIsFavoriteFalse,
     toggle: toggleIsFavorite
-  } = useBoolean(false);
+  } = useBoolean(isFavoriteProject || false);
 
   const {
     value: isProjectModalOpen,
@@ -22,10 +34,17 @@ const useProjectCreate = () => {
     toggle: toggleIsProjectModalOpen
   } = useBoolean(false);
 
-  const resetProjectCreateValues = () => {
+  const resetProjectSetupValues = () => {
     setProjectValue("");
     setProjectColor("#000");
     setIsFavoriteFalse();
+    setIsProjectModalOpenFalse();
+  };
+
+  const setProjectValuesAsTheyWere = () => {
+    setProjectValue(name);
+    setProjectColor(color as string);
+    setIsFavoritesValue(isFavoriteProject as boolean);
     setIsProjectModalOpenFalse();
   };
 
@@ -40,12 +59,23 @@ const useProjectCreate = () => {
   const setProjectConfirm = (e: any) => {
     e.preventDefault();
 
-    projectsStore.addProject(projectValue, projectColor, isFavorite);
-    resetProjectCreateValues();
+    if (isEditMode) {
+      projectsStore.editProject(id, projectValue, projectColor, isFavorite);
+
+      setIsProjectModalOpenFalse();
+    } else {
+      projectsStore.addProject(projectValue, projectColor, isFavorite);
+
+      resetProjectSetupValues();
+    }
   };
 
   const setProjectCancel = () => {
-    resetProjectCreateValues();
+    if (isEditMode) {
+      setProjectValuesAsTheyWere();
+    } else {
+      resetProjectSetupValues();
+    }
   };
 
   return {
@@ -64,4 +94,4 @@ const useProjectCreate = () => {
   };
 };
 
-export default useProjectCreate;
+export default useProjectSetup;

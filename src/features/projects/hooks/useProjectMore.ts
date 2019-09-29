@@ -22,9 +22,15 @@ const useProjectMore = ({ project, setIsMoreOpenToggle }: UseProjectMore) => {
     setIsMoreOpenToggle();
   };
 
+  const editProjectModalHandler = (toggleModal: () => void) => {
+    setIsMoreOpenToggle();
+    toggleModal();
+  };
+
   return {
     setProjectFavoriteStatusToFalse,
-    setProjectFavoriteStatusToTrue
+    setProjectFavoriteStatusToTrue,
+    editProjectModalHandler
   };
 };
 

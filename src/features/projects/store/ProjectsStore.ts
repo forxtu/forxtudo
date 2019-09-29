@@ -123,6 +123,25 @@ class ProjectsStore implements IProjectsStore {
   };
 
   @action
+  editProject = (
+    projectId: string,
+    projectValue: string,
+    projectColor: string,
+    isFavorite: boolean
+  ) => {
+    db.collection("projects")
+      .doc(projectId)
+      .update({
+        name: projectValue,
+        color: projectColor,
+        isFavorite
+      })
+      .then(() => {
+        this.fetchAllProjects();
+      });
+  };
+
+  @action
   setProjectFavoriteStatus = (projectId: string, isFavorite: boolean) => {
     db.collection("projects")
       .doc(projectId)

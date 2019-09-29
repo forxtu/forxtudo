@@ -1,11 +1,14 @@
 import React from "react";
-import { Modal, Icon, Typography } from "antd";
+import { Modal, Typography } from "antd";
 
 // hooks
 import useProjectMore from "features/projects/hooks/useProjectMore";
 
 // utils
 import { Project } from "features/projects/store/ProjectsStore";
+
+// components
+import ProjectSetup from "features/projects/components/ProjectSetup";
 
 // styles
 import {
@@ -33,7 +36,8 @@ const ProjectItemMorePopover = ({
 }: ProjectItemMorePopover) => {
   const {
     setProjectFavoriteStatusToFalse,
-    setProjectFavoriteStatusToTrue
+    setProjectFavoriteStatusToTrue,
+    editProjectModalHandler
   } = useProjectMore({ project, setIsMoreOpenToggle });
 
   const showDeleteConfirm = () => {
@@ -60,6 +64,20 @@ const ProjectItemMorePopover = ({
         </MoreItemBtn>
       ) : (
         <>
+          <ProjectSetup
+            isEditMode
+            project={project}
+            btnComponent={(toggleIsProjectModalOpen: () => void) => (
+              <MoreItemBtn
+                onClick={() =>
+                  editProjectModalHandler(toggleIsProjectModalOpen)
+                }
+              >
+                <MoreItemIcon type="edit" />
+                <Text>Edit project</Text>
+              </MoreItemBtn>
+            )}
+          />
           {!project.isFavorite ? (
             <MoreItemBtn onClick={setProjectFavoriteStatusToTrue}>
               <MoreItemIcon type="heart" />

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Icon } from "antd";
+import { Icon, Button } from "antd";
 import { withRouter } from "react-router-dom";
 import { observer } from "mobx-react";
 
@@ -11,7 +11,7 @@ import { Project } from "features/projects/store/ProjectsStore";
 
 // components
 import ProjectItem from "features/projects/components/ProjectItem";
-import ProjectCreate from "features/projects/components/ProjectCreate";
+import ProjectSetup from "features/projects/components/ProjectSetup";
 
 // styles
 import * as S from "features/projects/styles/projectsStyles";
@@ -63,7 +63,23 @@ const Projects = observer(({ history, globalProjectId }: any) => {
               deleteProjectHandler={deleteProjectHandler}
             />
           ))}
-          <ProjectCreate />
+          <ProjectSetup
+            btnComponent={(toggleIsProjectModalOpen: () => void) => (
+              <S.StyledListItem>
+                <S.AddProjectWrapper>
+                  <Button
+                    onClick={toggleIsProjectModalOpen}
+                    type="primary"
+                    icon="plus"
+                    size="default"
+                    shape="round"
+                  >
+                    Add project
+                  </Button>
+                </S.AddProjectWrapper>
+              </S.StyledListItem>
+            )}
+          />
         </S.ProjectsSubMenu>
       </S.ProjectsMenu>
     </>

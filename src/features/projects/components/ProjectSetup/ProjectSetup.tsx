@@ -1,8 +1,11 @@
 import React from "react";
-import { Button, Modal, Select, Switch } from "antd";
+import { Modal, Select, Switch } from "antd";
 
 // hooks
-import useProjectCreate from "features/projects/hooks/useProjectCreate";
+import useProjectSetup from "features/projects/hooks/useProjectSetup";
+
+// utils
+import { Project } from "features/projects/store/ProjectsStore";
 
 // components
 import ColorBadge from "components/elements/ColorBadge";
@@ -12,7 +15,17 @@ import * as S from "features/projects/styles/projectsStyles";
 
 const { Option } = Select;
 
-const ProjectCreate = () => {
+type ProjectSetupProps = {
+  btnComponent: any;
+  project?: Project;
+  isEditMode?: boolean;
+};
+
+const ProjectSetup = ({
+  isEditMode = false,
+  btnComponent,
+  project = {} as any
+}: ProjectSetupProps) => {
   const {
     projectValue,
     isProjectModalOpen,
@@ -25,12 +38,12 @@ const ProjectCreate = () => {
     setProjectColorHandler,
     isFavorite,
     toggleIsFavorite
-  } = useProjectCreate();
+  } = useProjectSetup({ project, isEditMode });
 
   return (
-    <S.StyledListItem>
+    <>
       <Modal
-        title="Add Project"
+        title={isEditMode ? "Edit Project" : "Add Project"}
         visible={isProjectModalOpen}
         onOk={setProjectConfirm}
         onCancel={setProjectCancel}
@@ -41,7 +54,7 @@ const ProjectCreate = () => {
           value={projectValue}
         />
         <Select
-          defaultValue={projectColors[0].hash}
+          defaultValue={isEditMode ? project.color : projectColors[0].hash}
           style={{ width: "100%" }}
           value={projectColor}
           onChange={setProjectColorHandler}
@@ -56,23 +69,17 @@ const ProjectCreate = () => {
           })}
         </Select>
         <S.FavoriteToggler>
-          <Switch onChange={toggleIsFavorite} checked={isFavorite} />
+          <Switch
+            onChange={toggleIsFavorite}
+            checked={isFavorite}
+            defaultChecked={isEditMode ? project.isFavorite : isFavorite}
+          />
           <S.FavoriteTogglerText>Add to favorite</S.FavoriteTogglerText>
         </S.FavoriteToggler>
       </Modal>
-      <S.AddProjectWrapper>
-        <Button
-          onClick={toggleIsProjectModalOpen}
-          type="primary"
-          icon="plus"
-          size="default"
-          shape="round"
-        >
-          Add project
-        </Button>
-      </S.AddProjectWrapper>
-    </S.StyledListItem>
+      {btnComponent(toggleIsProjectModalOpen)}
+    </>
   );
 };
 
-export default ProjectCreate;
+export default ProjectSetup;
