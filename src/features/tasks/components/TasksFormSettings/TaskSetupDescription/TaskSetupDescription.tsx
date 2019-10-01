@@ -15,7 +15,7 @@ const TaskSetupDescription = ({ taskSettings }: TaskSetupDescription) => {
     onTaskDescriptionCancelHandler,
     onTaskDescriptionConfirmHandler,
     setTaskDescriptionHandler
-  } = taskSettings;
+  } = taskSettings.taskDescriptionSetup;
 
   return (
     <>

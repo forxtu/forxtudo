@@ -3,7 +3,7 @@ import { useState } from "react";
 // hooks
 import useBoolean from "hooks/useBoolean";
 
-const useTaskSetupDescription = () => {
+const useTaskSetupDescriptionSetup = () => {
   const [taskDescription, setTaskDescription] = useState("");
 
   const {
@@ -37,4 +37,4 @@ const useTaskSetupDescription = () => {
   };
 };
 
-export default useTaskSetupDescription;
+export default useTaskSetupDescriptionSetup;

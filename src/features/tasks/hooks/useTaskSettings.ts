@@ -1,31 +1,28 @@
-import { useState } from "react";
-
 // hooks
 import useStores from "hooks/useStores";
-import useBoolean from "hooks/useBoolean";
-import useTaskDescription from "features/tasks/hooks/useTaskDescription";
+import useTaskDateSetup from "features/tasks/hooks/useTaskDateSetup";
+import useTaskProjectSetup from "features/tasks/hooks/useTaskProjectSetup";
+import useTaskDescriptionSetup from "features/tasks/hooks/useTaskDescriptionSetup";
+import useTaskPrioritySetup from "features/tasks/hooks/useTaskPrioritySetup";
 
 const useTaskSettings = () => {
   const { projectsStore } = useStores();
-  const [newProjectId, setNewProjectId] = useState("inbox");
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedDateObject, setSelectedDateObject] = useState(null);
 
-  const {
-    taskDescription,
-    setTaskDescription,
-    isTaskSetupDescriptionOpen,
-    toggleIsTaskSetupDescriptionOpen,
-    onTaskDescriptionCancelHandler,
-    onTaskDescriptionConfirmHandler,
-    setTaskDescriptionHandler
-  } = useTaskDescription();
+  // Date setup
+  const taskDateSetup = useTaskDateSetup();
+  const { setSelectedDate, setSelectedDateObject } = taskDateSetup;
 
-  const {
-    value: isTaskSetupProjectOpen,
-    setFalse: seIsTaskSetupProjectOpenFalse,
-    toggle: toggleIsTaskSetupProjectOpen
-  } = useBoolean(false);
+  // Project setup
+  const taskProjectSetup = useTaskProjectSetup();
+  const { setNewProjectId, seIsTaskSetupProjectOpenFalse } = taskProjectSetup;
+
+  // Description setup
+  const taskDescriptionSetup = useTaskDescriptionSetup();
+  const { setTaskDescription } = taskDescriptionSetup;
+
+  // Priority setup
+  const taskPrioritiesSetup = useTaskPrioritySetup();
+  const { setTaskPriority } = taskPrioritiesSetup;
 
   const resetTaskSetup = () => {
     seIsTaskSetupProjectOpenFalse();
@@ -33,39 +30,16 @@ const useTaskSettings = () => {
     setTaskDescription("");
     setSelectedDate("");
     setSelectedDateObject(null);
-  };
-
-  const onTaskSetupProjectConfirmHandler = () => {
-    seIsTaskSetupProjectOpenFalse();
-    setNewProjectId(newProjectId);
-  };
-
-  const setProjectHandler = (value: string) => {
-    setNewProjectId(value);
-  };
-
-  const setDateHandler = (dateObject: any, date: string) => {
-    setSelectedDate(date);
-    setSelectedDateObject(dateObject);
+    setTaskPriority(0);
   };
 
   return {
     allProjects: projectsStore.allProjects,
-    setProjectHandler,
-    newProjectId,
-    isTaskSetupProjectOpen,
-    toggleIsTaskSetupProjectOpen,
     resetTaskSetup,
-    onTaskSetupProjectConfirmHandler,
-    selectedDate,
-    selectedDateObject,
-    setDateHandler,
-    taskDescription,
-    isTaskSetupDescriptionOpen,
-    toggleIsTaskSetupDescriptionOpen,
-    onTaskDescriptionCancelHandler,
-    onTaskDescriptionConfirmHandler,
-    setTaskDescriptionHandler
+    taskDateSetup,
+    taskProjectSetup,
+    taskDescriptionSetup,
+    taskPrioritiesSetup
   };
 };
 

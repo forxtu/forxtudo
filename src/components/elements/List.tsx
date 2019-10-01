@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { List, Icon } from "antd";
 
+// styles
+import { flexRowSpaceBetween } from "styles/utils";
+
 const { Item } = List;
 
 const MoreItemIcon = styled(Icon)``;
@@ -20,8 +23,11 @@ const MoreWrapper = styled(List)`
   }
 
   ${MoreItemBtn} {
+    ${flexRowSpaceBetween};
+
     cursor: pointer;
     padding: 12px;
+    min-width: 200px;
 
     &:hover {
       background: rgba(0, 0, 0, 0.03);

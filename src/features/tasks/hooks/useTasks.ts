@@ -10,6 +10,7 @@ export type AddTaskArgs = {
   projectId: string;
   date?: string;
   description?: string;
+  priority?: number;
 };
 
 type UseTasks = {
@@ -21,19 +22,26 @@ const useTasks = ({ projectId }: UseTasks) => {
 
   const [taskValue, setTaskValue] = useState("");
 
-  const addTaskHandler = ({ projectId, date, description }: AddTaskArgs) => {
+  const addTaskHandler = ({
+    projectId,
+    date,
+    description,
+    priority
+  }: AddTaskArgs) => {
     projectId
       ? tasksStore.addTask({
           taskValue,
           projectId,
           date,
-          description
+          description,
+          priority
         })
       : tasksStore.addTask({
           taskValue,
           projectId,
           date,
-          description
+          description,
+          priority
         });
 
     setTaskValue("");

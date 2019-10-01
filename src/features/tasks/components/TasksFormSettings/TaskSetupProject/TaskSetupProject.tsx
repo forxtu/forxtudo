@@ -24,7 +24,7 @@ const TaskSetupProject = ({ taskSettings, allProjects }: TaskSetupProject) => {
     setProjectHandler,
     toggleIsTaskSetupProjectOpen,
     isTaskSetupProjectOpen
-  } = taskSettings;
+  } = taskSettings.taskProjectSetup;
 
   return (
     <Tooltip placement="bottom" title="Select a project">

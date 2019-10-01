@@ -36,21 +36,23 @@ const TasksForm = ({
 
   const taskSettings = useTaskSettings();
 
+  const { resetTaskSetup } = taskSettings;
+
   const {
-    newProjectId,
-    resetTaskSetup,
-    taskDescription,
-    onTaskSetupProjectConfirmHandler,
     selectedDate,
     selectedDateObject,
     setDateHandler
-  } = taskSettings;
+  } = taskSettings.taskDateSetup;
+  const { newProjectId } = taskSettings.taskProjectSetup;
+  const { taskPriority } = taskSettings.taskPrioritiesSetup;
+  const { taskDescription } = taskSettings.taskDescriptionSetup;
 
   const onAddTaskHandler = () => {
     addTask({
       projectId: newProjectId,
       date: selectedDate,
-      description: taskDescription
+      description: taskDescription,
+      priority: taskPriority
     });
     resetTaskSetup();
     resetTaskValue();
@@ -87,8 +89,6 @@ const TasksForm = ({
               <Button onClick={onCancelAddTaskHandler}>Cancel</Button>
             </S.ControlsButtons>
             <TasksFormSettings
-              onTaskSetupProjectConfirm={onTaskSetupProjectConfirmHandler}
-              newProjectId={newProjectId}
               globalSelectedProjectId={globalSelectedProjectId}
               taskSettings={taskSettings}
             />
