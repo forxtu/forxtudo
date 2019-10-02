@@ -6,6 +6,7 @@ import { lowerCase } from "lodash";
 import useTaskMore from "features/tasks/hooks/useTaskMore";
 import useTaskItem from "features/tasks/hooks/useTaskItem";
 import useProjects from "features/projects/hooks/useProjects";
+import useTaskPrioritySetup from "features/tasks/hooks/useTaskPrioritySetup";
 
 // utils
 import { Task } from "features/tasks/store/TasksStore";
@@ -57,6 +58,7 @@ const TasksListItem = ({
   } = useTaskItem({ task, editTaskName });
 
   const { allProjects } = useProjects();
+  const { priorities } = useTaskPrioritySetup();
 
   const popoverRef = useRef();
 
@@ -74,7 +76,11 @@ const TasksListItem = ({
               type="check-square"
             />
           ) : (
-            <S.StyledIcon onClick={() => completeTask(task)} type="border" />
+            <S.StyledIcon
+              style={{ color: priorities[task.priority].color }}
+              onClick={() => completeTask(task)}
+              type="border"
+            />
           )}
           <S.StyledMentions
             style={{ width: "100%" }}

@@ -7,6 +7,11 @@ import { Task } from "features/tasks/store/TasksStore";
 import { TaskItemContext } from "features/tasks/components/TasksListItem";
 
 // styles
+import {
+  MoreItemIconsWrapper,
+  MoreItem,
+  MoreItemIcon
+} from "components/elements/List";
 import * as S from "features/tasks/styles/tasksStyles";
 
 const { Paragraph } = Typography;
@@ -26,11 +31,11 @@ const TaskItemMoreSchedule = ({
 }: TaskItemMoreScheduleProps) => {
   const { setIsMoreOpenFalse } = useContext(TaskItemContext);
   return (
-    <S.MoreListItem>
+    <MoreItem>
       <Paragraph strong>Schedule</Paragraph>
-      <S.ScheduleControls>
+      <MoreItemIconsWrapper>
         <Tooltip title="Today" placement="top">
-          <S.MoreListItemIcon
+          <MoreItemIcon
             type="fire"
             onClick={() => {
               onDateSelect(task, moment());
@@ -39,7 +44,7 @@ const TaskItemMoreSchedule = ({
           />
         </Tooltip>
         <Tooltip title="Tomorrow" placement="top">
-          <S.MoreListItemIcon
+          <MoreItemIcon
             type="reload"
             onClick={() => {
               onDateSelect(
@@ -53,7 +58,7 @@ const TaskItemMoreSchedule = ({
           />
         </Tooltip>
         <Tooltip title="Next week" placement="top">
-          <S.MoreListItemIcon
+          <MoreItemIcon
             type="calendar"
             onClick={() => {
               onDateSelect(
@@ -79,11 +84,11 @@ const TaskItemMoreSchedule = ({
           onVisibleChange={toggleIsScheduleMoreOpen}
         >
           <Tooltip title="More" placement="top">
-            <Icon type="ellipsis" />
+            <MoreItemIcon type="ellipsis" style={{ fontSize: "24px" }} />
           </Tooltip>
         </Popover>
-      </S.ScheduleControls>
-    </S.MoreListItem>
+      </MoreItemIconsWrapper>
+    </MoreItem>
   );
 };
 

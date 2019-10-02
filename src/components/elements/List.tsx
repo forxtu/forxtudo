@@ -6,6 +6,7 @@ import { flexRowSpaceBetween } from "styles/utils";
 
 const { Item } = List;
 
+const MoreItemIconsWrapper = styled.div``;
 const MoreItemIcon = styled(Icon)``;
 const MoreItemBtn = styled(Item)``;
 const MoreItem = styled(Item)``;
@@ -20,6 +21,11 @@ const MoreWrapper = styled(List)`
       padding-right: 5px;
       font-size: 16px;
     }
+  }
+
+  ${MoreItemIconsWrapper} {
+    ${flexRowSpaceBetween};
+    align-items: center;
   }
 
   ${MoreItemBtn} {
@@ -39,4 +45,10 @@ const MoreWrapper = styled(List)`
   }
 `;
 
-export { MoreWrapper, MoreItem, MoreItemBtn, MoreItemIcon };
+export {
+  MoreWrapper,
+  MoreItem,
+  MoreItemBtn,
+  MoreItemIcon,
+  MoreItemIconsWrapper
+};

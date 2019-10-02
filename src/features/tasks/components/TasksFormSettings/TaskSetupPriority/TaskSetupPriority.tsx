@@ -19,18 +19,12 @@ type TaskSetupPriority = {
 
 const TaskSetupPriority = ({ taskSettings }: TaskSetupPriority) => {
   const {
+    priorities,
     taskPriority,
     isTaskSetupPriorityOpen,
     toggleIsTaskSetupPriorityOpen,
     setTaskPriorityHandler
   } = taskSettings.taskPrioritiesSetup;
-
-  const priorities = [
-    { name: "High", level: 3, color: "red" },
-    { name: "Medium", level: 2, color: "orange" },
-    { name: "Low", level: 1, color: "blue" },
-    { name: "None", level: 0, color: "gray" }
-  ];
 
   return (
     <Tooltip placement="bottom" title="Priority">

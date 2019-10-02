@@ -13,7 +13,7 @@ import ProjectSetup from "features/projects/components/ProjectSetup";
 // styles
 import {
   MoreWrapper,
-  MoreItem,
+  MoreItemIconsWrapper,
   MoreItemBtn,
   MoreItemIcon
 } from "components/elements/List";
@@ -59,8 +59,10 @@ const ProjectItemMorePopover = ({
     <MoreWrapper>
       {isFavorite ? (
         <MoreItemBtn onClick={setProjectFavoriteStatusToFalse}>
-          <MoreItemIcon type="eye-invisible" />
-          <Text>Remove from favorites</Text>
+          <MoreItemIconsWrapper>
+            <MoreItemIcon type="eye-invisible" />
+            <Text>Remove from favorites</Text>
+          </MoreItemIconsWrapper>
         </MoreItemBtn>
       ) : (
         <>
@@ -73,20 +75,26 @@ const ProjectItemMorePopover = ({
                   editProjectModalHandler(toggleIsProjectModalOpen)
                 }
               >
-                <MoreItemIcon type="edit" />
-                <Text>Edit project</Text>
+                <MoreItemIconsWrapper>
+                  <MoreItemIcon type="edit" />
+                  <Text>Edit project</Text>
+                </MoreItemIconsWrapper>
               </MoreItemBtn>
             )}
           />
           {!project.isFavorite ? (
             <MoreItemBtn onClick={setProjectFavoriteStatusToTrue}>
-              <MoreItemIcon type="heart" />
-              <Text>Add to favorites</Text>
+              <MoreItemIconsWrapper>
+                <MoreItemIcon type="heart" />
+                <Text>Add to favorites</Text>
+              </MoreItemIconsWrapper>
             </MoreItemBtn>
           ) : null}
           <MoreItemBtn onClick={showDeleteConfirm}>
-            <MoreItemIcon type="delete" style={{ color: "red" }} />
-            <Text type="danger">Delete project</Text>
+            <MoreItemIconsWrapper>
+              <MoreItemIcon type="delete" style={{ color: "red" }} />
+              <Text type="danger">Delete project</Text>
+            </MoreItemIconsWrapper>
           </MoreItemBtn>
         </>
       )}

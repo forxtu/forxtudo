@@ -179,6 +179,17 @@ class TasksStore implements ITasksStore {
   };
 
   @action
+  updateTaskPriority = (task: Task, priority: number) => {
+    db.collection("tasks")
+      .doc(task.id)
+      .update({
+        priority
+      });
+
+    this.fetchAllTasks();
+  };
+
+  @action
   editTaskDescription = (task: Task, description: string) => {
     db.collection("tasks")
       .doc(task.id)

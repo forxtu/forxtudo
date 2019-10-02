@@ -25,6 +25,10 @@ const useTaskMoreActions = () => {
     tasksStore.moveTaskToProject(task, projectId);
   };
 
+  const updateTaskPriorityHandler = (task: Task, priority: number) => {
+    tasksStore.updateTaskPriority(task, priority);
+  };
+
   function onDateSelectHandler(task: Task, newDate: any) {
     const date = moment(newDate).format("YYYY-MM-DD");
 
@@ -40,7 +44,8 @@ const useTaskMoreActions = () => {
     moveTaskToProjectHandler,
     isScheduleMoreOpen,
     toggleIsScheduleMoreOpen,
-    onDateSelectHandler
+    onDateSelectHandler,
+    updateTaskPriorityHandler
   };
 };
 
