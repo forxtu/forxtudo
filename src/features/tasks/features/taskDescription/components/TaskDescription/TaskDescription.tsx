@@ -1,11 +1,13 @@
 import React from "react";
-import { Result, Icon, Input } from "antd";
+import { Result, Icon } from "antd";
 import { isNil } from "lodash";
 
 // hooks
 import useTaskDescription from "features/tasks/features/taskDescription/hooks/useTaskDescription";
 
-const { TextArea } = Input;
+// components
+import TaskDescriptionHeader from "features/tasks/features/taskDescription/components/TaskDescriptionHeader";
+import TaskDescriptionArea from "features/tasks/features/taskDescription/components/TaskDescriptionArea";
 
 const TaskDescription = () => {
   const {
@@ -24,14 +26,8 @@ const TaskDescription = () => {
         />
       ) : (
         <>
-          <h1>{selectedTask.task}</h1>
-          <TextArea
-            onBlur={(e: any) => editTaskDescriptionHandler(e, selectedTask)}
-            value={taskTempDescription}
-            onChange={(e: any) => setTaskTempDescription(e.target.value)}
-            placeholder="Task description..."
-            autosize
-          />
+          <TaskDescriptionHeader selectedTask={selectedTask} />
+          <TaskDescriptionArea />
         </>
       )}
     </div>
