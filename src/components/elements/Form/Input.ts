@@ -8,6 +8,7 @@ const StyledTextArea = styled(TextArea)`
   background: transparent;
   box-shadow: none;
   resize: none;
+  padding: 0;
 
   &:focus {
     box-shadow: none;
