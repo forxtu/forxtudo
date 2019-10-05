@@ -5,6 +5,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import Home from "components/pages/Home";
 import TodayPage from "components/pages/TodayPage";
 import ProjectPage from "components/pages/ProjectPage";
+import LabelPage from "components/pages/LabelPage";
 import NotFoundPage from "components/pages/NotFoundPage";
 import Auth from "features/auth/components";
 
@@ -18,6 +19,11 @@ const routes = [
     path: "/project/:id",
     exact: true,
     component: ProjectPage
+  },
+  {
+    path: "/label/:id",
+    exact: true,
+    component: LabelPage
   },
   {
     path: "/today",
