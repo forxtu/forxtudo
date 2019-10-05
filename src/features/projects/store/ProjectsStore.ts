@@ -92,6 +92,8 @@ class ProjectsStore implements IProjectsStore {
       ...this.allProjects,
       {
         name: projectValue,
+        color: projectColor,
+        isFavorite,
         userId: this.rootStore.user
       }
     ] as Project[];

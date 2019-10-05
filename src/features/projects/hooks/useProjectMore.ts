@@ -12,6 +12,11 @@ type UseProjectMore = {
 const useProjectMore = ({ project, setIsMoreOpenToggle }: UseProjectMore) => {
   const { projectsStore } = useStores();
 
+  const editProjectModalHandler = (toggleModal: () => void) => {
+    setIsMoreOpenToggle();
+    toggleModal();
+  };
+
   const setProjectFavoriteStatusToFalse = () => {
     projectsStore.setProjectFavoriteStatus(project.id, false);
     setIsMoreOpenToggle();
@@ -22,15 +27,15 @@ const useProjectMore = ({ project, setIsMoreOpenToggle }: UseProjectMore) => {
     setIsMoreOpenToggle();
   };
 
-  const editProjectModalHandler = (toggleModal: () => void) => {
-    setIsMoreOpenToggle();
-    toggleModal();
+  const deleteProjectHandler = (projectId: string) => {
+    projectsStore.deleteProject(projectId);
   };
 
   return {
     setProjectFavoriteStatusToFalse,
     setProjectFavoriteStatusToTrue,
-    editProjectModalHandler
+    editProjectModalHandler,
+    deleteProjectHandler
   };
 };
 

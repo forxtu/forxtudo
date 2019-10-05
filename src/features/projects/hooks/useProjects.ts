@@ -7,10 +7,6 @@ import useStores from "hooks/useStores";
 const useProjects = () => {
   const { projectsStore } = useStores();
 
-  const deleteProjectHandler = (projectId: string) => {
-    projectsStore.deleteProject(projectId);
-  };
-
   const setSelectedProjectId = (projectId: string) => {
     projectsStore.selectedProjectId = projectId;
   };
@@ -25,7 +21,6 @@ const useProjects = () => {
     defaultProjects: projectsStore.defaultProjects,
     customProjects: projectsStore.customProjects,
     allProjects: projectsStore.allProjects,
-    deleteProjectHandler,
     setSelectedProjectId
   };
 };

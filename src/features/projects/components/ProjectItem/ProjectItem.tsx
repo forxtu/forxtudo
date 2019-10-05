@@ -18,17 +18,11 @@ import * as S from "features/projects/styles/projectsStyles";
 type ProjectProps = {
   project: Project;
   history: any;
-  deleteProjectHandler?: any;
   isFavorite?: boolean;
 };
 
 const ProjectItem = observer(
-  ({
-    project,
-    history,
-    deleteProjectHandler,
-    isFavorite = false
-  }: ProjectProps) => {
+  ({ project, history, isFavorite = false }: ProjectProps) => {
     const {
       isMoreVisible,
       setIsMoreVisibleTrue,
@@ -65,7 +59,6 @@ const ProjectItem = observer(
               isMoreOpen={isMoreOpen}
               setIsMoreOpenToggle={setIsMoreOpenToggle}
               project={project}
-              deleteProject={deleteProjectHandler}
               isFavorite={isFavorite}
             />
           ) : null}

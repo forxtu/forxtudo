@@ -14,14 +14,12 @@ type ProjectItemMore = {
   project: Project;
   isMoreOpen: boolean;
   isFavorite?: boolean;
-  deleteProject: (project: Project) => void;
   setIsMoreOpenToggle: () => void;
 };
 
 const ProjectItemMore = ({
   project,
   isMoreOpen,
-  deleteProject,
   setIsMoreOpenToggle,
   isFavorite
 }: ProjectItemMore) => {
@@ -33,7 +31,6 @@ const ProjectItemMore = ({
           <ProjectItemMorePopover
             isFavorite={isFavorite}
             project={project}
-            deleteProject={deleteProject}
             setIsMoreOpenToggle={setIsMoreOpenToggle}
           />
         }

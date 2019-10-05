@@ -24,20 +24,19 @@ const { Text } = Typography;
 type ProjectItemMorePopover = {
   project: Project;
   isFavorite?: boolean;
-  deleteProject: (project: Project) => void;
   setIsMoreOpenToggle: () => void;
 };
 
 const ProjectItemMorePopover = ({
   project,
   isFavorite,
-  deleteProject,
   setIsMoreOpenToggle
 }: ProjectItemMorePopover) => {
   const {
     setProjectFavoriteStatusToFalse,
     setProjectFavoriteStatusToTrue,
-    editProjectModalHandler
+    editProjectModalHandler,
+    deleteProjectHandler
   } = useProjectMore({ project, setIsMoreOpenToggle });
 
   const showDeleteConfirm = () => {
@@ -49,7 +48,7 @@ const ProjectItemMorePopover = ({
       okType: "danger",
       cancelText: "Cancel",
       onOk() {
-        deleteProject(project);
+        deleteProjectHandler(project.id as string);
       },
       onCancel() {}
     });
