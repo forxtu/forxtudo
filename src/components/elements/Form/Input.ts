@@ -3,6 +3,10 @@ import { Input } from "antd";
 
 const { TextArea } = Input;
 
+const StyledInput = styled(Input)`
+  margin-bottom: 12px;
+`;
+
 const StyledTextArea = styled(TextArea)`
   border: none;
   background: transparent;
@@ -15,4 +19,4 @@ const StyledTextArea = styled(TextArea)`
   }
 `;
 
-export { StyledTextArea };
+export { StyledInput, StyledTextArea };

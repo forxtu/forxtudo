@@ -9,36 +9,31 @@ import Sidebar from "components/blocks/Sidebar";
 // styles
 import { H2 } from "components/elements/Text";
 
-type ProjectPage = {
+type LabelPage = {
   match: any;
   location: {
     state: {
-      project: string;
+      label: string;
     };
   };
 };
 
-const ProjectPage = ({
+const LabelPage = ({
   match,
   location: {
-    state: { project }
+    state: { label }
   }
-}: ProjectPage) => {
-  const parsedProjectData = JSON.parse(project);
+}: LabelPage) => {
+  const parsedLabelProjectData = JSON.parse(label);
 
   return (
     <MainLayout
       sidebarContent={<Sidebar paramsId={match.params.id} />}
       taskDescriptionContent={<TaskDescription />}
     >
-      <H2>{parsedProjectData.name}</H2>
-      <Tasks
-        projectId={
-          parsedProjectData.name === "Inbox" ? "inbox" : match.params.id
-        }
-      />
+      <H2>{parsedLabelProjectData.name}</H2>
     </MainLayout>
   );
 };
 
-export default ProjectPage;
+export default LabelPage;

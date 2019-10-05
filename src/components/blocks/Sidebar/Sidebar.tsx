@@ -1,11 +1,20 @@
-import React from 'react'
+import React from "react";
 
-const Sidebar = () => {
+// components
+import Projects from "features/projects/components/Projects";
+import Labels from "features/labels/components/Labels";
+
+type Sidebar = {
+  paramsId: string;
+};
+
+const Sidebar = ({ paramsId }: Sidebar) => {
   return (
-    <div>
-      <h1>Sidebar</h1>
-    </div>
-  )
-}
+    <>
+      <Projects globalProjectId={paramsId} />
+      <Labels />
+    </>
+  );
+};
 
-export default Sidebar
+export default Sidebar;

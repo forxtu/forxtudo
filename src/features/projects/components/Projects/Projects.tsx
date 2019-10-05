@@ -5,12 +5,15 @@ import { observer } from "mobx-react";
 
 // hooks
 import useProjects from "features/projects/hooks/useProjects";
+import useLabels from "features/labels/hooks/useLabels";
 
 // utils
 import { Project } from "features/projects/store/ProjectsStore";
+import { Label } from "features/labels/store/LabelsStore";
 
 // components
 import ProjectItem from "features/projects/components/ProjectItem";
+import LabelItem from "features/labels/components/LabelItem";
 import ProjectSetup from "features/projects/components/ProjectSetup";
 
 // styles
@@ -20,9 +23,10 @@ const Projects = observer(({ history, globalProjectId }: any) => {
   const {
     defaultProjects,
     customProjects,
-    deleteProjectHandler,
     setSelectedProjectId
   } = useProjects();
+
+  const { allLabels } = useLabels();
 
   useEffect(() => {
     setSelectedProjectId(globalProjectId);
@@ -42,6 +46,15 @@ const Projects = observer(({ history, globalProjectId }: any) => {
           />
         ) : null;
       })}
+      {allLabels.map((favoriteLabel: Label) => {
+        return favoriteLabel.isFavorite ? (
+          <LabelItem
+            isFavorite={favoriteLabel.isFavorite}
+            label={favoriteLabel}
+            history={history}
+          />
+        ) : null;
+      })}
       <S.ProjectsMenu
         mode="inline"
         defaultSelectedKeys={["1"]}
@@ -57,11 +70,7 @@ const Projects = observer(({ history, globalProjectId }: any) => {
           }
         >
           {customProjects.map((project: Project) => (
-            <ProjectItem
-              project={project}
-              history={history}
-              deleteProjectHandler={deleteProjectHandler}
-            />
+            <ProjectItem project={project} history={history} />
           ))}
           <ProjectSetup
             btnComponent={(toggleIsProjectModalOpen: () => void) => (
