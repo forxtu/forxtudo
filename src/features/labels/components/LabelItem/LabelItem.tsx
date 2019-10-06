@@ -49,7 +49,7 @@ const LabelItem = observer(
         >
           <S.SidebarItemTitle>
             <S.SidebarItemTitleIcon type="tag" style={{ color: label.color }} />
-            <S.SidebarItemTitleText>{label.name}</S.SidebarItemTitleText>
+            <S.SidebarItemTitleText>{label.label}</S.SidebarItemTitleText>
           </S.SidebarItemTitle>
           {isMoreVisible ? (
             <LabelItemMore

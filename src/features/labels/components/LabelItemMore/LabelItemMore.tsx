@@ -34,7 +34,7 @@ const LabelItemMore = ({
             setIsMoreOpenToggle={setIsMoreOpenToggle}
           />
         }
-        title={label.name}
+        title={label.label}
         trigger="click"
         visible={isMoreOpen}
         onVisibleChange={setIsMoreOpenToggle}

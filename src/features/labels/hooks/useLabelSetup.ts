@@ -13,12 +13,12 @@ type UseLabelSetup = {
 };
 
 const useLabelSetup = ({
-  label: { name, color, id, isFavorite: isFavoriteLabel },
+  label: { label, color, id, isFavorite: isFavoriteLabel },
   isEditMode
 }: UseLabelSetup) => {
   const { labelsStore } = useStores();
 
-  const [labelValue, setLabelValue] = useState<string>(name || "");
+  const [labelValue, setLabelValue] = useState<string>(label || "");
   const [labelColor, setLabelColor] = useState<string>(color || "#000");
 
   const {
@@ -42,7 +42,7 @@ const useLabelSetup = ({
   };
 
   const setLabelValuesAsTheyWere = () => {
-    setLabelValue(name);
+    setLabelValue(label);
     setLabelColor(color as string);
     setIsFavoritesValue(isFavoriteLabel as boolean);
     setIsLabelModalOpenFalse();

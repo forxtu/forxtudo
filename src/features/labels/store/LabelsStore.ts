@@ -10,7 +10,8 @@ type LabelColor = {
 };
 
 export type Label = {
-  name: string;
+  label: string;
+  value: string;
   color: string;
   isFavorite?: boolean;
   id?: string;
@@ -49,7 +50,8 @@ class LabelsStore implements LabelsStoreProps {
     this.allLabels = [
       ...this.allLabels,
       {
-        name: labelValue,
+        label: labelValue,
+        value: labelValue,
         color: labelColor,
         isFavorite,
         userId: this.rootStore.user
@@ -57,7 +59,8 @@ class LabelsStore implements LabelsStoreProps {
     ] as Label[];
 
     db.collection("labels").add({
-      name: labelValue,
+      label: labelValue,
+      value: labelValue,
       color: labelColor,
       isFavorite,
       userId: this.rootStore.user
@@ -91,7 +94,8 @@ class LabelsStore implements LabelsStoreProps {
     db.collection("labels")
       .doc(labelId)
       .update({
-        name: labelValue,
+        label: labelValue,
+        value: labelValue,
         color: labelColor,
         isFavorite
       })

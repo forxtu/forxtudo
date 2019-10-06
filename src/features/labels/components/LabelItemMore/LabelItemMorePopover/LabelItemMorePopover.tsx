@@ -42,7 +42,7 @@ const LabelItemMorePopover = ({
   const showDeleteConfirm = () => {
     setIsMoreOpenToggle();
     confirm({
-      title: `${label.name}`,
+      title: `${label.label}`,
       content: "Are you sure you want to delete this label?",
       okText: "Delete",
       okType: "danger",
