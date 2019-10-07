@@ -31,7 +31,7 @@ const LabelPage = ({
       sidebarContent={<Sidebar paramsId={match.params.id} />}
       taskDescriptionContent={<TaskDescription />}
     >
-      <H2>{parsedLabelProjectData.name}</H2>
+      <H2>{parsedLabelProjectData.label}</H2>
     </MainLayout>
   );
 };
