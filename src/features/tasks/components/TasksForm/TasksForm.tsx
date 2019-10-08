@@ -46,13 +46,15 @@ const TasksForm = ({
   const { newProjectId } = taskSettings.taskProjectSetup;
   const { taskPriority } = taskSettings.taskPrioritiesSetup;
   const { taskDescription } = taskSettings.taskDescriptionSetup;
+  const { taskLabels } = taskSettings.taskLabelsSetup;
 
   const onAddTaskHandler = () => {
     addTask({
       projectId: newProjectId,
       date: selectedDate,
       description: taskDescription,
-      priority: taskPriority
+      priority: taskPriority,
+      labels: taskLabels
     });
     resetTaskSetup();
     resetTaskValue();

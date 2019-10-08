@@ -5,6 +5,7 @@ import useTaskSettings from "features/tasks/hooks/useTaskSettings";
 
 // components
 import TaskSetupProject from "features/tasks/components/TasksFormSettings/TaskSetupProject";
+import TaskSetupLabels from "features/tasks/components/TasksFormSettings/TaskSetupLabels";
 import TaskSetupDescription from "features/tasks/components/TasksFormSettings/TaskSetupDescription";
 import TaskSetupPriority from "features/tasks/components/TasksFormSettings/TaskSetupPriority";
 
@@ -34,6 +35,9 @@ const TasksFormSettings = ({ taskSettings }: TasksFormSettings) => {
           taskSettings={taskSettings}
           allProjects={allProjects}
         />
+      </S.ControlItem>
+      <S.ControlItem>
+        <TaskSetupLabels taskSettings={taskSettings} />
       </S.ControlItem>
       <S.ControlItem>
         <TaskSetupPriority taskSettings={taskSettings} />

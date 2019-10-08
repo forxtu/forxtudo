@@ -114,6 +114,11 @@ const TasksListItem = ({
               );
             }
           })}
+          <S.LabelsWrapper>
+            {task.labels.map((label: string) => (
+              <S.LabelsItem>{label}</S.LabelsItem>
+            ))}
+          </S.LabelsWrapper>
           {isMoreVisible ? (
             <TaskItemMore
               isMoreOpen={isMoreOpen}

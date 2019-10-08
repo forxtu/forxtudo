@@ -4,9 +4,10 @@ import useTaskDateSetup from "features/tasks/hooks/useTaskDateSetup";
 import useTaskProjectSetup from "features/tasks/hooks/useTaskProjectSetup";
 import useTaskDescriptionSetup from "features/tasks/hooks/useTaskDescriptionSetup";
 import useTaskPrioritySetup from "features/tasks/hooks/useTaskPrioritySetup";
+import useTaskLabelsSetup from "features/tasks/hooks/useTaskLabelsSetup";
 
 const useTaskSettings = () => {
-  const { projectsStore } = useStores();
+  const { projectsStore, labelsStore } = useStores();
 
   // Date setup
   const taskDateSetup = useTaskDateSetup();
@@ -24,6 +25,10 @@ const useTaskSettings = () => {
   const taskPrioritiesSetup = useTaskPrioritySetup();
   const { setTaskPriority } = taskPrioritiesSetup;
 
+  // Labels setup
+  const taskLabelsSetup = useTaskLabelsSetup();
+  const { setTaskLabels } = taskLabelsSetup;
+
   const resetTaskSetup = () => {
     seIsTaskSetupProjectOpenFalse();
     setNewProjectId("inbox");
@@ -31,15 +36,18 @@ const useTaskSettings = () => {
     setSelectedDate("");
     setSelectedDateObject(null);
     setTaskPriority(0);
+    setTaskLabels([]);
   };
 
   return {
     allProjects: projectsStore.allProjects,
+    allLabels: labelsStore.allLabels,
     resetTaskSetup,
     taskDateSetup,
     taskProjectSetup,
     taskDescriptionSetup,
-    taskPrioritiesSetup
+    taskPrioritiesSetup,
+    taskLabelsSetup
   };
 };
 

@@ -5,6 +5,8 @@ import moment from "moment";
 import { db } from "config/Auth";
 import { IRootStore } from "store/RootStore";
 
+type Label = string;
+
 export type Task = {
   task: string;
   description: string;
@@ -14,6 +16,7 @@ export type Task = {
   completed: boolean;
   date: Date;
   priority: number;
+  labels: Label[];
   id?: string;
 };
 
@@ -23,6 +26,7 @@ export type AddTask = {
   date?: string;
   description?: string;
   priority?: number;
+  labels?: Label[];
 };
 
 export interface ITasksStore {
@@ -62,7 +66,8 @@ class TasksStore implements ITasksStore {
     projectId,
     date,
     description,
-    priority
+    priority,
+    labels = []
   }: AddTask) => {
     this.allTasks = [
       ...this.allTasks,
@@ -72,6 +77,7 @@ class TasksStore implements ITasksStore {
         completed: false,
         description,
         priority,
+        labels,
         date,
         projectId,
         userId: this.rootStore.user
@@ -84,6 +90,7 @@ class TasksStore implements ITasksStore {
       completed: false,
       description,
       priority,
+      labels,
       date,
       projectId,
       userId: this.rootStore.user

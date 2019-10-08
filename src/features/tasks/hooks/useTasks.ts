@@ -4,6 +4,7 @@ import { ChangeEvent, useState, useEffect, useContext } from "react";
 import useStores from "hooks/useStores";
 
 // utils
+import { Label } from "features/labels/store/LabelsStore";
 import { Task } from "features/tasks/store/TasksStore";
 
 export type AddTaskArgs = {
@@ -11,6 +12,7 @@ export type AddTaskArgs = {
   date?: string;
   description?: string;
   priority?: number;
+  labels?: Label[];
 };
 
 type UseTasks = {
@@ -26,7 +28,8 @@ const useTasks = ({ projectId }: UseTasks) => {
     projectId,
     date,
     description,
-    priority
+    priority,
+    labels
   }: AddTaskArgs) => {
     projectId
       ? tasksStore.addTask({
@@ -34,14 +37,16 @@ const useTasks = ({ projectId }: UseTasks) => {
           projectId,
           date,
           description,
-          priority
+          priority,
+          labels
         })
       : tasksStore.addTask({
           taskValue,
           projectId,
           date,
           description,
-          priority
+          priority,
+          labels
         });
 
     setTaskValue("");

@@ -52,15 +52,18 @@ const Controls = styled.div`
 const ControlsButtons = styled.div``;
 
 // TaskListItem
+const LabelsItem = styled.span``;
+const LabelsWrapper = styled.div``;
 const TaskProjectBadge = styled(ColorBadge)``;
 const StyledMentions = styled(Mentions)``;
 const StyledIcon = styled(Icon)``;
 const StyledText = styled(Text)``;
 const StyledListItem = styled(List.Item as any)`
   display: flex;
-  padding: 0 12px;
+  padding: 15px 12px;
   margin: 12px 0;
   border-radius: 5px;
+  position: relative;
 
   ${ifProp(
     "isHighlighted",
@@ -107,6 +110,18 @@ const StyledListItem = styled(List.Item as any)`
       &-dot {
         top: 0px;
       }
+    }
+  }
+
+  ${LabelsWrapper} {
+    display: flex;
+    font-size: 11px;
+    position: absolute;
+    top: 40px;
+    left: 40px;
+
+    ${LabelsItem} {
+      margin-right: 8px;
     }
   }
 `;
@@ -171,6 +186,8 @@ export {
   StyledText,
   StyledListItem,
   StyledIcon,
+  LabelsItem,
+  LabelsWrapper,
   More,
   DeleteIcon,
   ScheduleControls,
