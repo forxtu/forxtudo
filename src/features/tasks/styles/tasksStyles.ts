@@ -2,13 +2,10 @@ import styled, { css } from "styled-components";
 import {
   Input,
   Mentions,
-  Badge,
   DatePicker,
   Button,
   List,
   Icon,
-  Popover,
-  Tooltip,
   Typography
 } from "antd";
 import { ifProp } from "styled-tools";
@@ -17,7 +14,6 @@ import { ifProp } from "styled-tools";
 import ColorBadge from "components/elements/ColorBadge";
 
 const { Text } = Typography;
-const { Option } = Mentions;
 
 // TaskForm
 const Wrapper = styled.div``;
