@@ -1,6 +1,8 @@
 import React, { useRef, createContext } from "react";
 import { Mentions } from "antd";
 import { lowerCase } from "lodash";
+import { withRouter } from "react-router-dom";
+import { RouteComponentProps } from "react-router";
 
 // hooks
 import useTaskMore from "features/tasks/hooks/useTaskMore";
@@ -10,6 +12,8 @@ import useTaskPrioritySetup from "features/tasks/hooks/useTaskPrioritySetup";
 
 // utils
 import { Task } from "features/tasks/store/TasksStore";
+import { Project } from "features/projects/store/ProjectsStore";
+import setIsInbox from "utils/setIsInbox";
 
 // components
 import TaskItemMore from "features/tasks/components/TaskItemMore";
@@ -21,20 +25,25 @@ const { Option } = Mentions;
 
 export const TaskItemContext = createContext<any>(null);
 
+type Params = {
+  history: string | undefined;
+};
+
 type TasksListItem = {
   task: Task;
   deleteTask: (task: Task) => void;
   editTaskName: (task: Task, taskValue: string) => void;
   completeTask: (task: Task) => void;
   unCompleteTask: (task: Task) => void;
-};
+} & RouteComponentProps<Params>;
 
 const TasksListItem = ({
   task,
   deleteTask,
   editTaskName,
   completeTask,
-  unCompleteTask
+  unCompleteTask,
+  history
 }: TasksListItem) => {
   const {
     isMoreVisible,
@@ -61,6 +70,13 @@ const TasksListItem = ({
   const { priorities } = useTaskPrioritySetup();
 
   const popoverRef = useRef();
+
+  const projectNavigate = (project: Project) => {
+    history.push({
+      pathname: `/project/${setIsInbox(project)}`,
+      state: { project: JSON.stringify(project) }
+    });
+  };
 
   return (
     <TaskItemContext.Provider value={{ setIsMoreOpenFalse }}>
@@ -104,13 +120,15 @@ const TasksListItem = ({
               lowerCase(project.name) == lowerCase(task.projectId)
             ) {
               return (
-                <S.TaskProjectBadge
-                  width="6px"
-                  height="6px"
-                  fontSize="11px"
-                  color={project.color || "#4e44f3"}
-                  text={project.name}
-                />
+                <span onClick={() => projectNavigate(project)}>
+                  <S.TaskProjectBadge
+                    width="6px"
+                    height="6px"
+                    fontSize="11px"
+                    color={project.color || "#4e44f3"}
+                    text={project.name}
+                  />
+                </span>
               );
             }
           })}
@@ -133,4 +151,4 @@ const TasksListItem = ({
   );
 };
 
-export default TasksListItem;
+export default withRouter(TasksListItem);

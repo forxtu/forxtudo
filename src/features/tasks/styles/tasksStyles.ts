@@ -101,10 +101,15 @@ const StyledListItem = styled(List.Item as any)`
     display: flex;
     align-items: center;
     margin-right: 24px;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
 
     .ant-badge-status {
       &-dot {
-        top: 0px;
+        top: 1px;
       }
     }
   }
