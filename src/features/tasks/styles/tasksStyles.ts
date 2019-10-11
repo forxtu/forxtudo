@@ -6,7 +6,8 @@ import {
   Button,
   List,
   Icon,
-  Typography
+  Typography,
+  Collapse
 } from "antd";
 import { ifProp } from "styled-tools";
 
@@ -14,9 +15,12 @@ import { ifProp } from "styled-tools";
 import ColorBadge from "components/elements/ColorBadge";
 
 const { Text } = Typography;
+const { Panel } = Collapse;
 
 // TaskForm
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  margin: 12px 0;
+`;
 
 const TaskInput = styled(Input)`
   margin-bottom: 12px;
@@ -46,6 +50,29 @@ const Controls = styled.div`
   justify-content: space-between;
 `;
 const ControlsButtons = styled.div``;
+
+// TasksList
+const StyledPanel = styled(Panel)``;
+const StyledCollapse = styled(Collapse)`
+  background: #fffff2;
+
+  .ant-collapse-item {
+    border-bottom: none !important;
+  }
+
+  .ant-collapse-content-box {
+    padding: 0 !important;
+  }
+
+  .ant-collapse-header {
+    padding: 12px 0 !important;
+    border-bottom: 1px solid #ccc;
+  }
+
+  ${StyledPanel} {
+    padding: 0;
+  }
+`;
 
 // TaskListItem
 const LabelsItem = styled.span``;
@@ -195,5 +222,7 @@ export {
   MoreListItem,
   MoreListItemBtn,
   MoreListItemIcon,
-  MoreListWrapper
+  MoreListWrapper,
+  StyledCollapse,
+  StyledPanel
 };

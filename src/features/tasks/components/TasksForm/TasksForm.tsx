@@ -67,9 +67,9 @@ const TasksForm = ({
   };
 
   return (
-    <div>
+    <S.Wrapper>
       {isEditModeOpen ? (
-        <S.Wrapper>
+        <>
           <S.TaskInput
             placeholder="Type something..."
             onChange={setTaskValue}
@@ -95,7 +95,7 @@ const TasksForm = ({
               taskSettings={taskSettings}
             />
           </S.Controls>
-        </S.Wrapper>
+        </>
       ) : (
         <Button
           onClick={setIsEditModeOpenTrue}
@@ -107,7 +107,7 @@ const TasksForm = ({
           Add task
         </Button>
       )}
-    </div>
+    </S.Wrapper>
   );
 };
 
