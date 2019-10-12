@@ -67,6 +67,10 @@ const StyledCollapse = styled(Collapse)`
   .ant-collapse-header {
     padding: 12px 0 !important;
     border-bottom: 1px solid #ccc;
+
+    .ant-collapse-arrow {
+      right: 0 !important;
+    }
   }
 
   ${StyledPanel} {
@@ -92,6 +96,13 @@ const StyledListItem = styled(List.Item as any)`
     "isHighlighted",
     css`
       background: #4b6fde1f !important;
+    `
+  )}
+
+  ${ifProp(
+    "isCompleted",
+    css`
+      opacity: 0.6;
     `
   )}
 

@@ -5,6 +5,9 @@ import { List } from "antd";
 // utils
 import { Task } from "features/tasks/store/TasksStore";
 
+// components
+import { CountBadgeText } from "components/elements/Badge";
+
 // styles
 import * as S from "features/tasks/styles/tasksStyles";
 
@@ -28,6 +31,11 @@ const TasksList = ({
   unCompleteTask
 }: TasksList) => {
   const [isCompletedAvailable, setIsCompletedAvailable] = useState(false);
+
+  const completedTasks = (filterType === "date"
+    ? filteredByDateTasks
+    : tasks
+  ).filter((task: Task) => task.completed);
 
   const isCompletedAvailableHandler = (task: Task) => task.completed;
   const isSomeOfTasksCompleted = (filterType === "date"
@@ -61,23 +69,28 @@ const TasksList = ({
       </List>
       {isCompletedAvailable && (
         <S.StyledCollapse bordered={false} expandIconPosition="right">
-          <S.StyledPanel header={<h1>Completed</h1>} key="1">
-            {(filterType === "date" ? filteredByDateTasks : tasks).map(
-              (task: Task) => (
-                <>
-                  {task.completed && (
-                    <TasksListItem
-                      task={task}
-                      key={task.id}
-                      deleteTask={deleteTask}
-                      editTaskName={editTaskName}
-                      completeTask={completeTask}
-                      unCompleteTask={unCompleteTask}
-                    />
-                  )}
-                </>
-              )
-            )}
+          <S.StyledPanel
+            header={
+              <CountBadgeText count={completedTasks.length}>
+                <h1>Completed</h1>
+              </CountBadgeText>
+            }
+            key="1"
+          >
+            {completedTasks.map((task: Task) => (
+              <>
+                {task.completed && (
+                  <TasksListItem
+                    task={task}
+                    key={task.id}
+                    deleteTask={deleteTask}
+                    editTaskName={editTaskName}
+                    completeTask={completeTask}
+                    unCompleteTask={unCompleteTask}
+                  />
+                )}
+              </>
+            ))}
           </S.StyledPanel>
         </S.StyledCollapse>
       )}

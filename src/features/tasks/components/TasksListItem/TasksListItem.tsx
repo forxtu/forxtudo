@@ -85,6 +85,7 @@ const TasksListItem = ({
           onMouseOver={setIsMoreVisibleTrue}
           onMouseLeave={setIsMoreVisibleHandler}
           isHighlighted={isHighlighted}
+          isCompleted={task.completed}
         >
           {task.completed ? (
             <S.StyledIcon
