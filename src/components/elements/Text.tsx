@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import { Typography } from "antd";
+
+const { Text } = Typography;
 
 export const H1 = styled.h1``;
 export const H2 = styled.h2``;
@@ -11,3 +14,7 @@ export const Link = styled.a``;
 
 export const Primary = styled.p``;
 export const Secondary = styled.p``;
+
+export const SmallText = styled(Text)`
+  font-size: 12px;
+`;

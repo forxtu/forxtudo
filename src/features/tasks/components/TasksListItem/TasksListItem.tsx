@@ -1,22 +1,20 @@
 import React, { useRef, createContext } from "react";
 import { Mentions } from "antd";
-import { lowerCase } from "lodash";
 import { withRouter } from "react-router-dom";
 import { RouteComponentProps } from "react-router";
 
 // hooks
 import useTaskMore from "features/tasks/hooks/useTaskMore";
 import useTaskItem from "features/tasks/hooks/useTaskItem";
-import useProjects from "features/projects/hooks/useProjects";
 import useTaskPrioritySetup from "features/tasks/hooks/useTaskPrioritySetup";
 
 // utils
 import { Task } from "features/tasks/store/TasksStore";
-import { Project } from "features/projects/store/ProjectsStore";
-import setIsInbox from "utils/setIsInbox";
 
 // components
 import TaskItemMore from "features/tasks/components/TaskItemMore";
+import TaskDate from "features/tasks/components/TasksListItem/TaskDate";
+import TaskProject from "features/tasks/components/TasksListItem/TaskProject";
 
 // styles
 import * as S from "features/tasks/styles/tasksStyles";
@@ -66,17 +64,9 @@ const TasksListItem = ({
     prefix
   } = useTaskItem({ task, editTaskName });
 
-  const { allProjects } = useProjects();
   const { priorities } = useTaskPrioritySetup();
 
   const popoverRef = useRef();
-
-  const projectNavigate = (project: Project) => {
-    history.push({
-      pathname: `/project/${setIsInbox(project)}`,
-      state: { project: JSON.stringify(project) }
-    });
-  };
 
   return (
     <TaskItemContext.Provider value={{ setIsMoreOpenFalse }}>
@@ -115,24 +105,8 @@ const TasksListItem = ({
               </Option>
             ))}
           </S.StyledMentions>
-          {allProjects.map((project: any) => {
-            if (
-              lowerCase(project.id) == lowerCase(task.projectId) ||
-              lowerCase(project.name) == lowerCase(task.projectId)
-            ) {
-              return (
-                <span onClick={() => projectNavigate(project)}>
-                  <S.TaskProjectBadge
-                    width="6px"
-                    height="6px"
-                    fontSize="11px"
-                    color={project.color || "#4e44f3"}
-                    text={project.name}
-                  />
-                </span>
-              );
-            }
-          })}
+          <TaskDate taskDate={task.date} />
+          <TaskProject taskProjectId={task.projectId} />
           <S.LabelsWrapper>
             {task.labels.map((label: string) => (
               <S.LabelsItem>{label}</S.LabelsItem>

@@ -6,6 +6,11 @@ export const flexRowSpaceBetween = css`
   justify-content: space-between;
 `;
 
+export const flexStartEnd = css`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 export const flexAlignItemsCenter = css`
   display: flex;
   align-items: center;

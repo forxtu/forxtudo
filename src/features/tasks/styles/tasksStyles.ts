@@ -11,6 +11,9 @@ import {
 } from "antd";
 import { ifProp } from "styled-tools";
 
+// utils
+import { flexStartEnd } from "styles/utils";
+
 // components
 import ColorBadge from "components/elements/ColorBadge";
 
@@ -79,6 +82,7 @@ const StyledCollapse = styled(Collapse)`
 `;
 
 // TaskListItem
+const DateWrapper = styled.div``;
 const LabelsItem = styled.span``;
 const LabelsWrapper = styled.div``;
 const TaskProjectBadge = styled(ColorBadge)``;
@@ -108,6 +112,12 @@ const StyledListItem = styled(List.Item as any)`
 
   &:hover {
     background: #f0f2f5;
+  }
+
+  ${DateWrapper} {
+    ${flexStartEnd};
+    min-width: 130px;
+    margin-right: 12px;
   }
 
   ${StyledIcon} {
@@ -154,7 +164,7 @@ const StyledListItem = styled(List.Item as any)`
 
   ${LabelsWrapper} {
     display: flex;
-    font-size: 11px;
+    font-size: 10px;
     position: absolute;
     top: 40px;
     left: 40px;
@@ -235,5 +245,6 @@ export {
   MoreListItemIcon,
   MoreListWrapper,
   StyledCollapse,
-  StyledPanel
+  StyledPanel,
+  DateWrapper
 };
