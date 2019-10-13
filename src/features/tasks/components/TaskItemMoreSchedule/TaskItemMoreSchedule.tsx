@@ -19,7 +19,7 @@ const { Paragraph } = Typography;
 type TaskItemMoreScheduleProps = {
   isScheduleMoreOpen: boolean;
   toggleIsScheduleMoreOpen: () => void;
-  onDateSelect: (task: Task, date: Moment | undefined) => void;
+  onDateSelect: (task: Task, date: Moment | undefined | string) => void;
   task: Task;
 };
 
@@ -67,6 +67,15 @@ const TaskItemMoreSchedule = ({
                   .endOf("isoWeek")
                   .add(1, "day")
               );
+              setIsMoreOpenFalse();
+            }}
+          />
+        </Tooltip>
+        <Tooltip title="No date" placement="top">
+          <MoreItemIcon
+            type="stop"
+            onClick={() => {
+              onDateSelect(task, "");
               setIsMoreOpenFalse();
             }}
           />

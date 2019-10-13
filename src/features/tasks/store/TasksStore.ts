@@ -180,9 +180,10 @@ class TasksStore implements ITasksStore {
       .doc(task.id)
       .update({
         date
+      })
+      .then(() => {
+        this.fetchAllTasks();
       });
-
-    this.fetchAllTasks();
   };
 
   @action

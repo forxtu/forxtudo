@@ -29,8 +29,8 @@ const useTaskMoreActions = () => {
     tasksStore.updateTaskPriority(task, priority);
   };
 
-  function onDateSelectHandler(task: Task, newDate: any) {
-    const date = moment(newDate).format("YYYY-MM-DD");
+  function onDateSelectHandler(task: Task, newDate: Date | string) {
+    const date = newDate === "" ? "" : moment(newDate).format("YYYY-MM-DD");
 
     tasksStore.editTaskDate(task, date);
     setFalseIsScheduleMoreOpen();
