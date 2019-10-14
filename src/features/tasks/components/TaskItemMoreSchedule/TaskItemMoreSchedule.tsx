@@ -19,7 +19,7 @@ const { Paragraph } = Typography;
 type TaskItemMoreScheduleProps = {
   isScheduleMoreOpen: boolean;
   toggleIsScheduleMoreOpen: () => void;
-  onDateSelect: (task: Task, date: Moment | undefined | string) => void;
+  onDateSelect: (task: Task, date: Date | Moment | undefined | string) => void;
   task: Task;
 };
 

@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment, { Moment } from "moment";
 
 // hooks
 import useBoolean from "hooks/useBoolean";
@@ -29,7 +29,10 @@ const useTaskMoreActions = () => {
     tasksStore.updateTaskPriority(task, priority);
   };
 
-  function onDateSelectHandler(task: Task, newDate: Date | string) {
+  function onDateSelectHandler(
+    task: Task,
+    newDate: Date | Moment | undefined | string
+  ) {
     const date = newDate === "" ? "" : moment(newDate).format("YYYY-MM-DD");
 
     tasksStore.editTaskDate(task, date);
