@@ -81,6 +81,7 @@ const useTasks = ({ projectId }: UseTasks) => {
   }, []);
 
   return {
+    allTasks: tasksStore.allTasks,
     tasks: tasksStore.filteredByProjectTasks,
     filteredByDateTasks: tasksStore.filteredByDateTasks,
     addTaskHandler,

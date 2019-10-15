@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import TasksListItem from "features/tasks/components/TasksListItem";
-import { List } from "antd";
+import { List, Result, Icon } from "antd";
+import { isEqual, isEmpty } from "lodash";
 
 // utils
 import { Task } from "features/tasks/store/TasksStore";
+import { isDateBeforeTodayHandler } from "utils/dates";
 
 // components
 import { CountBadgeText } from "components/elements/Badge";
@@ -12,6 +14,7 @@ import { CountBadgeText } from "components/elements/Badge";
 import * as S from "features/tasks/styles/tasksStyles";
 
 type TasksList = {
+  allTasks: Task[];
   tasks: Task[];
   filteredByDateTasks: Task[];
   filterType: string;
@@ -22,6 +25,7 @@ type TasksList = {
 };
 
 const TasksList = ({
+  allTasks,
   tasks,
   filterType,
   filteredByDateTasks,
@@ -32,14 +36,17 @@ const TasksList = ({
 }: TasksList) => {
   const [isCompletedAvailable, setIsCompletedAvailable] = useState(false);
 
-  const completedTasks = (filterType === "date"
-    ? filteredByDateTasks
-    : tasks
-  ).filter((task: Task) => task.completed);
+  const completedTasks = (filterType === "date" ? allTasks : tasks).filter(
+    (task: Task) => task.completed
+  );
+
+  const overdueTasks = allTasks.filter(
+    (task: Task) => !task.completed && isDateBeforeTodayHandler(task.date)
+  );
 
   const isCompletedAvailableHandler = (task: Task) => task.completed;
   const isSomeOfTasksCompleted = (filterType === "date"
-    ? filteredByDateTasks
+    ? allTasks
     : tasks
   ).some(isCompletedAvailableHandler);
 
@@ -47,26 +54,105 @@ const TasksList = ({
     setIsCompletedAvailable(isSomeOfTasksCompleted);
   }, [isSomeOfTasksCompleted]);
 
+  const filteredByTodayTasksLength = filteredByDateTasks.filter(
+    (task: Task) => !task.completed
+  ).length;
+
+  const filteredByProjectTasksLength = tasks.filter(
+    (task: Task) => !task.completed
+  ).length;
+
   return (
     <>
-      <List>
-        {(filterType === "date" ? filteredByDateTasks : tasks).map(
-          (task: Task) => (
-            <>
-              {!task.completed && (
-                <TasksListItem
-                  task={task}
-                  key={task.id}
-                  deleteTask={deleteTask}
-                  editTaskName={editTaskName}
-                  completeTask={completeTask}
-                  unCompleteTask={unCompleteTask}
-                />
-              )}
-            </>
-          )
-        )}
-      </List>
+      {isEqual(filterType, "date") && !isEmpty(overdueTasks) && (
+        <S.StyledCollapse bordered={false} expandIconPosition="right">
+          <S.StyledPanel
+            header={
+              <CountBadgeText count={overdueTasks.length}>
+                <h1>Overdue</h1>
+              </CountBadgeText>
+            }
+            key="1"
+          >
+            {overdueTasks.map((task: Task) => (
+              <TasksListItem
+                task={task}
+                key={task.id}
+                deleteTask={deleteTask}
+                editTaskName={editTaskName}
+                completeTask={completeTask}
+                unCompleteTask={unCompleteTask}
+              />
+            ))}
+          </S.StyledPanel>
+        </S.StyledCollapse>
+      )}
+      {isEqual(filterType, "date") ? (
+        <>
+          {!!filteredByTodayTasksLength ? (
+            <S.StyledCollapse
+              bordered={false}
+              expandIconPosition="right"
+              defaultActiveKey="1"
+            >
+              <S.StyledPanel
+                header={
+                  <CountBadgeText count={filteredByTodayTasksLength}>
+                    <h1>Today</h1>
+                  </CountBadgeText>
+                }
+                key="1"
+              >
+                {filteredByDateTasks.map((task: Task) => (
+                  <>
+                    {!task.completed && (
+                      <TasksListItem
+                        task={task}
+                        key={task.id}
+                        deleteTask={deleteTask}
+                        editTaskName={editTaskName}
+                        completeTask={completeTask}
+                        unCompleteTask={unCompleteTask}
+                      />
+                    )}
+                  </>
+                ))}
+              </S.StyledPanel>
+            </S.StyledCollapse>
+          ) : (
+            <Result
+              status="success"
+              title="All tasks for today are done! Enjoy your day!"
+            />
+          )}
+        </>
+      ) : (
+        <>
+          {!!filteredByProjectTasksLength ? (
+            <List>
+              {tasks.map((task: Task) => (
+                <>
+                  {!task.completed && (
+                    <TasksListItem
+                      task={task}
+                      key={task.id}
+                      deleteTask={deleteTask}
+                      editTaskName={editTaskName}
+                      completeTask={completeTask}
+                      unCompleteTask={unCompleteTask}
+                    />
+                  )}
+                </>
+              ))}
+            </List>
+          ) : (
+            <Result
+              icon={<Icon type="file-add" theme="twoTone" />}
+              title="Add your first tasks!"
+            />
+          )}
+        </>
+      )}
       {isCompletedAvailable && (
         <S.StyledCollapse bordered={false} expandIconPosition="right">
           <S.StyledPanel

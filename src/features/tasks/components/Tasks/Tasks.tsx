@@ -15,6 +15,7 @@ type Tasks = {
 
 const Tasks = observer(({ projectId, filterType = "" }: Tasks) => {
   const {
+    allTasks,
     tasks,
     filteredByDateTasks,
     addTaskHandler,
@@ -30,6 +31,7 @@ const Tasks = observer(({ projectId, filterType = "" }: Tasks) => {
   return (
     <div>
       <TasksList
+        allTasks={allTasks}
         tasks={tasks}
         filteredByDateTasks={filteredByDateTasks}
         deleteTask={deleteTaskHandler}
