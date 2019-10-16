@@ -8,7 +8,7 @@ import { Label } from "features/labels/store/LabelsStore";
 import { Task } from "features/tasks/store/TasksStore";
 
 export type AddTaskArgs = {
-  projectId: string;
+  projectId: string | undefined;
   date?: string;
   description?: string;
   priority?: number;

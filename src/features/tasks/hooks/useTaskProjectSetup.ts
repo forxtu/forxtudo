@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // hooks
 import useBoolean from "hooks/useBoolean";
 
-const useTaskProjectSetup = () => {
-  const [newProjectId, setNewProjectId] = useState("inbox");
+const useTaskProjectSetup = (globalSelectedProjectId?: string) => {
+  const [newProjectId, setNewProjectId] = useState(globalSelectedProjectId);
 
   const {
     value: isTaskSetupProjectOpen,
@@ -20,6 +20,10 @@ const useTaskProjectSetup = () => {
     seIsTaskSetupProjectOpenFalse();
     setNewProjectId(newProjectId);
   };
+
+  useEffect(() => {
+    setNewProjectId(globalSelectedProjectId);
+  }, [globalSelectedProjectId]);
 
   return {
     newProjectId,

@@ -34,7 +34,7 @@ const TasksForm = ({
     setIsEditModeOpenFalse
   } = useTaskControls();
 
-  const taskSettings = useTaskSettings();
+  const taskSettings = useTaskSettings(globalSelectedProjectId);
 
   const { resetTaskSetup } = taskSettings;
 

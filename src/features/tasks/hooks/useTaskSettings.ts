@@ -6,7 +6,7 @@ import useTaskDescriptionSetup from "features/tasks/hooks/useTaskDescriptionSetu
 import useTaskPrioritySetup from "features/tasks/hooks/useTaskPrioritySetup";
 import useTaskLabelsSetup from "features/tasks/hooks/useTaskLabelsSetup";
 
-const useTaskSettings = () => {
+const useTaskSettings = (globalSelectedProjectId?: string) => {
   const { projectsStore, labelsStore } = useStores();
 
   // Date setup
@@ -14,7 +14,7 @@ const useTaskSettings = () => {
   const { setSelectedDate, setSelectedDateObject } = taskDateSetup;
 
   // Project setup
-  const taskProjectSetup = useTaskProjectSetup();
+  const taskProjectSetup = useTaskProjectSetup(globalSelectedProjectId);
   const { setNewProjectId, seIsTaskSetupProjectOpenFalse } = taskProjectSetup;
 
   // Description setup
@@ -31,7 +31,7 @@ const useTaskSettings = () => {
 
   const resetTaskSetup = () => {
     seIsTaskSetupProjectOpenFalse();
-    setNewProjectId("inbox");
+    setNewProjectId(globalSelectedProjectId);
     setTaskDescription("");
     setSelectedDate("");
     setSelectedDateObject(null);
