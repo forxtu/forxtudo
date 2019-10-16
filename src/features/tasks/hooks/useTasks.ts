@@ -9,7 +9,7 @@ import { Task } from "features/tasks/store/TasksStore";
 
 export type AddTaskArgs = {
   projectId: string | undefined;
-  date?: string;
+  date?: string | Date;
   description?: string;
   priority?: number;
   labels?: Label[];

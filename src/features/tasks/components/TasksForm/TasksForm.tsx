@@ -16,6 +16,7 @@ import * as S from "features/tasks/styles/tasksStyles";
 interface TasksForm extends HTMLProps<HTMLFormElement> {
   taskValue: string;
   globalSelectedProjectId: string;
+  filterType: string;
   setTaskValue: (event: ChangeEvent<HTMLInputElement>) => void;
   resetTaskValue: () => void;
   addTask: ({ projectId, date, description }: AddTaskArgs) => void;
@@ -26,7 +27,8 @@ const TasksForm = ({
   taskValue,
   resetTaskValue,
   addTask,
-  globalSelectedProjectId
+  globalSelectedProjectId,
+  filterType
 }: TasksForm) => {
   const {
     isEditModeOpen,
@@ -34,7 +36,7 @@ const TasksForm = ({
     setIsEditModeOpenFalse
   } = useTaskControls();
 
-  const taskSettings = useTaskSettings(globalSelectedProjectId);
+  const taskSettings = useTaskSettings(globalSelectedProjectId, filterType);
 
   const { resetTaskSetup } = taskSettings;
 

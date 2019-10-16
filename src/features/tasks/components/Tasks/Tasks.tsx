@@ -46,6 +46,7 @@ const Tasks = observer(({ projectId, filterType = "" }: Tasks) => {
         resetTaskValue={resetTaskValueHandler}
         taskValue={taskValue}
         globalSelectedProjectId={projectId}
+        filterType={filterType}
       />
     </div>
   );

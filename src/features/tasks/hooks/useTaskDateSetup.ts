@@ -1,8 +1,18 @@
 import { useState } from "react";
 
-const useTaskDateSetup = () => {
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedDateObject, setSelectedDateObject] = useState(null);
+// utils
+import {
+  getDefaultSelectedDate,
+  getDefaultSelectedDateObject
+} from "utils/dates";
+
+const useTaskDateSetup = (filterType: string | undefined) => {
+  const [selectedDate, setSelectedDate] = useState(
+    getDefaultSelectedDate(filterType)
+  );
+  const [selectedDateObject, setSelectedDateObject] = useState(
+    getDefaultSelectedDateObject(filterType)
+  );
 
   const setDateHandler = (dateObject: any, date: string) => {
     setSelectedDate(date);

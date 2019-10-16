@@ -6,11 +6,20 @@ import useTaskDescriptionSetup from "features/tasks/hooks/useTaskDescriptionSetu
 import useTaskPrioritySetup from "features/tasks/hooks/useTaskPrioritySetup";
 import useTaskLabelsSetup from "features/tasks/hooks/useTaskLabelsSetup";
 
-const useTaskSettings = (globalSelectedProjectId?: string) => {
+// utils
+import {
+  getDefaultSelectedDate,
+  getDefaultSelectedDateObject
+} from "utils/dates";
+
+const useTaskSettings = (
+  globalSelectedProjectId?: string,
+  filterType?: string | undefined
+) => {
   const { projectsStore, labelsStore } = useStores();
 
   // Date setup
-  const taskDateSetup = useTaskDateSetup();
+  const taskDateSetup = useTaskDateSetup(filterType);
   const { setSelectedDate, setSelectedDateObject } = taskDateSetup;
 
   // Project setup
@@ -33,8 +42,8 @@ const useTaskSettings = (globalSelectedProjectId?: string) => {
     seIsTaskSetupProjectOpenFalse();
     setNewProjectId(globalSelectedProjectId);
     setTaskDescription("");
-    setSelectedDate("");
-    setSelectedDateObject(null);
+    setSelectedDate(getDefaultSelectedDate(filterType));
+    setSelectedDateObject(getDefaultSelectedDateObject(filterType));
     setTaskPriority(0);
     setTaskLabels([]);
   };
