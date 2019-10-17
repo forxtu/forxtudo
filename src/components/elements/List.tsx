@@ -11,7 +11,7 @@ const MoreItemIcon = styled(Icon)``;
 const MoreItemBtn = styled(Item)``;
 const MoreItem = styled(Item)``;
 const MoreWrapper = styled(List)`
-  padding: 0;
+  padding: 6px 0;
 
   ${MoreItem} {
     padding: 12px;

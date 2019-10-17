@@ -2,6 +2,7 @@ import { ChangeEvent, useState, useEffect, useContext } from "react";
 
 // hooks
 import useStores from "hooks/useStores";
+import useBoolean from "hooks/useBoolean";
 
 // utils
 import { Label } from "features/labels/store/LabelsStore";
@@ -21,6 +22,10 @@ type UseTasks = {
 
 const useTasks = ({ projectId }: UseTasks) => {
   const { tasksStore } = useStores();
+  const {
+    value: isCompletedTasksShown,
+    toggle: toggleIsCompletedTasksShown
+  } = useBoolean(true);
 
   const [taskValue, setTaskValue] = useState("");
 
@@ -91,7 +96,9 @@ const useTasks = ({ projectId }: UseTasks) => {
     unCompleteTaskHandler,
     setTaskValueHandler,
     taskValue,
-    resetTaskValueHandler
+    resetTaskValueHandler,
+    isCompletedTasksShown,
+    toggleIsCompletedTasksShown
   };
 };
 

@@ -18,6 +18,7 @@ type TasksList = {
   tasks: Task[];
   filteredByDateTasks: Task[];
   filterType: string;
+  isCompletedTasksShown: boolean;
   deleteTask: (task: Task) => void;
   editTaskName: (task: Task, taskValue: string) => void;
   completeTask: (task: Task) => void;
@@ -32,7 +33,8 @@ const TasksList = ({
   deleteTask,
   editTaskName,
   completeTask,
-  unCompleteTask
+  unCompleteTask,
+  isCompletedTasksShown
 }: TasksList) => {
   const [isCompletedAvailable, setIsCompletedAvailable] = useState(false);
 
@@ -153,7 +155,7 @@ const TasksList = ({
           )}
         </>
       )}
-      {isCompletedAvailable && (
+      {isCompletedAvailable && isCompletedTasksShown && (
         <S.StyledCollapse bordered={false} expandIconPosition="right">
           <S.StyledPanel
             header={
