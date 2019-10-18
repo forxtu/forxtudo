@@ -1,7 +1,5 @@
 // utils
 import { Project } from "features/projects/store/ProjectsStore";
 
-const setIsInbox = (project: Project) =>
+export const getProjectIdDependingOnType = (project: Project) =>
   project.name === "Inbox" ? "inbox" : project.id;
-
-export default setIsInbox;

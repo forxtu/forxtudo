@@ -7,6 +7,7 @@ import useTaskMoreActions from "features/tasks/hooks/useTaskMoreActions";
 
 // utils
 import { Task } from "features/tasks/store/TasksStore";
+import { getProjectIdDependingOnType } from "utils/projects";
 
 // components
 import TaskItemMoreSchedule from "features/tasks/components/TaskItemMoreSchedule";
@@ -94,7 +95,9 @@ const TaskItemMorePopover = ({
             renderItem={(project: any) => (
               <StyledListItem
                 onClick={() =>
-                  moveTaskToProjectHandler(task, project.id as string)
+                  moveTaskToProjectHandler(task, getProjectIdDependingOnType(
+                    project
+                  ) as string)
                 }
               >
                 {project.name}

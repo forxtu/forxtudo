@@ -8,7 +8,7 @@ import useProjects from "features/projects/hooks/useProjects";
 
 // utils
 import { Project } from "features/projects/store/ProjectsStore";
-import setIsInbox from "utils/setIsInbox";
+import { getProjectIdDependingOnType } from "utils/projects";
 
 // styles
 import * as S from "features/tasks/styles/tasksStyles";
@@ -26,7 +26,7 @@ const TaskProject = ({ taskProjectId, history }: TaskProject) => {
 
   const projectNavigate = (project: Project) => {
     history.push({
-      pathname: `/project/${setIsInbox(project)}`,
+      pathname: `/project/${getProjectIdDependingOnType(project)}`,
       state: { project: JSON.stringify(project) }
     });
   };

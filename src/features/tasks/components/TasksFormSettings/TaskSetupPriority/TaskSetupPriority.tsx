@@ -1,15 +1,7 @@
 import React from "react";
 import { Icon, Tooltip, Popover } from "antd";
 
-// utils
-import { Project } from "features/projects/store/ProjectsStore";
-import setIsInbox from "utils/setIsInbox";
-
-// components
-import DefaultProjectItem from "components/blocks/DefaultProjectItem";
-
-// styles
-import * as S from "features/tasks/components/TasksFormSettings/tasksFormSettingsStyles";
+// comoponents
 import { MoreWrapper, MoreItemBtn } from "components/elements/List";
 import ColorBadge from "components/elements/ColorBadge";
 

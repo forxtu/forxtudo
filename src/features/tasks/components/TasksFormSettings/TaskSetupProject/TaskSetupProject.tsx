@@ -3,7 +3,7 @@ import { Icon, Tooltip, Popover } from "antd";
 
 // utils
 import { Project } from "features/projects/store/ProjectsStore";
-import setIsInbox from "utils/setIsInbox";
+import { getProjectIdDependingOnType } from "utils/projects";
 
 // components
 import DefaultProjectItem from "components/blocks/DefaultProjectItem";
@@ -35,14 +35,18 @@ const TaskSetupProject = ({ taskSettings, allProjects }: TaskSetupProject) => {
             dataSource={allProjects}
             renderItem={(project: any) => (
               <S.SelectProjectItem
-                onClick={() => setProjectHandler(setIsInbox(project) as string)}
+                onClick={() =>
+                  setProjectHandler(getProjectIdDependingOnType(
+                    project
+                  ) as string)
+                }
               >
                 {project.isDefault ? (
                   <DefaultProjectItem project={project} />
                 ) : (
                   <ColorBadge color={project.color} text={project.name} />
                 )}
-                {newProjectId === setIsInbox(project) ? (
+                {newProjectId === getProjectIdDependingOnType(project) ? (
                   <Icon type="check" style={{ color: "green" }} />
                 ) : null}
               </S.SelectProjectItem>
