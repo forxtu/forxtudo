@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon, Tooltip, Popover } from "antd";
 
-// comoponents
+// components
 import { MoreWrapper, MoreItemBtn } from "components/elements/List";
 import ColorBadge from "components/elements/ColorBadge";
 
