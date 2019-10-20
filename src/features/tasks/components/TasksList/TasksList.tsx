@@ -38,9 +38,10 @@ const TasksList = ({
 }: TasksList) => {
   const [isCompletedAvailable, setIsCompletedAvailable] = useState(false);
 
-  const completedTasks = (filterType === "date" ? allTasks : tasks).filter(
-    (task: Task) => task.completed
-  );
+  const completedTasks = (filterType === "date"
+    ? filteredByDateTasks
+    : tasks
+  ).filter((task: Task) => task.completed);
 
   const overdueTasks = allTasks.filter(
     (task: Task) => !task.completed && isDateBeforeTodayHandler(task.date)
@@ -48,7 +49,7 @@ const TasksList = ({
 
   const isCompletedAvailableHandler = (task: Task) => task.completed;
   const isSomeOfTasksCompleted = (filterType === "date"
-    ? allTasks
+    ? filteredByDateTasks
     : tasks
   ).some(isCompletedAvailableHandler);
 
