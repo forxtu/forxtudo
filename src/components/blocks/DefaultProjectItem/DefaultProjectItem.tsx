@@ -29,13 +29,11 @@ type DefaultProjectItem = {
   project: Project;
 };
 
-const DefaultProjectItem = ({ project }: DefaultProjectItem) => {
-  return (
-    <ProjectItemWrapper>
-      <ProjectIcon type="inbox" />
-      <ProjectText>{project.name}</ProjectText>
-    </ProjectItemWrapper>
-  );
-};
+const DefaultProjectItem = ({ project }: DefaultProjectItem) => (
+  <ProjectItemWrapper>
+    <ProjectIcon type="inbox" />
+    <ProjectText>{project.name}</ProjectText>
+  </ProjectItemWrapper>
+);
 
 export default DefaultProjectItem;

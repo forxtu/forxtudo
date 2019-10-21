@@ -8,13 +8,11 @@ type Sidebar = {
   paramsId: string;
 };
 
-const Sidebar = ({ paramsId }: Sidebar) => {
-  return (
-    <>
-      <Projects globalProjectId={paramsId} />
-      <Labels />
-    </>
-  );
-};
+const Sidebar = ({ paramsId }: Sidebar) => (
+  <>
+    <Projects globalProjectId={paramsId} />
+    <Labels />
+  </>
+);
 
 export default Sidebar;
