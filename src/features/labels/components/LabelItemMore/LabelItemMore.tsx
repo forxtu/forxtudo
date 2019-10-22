@@ -22,27 +22,25 @@ const LabelItemMore = ({
   isMoreOpen,
   setIsMoreOpenToggle,
   isFavorite
-}: LabelItemMore) => {
-  return (
-    <Tooltip placement="right" title="More">
-      <Popover
-        placement="bottomRight"
-        content={
-          <LabelItemMorePopover
-            isFavorite={isFavorite}
-            label={label}
-            setIsMoreOpenToggle={setIsMoreOpenToggle}
-          />
-        }
-        title={label.label}
-        trigger="click"
-        visible={isMoreOpen}
-        onVisibleChange={setIsMoreOpenToggle}
-      >
-        <S.More type="ellipsis" />
-      </Popover>
-    </Tooltip>
-  );
-};
+}: LabelItemMore) => (
+  <Tooltip placement="right" title="More">
+    <Popover
+      placement="bottomRight"
+      content={
+        <LabelItemMorePopover
+          isFavorite={isFavorite}
+          label={label}
+          setIsMoreOpenToggle={setIsMoreOpenToggle}
+        />
+      }
+      title={label.label}
+      trigger="click"
+      visible={isMoreOpen}
+      onVisibleChange={setIsMoreOpenToggle}
+    >
+      <S.More type="ellipsis" />
+    </Popover>
+  </Tooltip>
+);
 
 export default LabelItemMore;
