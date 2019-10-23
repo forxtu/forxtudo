@@ -1,6 +1,9 @@
 import moment from "moment";
 import { isEqual } from "lodash";
 
+export type FilterType = string | undefined;
+type DateType = string | Date;
+
 export const dateToFromNowDaily = (date: string | Date) =>
   date !== "" &&
   moment(date).calendar(undefined, {
@@ -12,11 +15,11 @@ export const dateToFromNowDaily = (date: string | Date) =>
     sameElse: "MMM Do YY"
   });
 
-export const isDateBeforeTodayHandler = (date: string | Date) =>
+export const isDateBeforeTodayHandler = (date: DateType) =>
   moment(date).isBefore(moment(), "day");
 
-export const getDefaultSelectedDate = (filterType: string | undefined) =>
+export const getDefaultSelectedDate = (filterType: FilterType) =>
   isEqual(filterType, "date") ? moment().format("YYYY-MM-DD") : "";
 
-export const getDefaultSelectedDateObject = (filterType: string | undefined) =>
+export const getDefaultSelectedDateObject = (filterType: FilterType) =>
   isEqual(filterType, "date") ? moment() : null;
