@@ -14,14 +14,15 @@ type UseTaskItem = {
 };
 
 const useTaskItem = ({ task, editTaskName }: UseTaskItem) => {
-  const { tasksStore, projectsStore } = useStores();
+  const { tasksStore, projectsStore, labelsStore } = useStores();
 
   const [taskName, setTaskName] = useState();
   const [prefix, setPrefix] = useState("@");
   const [isHighlighted, setIsHighlighted] = useState<boolean>(false);
 
   const mentionsData: any = {
-    "#": projectsStore.allProjects
+    "#": projectsStore.allProjects,
+    "@": labelsStore.allLabels
   };
 
   const setTaskNameHandler = (text: string) => {
@@ -44,6 +45,29 @@ const useTaskItem = ({ task, editTaskName }: UseTaskItem) => {
     );
   };
 
+  const onMentionSelect = (mention: any) => {
+    const { label } = mention["data-mention"];
+
+    if (label) {
+      const pattern = /^((?!label.value).)*$/gi;
+      const withoutLabelMention = taskName.match(pattern)[0].split("@")[0];
+
+      setTaskName(trim(withoutLabelMention));
+
+      setTaskLabelHandler(task, label);
+    } else {
+      const pattern = /^((?!project.value).)*$/gi;
+      const withoutProjectMention = taskName.match(pattern)[0].split("#")[0];
+
+      setTaskName(trim(withoutProjectMention));
+
+      setTaskProjectHandler(
+        task,
+        isEqual(mention.value, "Inbox") ? "inbox" : mention["data-mention"].id
+      );
+    }
+  };
+
   const onBlurHandler = () => {
     editTaskName(task, taskName);
   };
@@ -54,6 +78,10 @@ const useTaskItem = ({ task, editTaskName }: UseTaskItem) => {
 
   const setTaskProjectHandler = (task: Task, projectId: string) => {
     tasksStore.moveTaskToProject(task, projectId);
+  };
+
+  const setTaskLabelHandler = (task: Task, label: string) => {
+    tasksStore.addLabelToTask(task, label);
   };
 
   useEffect(() => {
@@ -82,6 +110,7 @@ const useTaskItem = ({ task, editTaskName }: UseTaskItem) => {
     isHighlighted,
     setTaskNameHandler,
     onProjectSelect,
+    onMentionSelect,
     taskName,
     setPrefixHandler,
     onBlurHandler,

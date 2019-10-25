@@ -57,7 +57,7 @@ const TasksListItem = ({
     isHighlighted,
     mentionsData,
     setPrefixHandler,
-    onProjectSelect,
+    onMentionSelect,
     taskName,
     setTaskNameHandler,
     onBlurHandler,
@@ -94,14 +94,18 @@ const TasksListItem = ({
             placeholder={`Task name`}
             prefix={["@", "#"]}
             onSearch={setPrefixHandler}
-            onSelect={onProjectSelect}
+            onSelect={onMentionSelect}
             value={taskName}
             onChange={setTaskNameHandler}
             onBlur={onBlurHandler}
           >
             {(mentionsData[prefix] || []).map((value: any) => (
-              <Option key={value.id} value={value.name} data-project={value}>
-                {value.name}
+              <Option
+                key={value.id}
+                value={value.name || value.value}
+                data-mention={value}
+              >
+                {value.name || value.label}
               </Option>
             ))}
           </S.StyledMentions>

@@ -1,5 +1,6 @@
 import { observable, action, computed } from "mobx";
 import moment from "moment";
+import { uniq } from "lodash";
 
 // utils
 import { db } from "config/Auth";
@@ -169,6 +170,17 @@ class TasksStore implements ITasksStore {
       .doc(task.id)
       .update({
         projectId
+      });
+
+    this.fetchAllTasks();
+  };
+
+  @action
+  addLabelToTask = (task: Task, label: string) => {
+    db.collection("tasks")
+      .doc(task.id)
+      .update({
+        labels: uniq([...task.labels, label])
       });
 
     this.fetchAllTasks();
