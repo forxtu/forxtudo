@@ -8,6 +8,7 @@ import useTaskDescription from "features/tasks/features/taskDescription/hooks/us
 // components
 import TaskDescriptionHeader from "features/tasks/features/taskDescription/components/TaskDescriptionHeader";
 import TaskDescriptionArea from "features/tasks/features/taskDescription/components/TaskDescriptionArea";
+import TaskDescriptionTags from "features/tasks/features/taskDescription/components/TaskDescriptionTags";
 
 const TaskDescription = () => {
   const {
@@ -28,6 +29,7 @@ const TaskDescription = () => {
         <>
           <TaskDescriptionHeader selectedTask={selectedTask} />
           <TaskDescriptionArea />
+          <TaskDescriptionTags selectedTask={selectedTask} />
         </>
       )}
     </div>
