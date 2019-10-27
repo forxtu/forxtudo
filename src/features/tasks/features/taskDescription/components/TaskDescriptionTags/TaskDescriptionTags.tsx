@@ -6,13 +6,17 @@ import { Task } from "features/tasks/store/TasksStore";
 
 type TaskDescriptionTags = {
   selectedTask: Task;
+  onRemoveLabel: (task: Task, label: string) => void;
 };
 
-const TaskDescriptionTags = ({ selectedTask }: TaskDescriptionTags) => {
+const TaskDescriptionTags = ({
+  selectedTask,
+  onRemoveLabel
+}: TaskDescriptionTags) => {
   return (
     <>
       {selectedTask.labels.map(label => (
-        <Tag closable onClose={() => console.log("close")}>
+        <Tag closable onClose={() => onRemoveLabel(selectedTask, label)}>
           {label}
         </Tag>
       ))}

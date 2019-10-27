@@ -20,6 +20,10 @@ const useTaskDescription = () => {
     tasksStore.editTaskDescription(task, value);
   };
 
+  const handleRemoveLabel = (task: Task, label: string) => {
+    tasksStore.removeLabelFromTask(task, label);
+  };
+
   useEffect(() => {
     autorun(() => {
       setTaskTempDescription(tasksStore.selectedTask.description);
@@ -31,7 +35,8 @@ const useTaskDescription = () => {
     taskTempDescription,
     setTaskTempDescription,
     selectedTask: selectedTaskItem,
-    editTaskDescriptionHandler
+    editTaskDescriptionHandler,
+    handleRemoveLabel
   };
 };
 

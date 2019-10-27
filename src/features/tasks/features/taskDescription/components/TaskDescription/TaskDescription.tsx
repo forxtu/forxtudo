@@ -1,6 +1,7 @@
 import React from "react";
 import { Result, Icon } from "antd";
 import { isNil } from "lodash";
+import { observer } from "mobx-react";
 
 // hooks
 import useTaskDescription from "features/tasks/features/taskDescription/hooks/useTaskDescription";
@@ -10,12 +11,13 @@ import TaskDescriptionHeader from "features/tasks/features/taskDescription/compo
 import TaskDescriptionArea from "features/tasks/features/taskDescription/components/TaskDescriptionArea";
 import TaskDescriptionTags from "features/tasks/features/taskDescription/components/TaskDescriptionTags";
 
-const TaskDescription = () => {
+const TaskDescription = observer(() => {
   const {
     taskTempDescription,
     setTaskTempDescription,
     selectedTask,
-    editTaskDescriptionHandler
+    editTaskDescriptionHandler,
+    handleRemoveLabel
   } = useTaskDescription();
 
   return (
@@ -29,11 +31,14 @@ const TaskDescription = () => {
         <>
           <TaskDescriptionHeader selectedTask={selectedTask} />
           <TaskDescriptionArea />
-          <TaskDescriptionTags selectedTask={selectedTask} />
+          <TaskDescriptionTags
+            selectedTask={selectedTask}
+            onRemoveLabel={handleRemoveLabel}
+          />
         </>
       )}
     </div>
   );
-};
+});
 
 export default TaskDescription;
