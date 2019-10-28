@@ -5,6 +5,7 @@ import { uniq, isEqual } from "lodash";
 // utils
 import { db } from "config/Auth";
 import { IRootStore } from "store/RootStore";
+import { removeFromArray } from "utils/helpers";
 
 type Label = string;
 
@@ -112,6 +113,8 @@ class TasksStore implements ITasksStore {
         console.log(err);
       });
 
+    this.allTasks = removeFromArray(this.allTasks, task.id);
+
     this.setSelectedTask(null as any);
     this.fetchAllTasks();
   };
@@ -124,7 +127,7 @@ class TasksStore implements ITasksStore {
         task: taskValue
       });
 
-    this.fetchAllTasks();
+    task.task = taskValue;
   };
 
   @action
@@ -135,6 +138,7 @@ class TasksStore implements ITasksStore {
         completed: true
       });
 
+    task.completed = true;
     this.fetchAllTasks();
   };
 
@@ -146,6 +150,7 @@ class TasksStore implements ITasksStore {
         completed: false
       });
 
+    task.completed = false;
     this.fetchAllTasks();
   };
 
@@ -172,7 +177,7 @@ class TasksStore implements ITasksStore {
         projectId
       });
 
-    this.fetchAllTasks();
+    task.projectId = projectId;
   };
 
   @action
@@ -183,7 +188,7 @@ class TasksStore implements ITasksStore {
         labels: uniq([...task.labels, label])
       });
 
-    this.fetchAllTasks();
+    task.labels = uniq([...task.labels, label]);
   };
 
   @action
@@ -191,10 +196,10 @@ class TasksStore implements ITasksStore {
     db.collection("tasks")
       .doc(task.id)
       .update({
-        labels: task.labels.filter(labelItem => !isEqual(labelItem, label))
+        labels: removeFromArray(task.labels, label)
       });
 
-    this.fetchAllTasks();
+    task.labels = removeFromArray(task.labels, label);
   };
 
   @action
@@ -203,10 +208,9 @@ class TasksStore implements ITasksStore {
       .doc(task.id)
       .update({
         date
-      })
-      .then(() => {
-        this.fetchAllTasks();
       });
+
+    task.date = date;
   };
 
   @action
@@ -217,7 +221,7 @@ class TasksStore implements ITasksStore {
         priority
       });
 
-    this.fetchAllTasks();
+    task.priority = priority;
   };
 
   @action
@@ -228,7 +232,7 @@ class TasksStore implements ITasksStore {
         description
       });
 
-    this.fetchAllTasks();
+    task.description = description;
   };
 
   @action
