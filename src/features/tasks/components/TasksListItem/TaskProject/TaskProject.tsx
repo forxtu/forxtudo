@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { lowerCase } from "lodash";
 import { withRouter } from "react-router-dom";
 import { RouteComponentProps } from "react-router";
