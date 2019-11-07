@@ -1,7 +1,6 @@
 import { Badge } from "antd";
 import { BadgeProps } from "antd/lib/badge";
 import styled from "styled-components";
-import { prop } from "styled-tools";
 
 interface BadgeExtendedProps extends BadgeProps {
   width?: string;
